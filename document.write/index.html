@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--[if lt ie 7]> <html class="ie ie6" lang="zh-CN"> <![endif]-->
+<!--[if ie 7]>    <html class="ie ie7" lang="zh-CN"> <![endif]-->
+<!--[if ie 8]>    <html class="ie ie8" lang="zh-CN"> <![endif]-->
+<!--[if gt ie 8]><!-->  <html> <!--<![endif]-->
+ <head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>tonny zhang，放飞心灵</title>
+		<meta name="Author" content="tonny zhang"/>
+		<meta name="Keywords" content="tonny zhangkai,wodexintiao@gmail.com"/>
+		<meta name="Description" content="tonny zhangkai,wodexintiao@gmail.com"/>
+		<style>
+		</style>
+		<script src="http://misc.weather.com.cn/source/j/jquery-1.8.2.js"></script>
+		<script src="../seajs/js/seajs.js"></script>
+		<script src="./doc-write.js"></script>
+	</head>
+	<body>
+		<script>$(function(){
+			$('#testReady').get(0).innerHTML += (+new Date())+' read';
+		})</script>
+		<script>
+		document.writeln('1 I\' an in inner document.write<br/>',true);
+		</script>
+		<div id="testE"></div>
+		<script>
+		document.write('<script>document.write("1.1 hello<br/>");document.write("1.1.1 hello2<br/>");document.getElementById("testE").innerHTML += "1.2 inner text<br/>";</'+'script><script src="sync.js"></'+'script><br/>',true);
+		</script>
+		<script>
+		function ad(src){
+			document.write("3 I'm is callback document.write<br/>",true);
+			document.write('4 <script src="'+src+'"></'+'script><br/>',true);
+			document.write("6.1 I'm is callback document.write<br/>",true);
+		}
+		ad('./ad.js');
+		</script>
+		<script>
+		document.writeln('7 test',true);
+		</script>
+		<script>//docWriteDown()</script>
+		<div id="testReady"></div>
+	</body>
+</html>

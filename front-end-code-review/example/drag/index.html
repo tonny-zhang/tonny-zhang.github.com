@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6" lang="zh-CN"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7" lang="zh-CN"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8" lang="zh-CN"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>1天气网改版测试用例</title>
+<script src="../../n/j/core.js"></script> 
+<!--<script>
+W.css('../n/c/1.css');
+W.css('../n/c/2.css',{'media':'screen'});
+</script>-->
+</head>
+<body>
+<style>
+*{
+	padding: 0;
+	margin: 0;
+}
+body{
+	position: relative;
+	*zoom: 1;
+}
+p{
+	margin: 0;
+	padding: 0;
+}
+.div{
+	width: 350px;
+	float: left;
+	display: inline;
+}
+ul{
+	/*
+	IE6 IE7 IE8(Q) 中如果列表元素设置 'list-style-type:none' 时 'list-style-position:inside' 设置产生的标记框不消失，依然占据布局位置。
+	http://www.w3help.org/zh-cn/causes/RG1002
+	*/
+	list-style: none outside none;
+	margin: 0;
+	padding: 0;
+}
+li{
+	background: #eee;
+	margin: 5px;
+	padding: 3px 10px;
+	width: 300px;
+	word-break:break-all;
+}
+.container2{
+	width: 270px;
+}
+.container2 li div{
+	height: 20px;
+	margin: -3px -10px;
+	margin-bottom: 5px;
+	background-color: #ccc;
+}
+
+.container2 .drag_placeholder{
+	border: 2px dotted #eee;
+	background: red;
+	margin: 5px;
+	padding: 1px 10px;
+	width: 296px;
+	color: none;
+	display: block;
+}
+.container2 .drag_placeholder div{
+	background: none;
+}
+.container2 .drag_placeholder p{
+	text-indent: -20000px;
+}
+.container2 ul{
+	width: 100%;
+	float: left;
+	margin: 5px 0;
+	padding: 10px 0;
+	background-color: #eff;
+}
+.container2 li,
+.container2 .drag_placeholder{
+	float: left;
+	display: inline;
+	width: 60px;
+}
+.container2 .drag_placeholder{
+	width: 56px;
+}
+.container3{
+	height: 350px;
+	background: blue;
+	margin-left: 300px;
+}
+.container3 .moveObj{
+	background:green;
+	width: 100px;
+	height: 100px;
+}
+
+div.container4{
+	height: 350px;
+	background: #776688;
+	position: absolute;
+	left: 400px;
+	top: 400px;
+}
+.container4 .moveObj{
+	background:green;
+	width: 100px;
+	height: 100px;
+}
+
+.container5{
+	height: 350px;
+	background: #333;
+	position: absolute;
+	right: 200px;
+	top: 200px;
+}
+.container5 .moveObj{
+	background:green;
+	width: 100px;
+	height: 100px;
+}
+.container5 .moveObj .moveTitle{
+	background: black;
+	width: 100px;
+	height: 30px;
+}
+.container{
+	background: #593;
+}
+.container ul{
+	float: left;
+	display: inline;
+	width: 115px;
+	margin: 0 10px; 
+	padding: 0px;
+	background: blue;
+	padding: 10px 0;
+}
+.container ul li{
+	width: 105px;
+	padding: 5px;
+	margin: 0;
+	margin-bottom: 5px;
+}
+.container ul li.drag_placeholder{
+	border: 2px dotted #000;
+	padding: 3px;
+	text-indent: -2000px;
+	background: none;
+}
+.container6{
+	background: red;
+	width: 300px;
+	position: absolute;
+	left: 10px;
+	top: 300px;
+}
+.container6 li{
+	width: 280px;
+	margin-left: 0;
+	margin-right: 0;
+}
+/*.container6 span{
+	display: inline-block;
+	background: #eee;
+	margin: 0px;
+	padding: 3px 10px;
+	width: 280px;
+	margin-bottom: 5px;
+}
+.container6 span.drag_container{
+	background: none;
+}*/
+.container6 .drag_placeholder{
+	border: 2px dotted #000;
+	padding: 1px 8px;
+	text-indent: -2000px;
+	background: none;
+}
+</style>
+<div class="div container" style="width: 410px;margin-top:40px;">
+	<ul>
+		<li>One</li>
+		<li>Two</li>
+		<li>Three</li>
+		<li>Four</li>
+		<li>Five</li>
+	</ul>
+	<ul></ul>
+	<input type="button" value="添加新布局" style="position:absolute;top: -20px; left: 20px;"/>
+</div>
+<ul class="container6">
+	<li>One</li>
+	<li>Two</li>
+	<li>Three</li>
+	<li>Four</li>
+	<li>Five</li>
+</ul>
+<!-- <div class="container6">
+		<span>One</span>
+		<span>Two</span>
+		<span>Three</span>
+		<span>Four</span>
+		<span>Five</span>
+</div> -->
+<div class="div container2" style="background:red;">
+	<ul>
+		<li data='1'><div></div><p>OneOne</p></li>
+	</ul>
+	<ul>
+		<li data='11'><div></div><p>One 1</p></li>
+		<li data='12'><div></div><p>Two 1</p></li>
+		<li data='13'><div></div><p>Three 1</p></li>
+		<li data='14'><div></div><p>Four 1</p></li>
+		<li data='15'><div></div><p>Five 1</p></li>
+		<li data='16' data-notlayout=true><div></div><p><a href="javascript:;">dont layout 1</a></p></li>
+	</ul>
+	<ul>
+		<li data='111'><div></div><p>One 2</p></li>
+	</ul>
+</div>
+<div class="div container3">
+	<div class="moveObj">拖我</div>
+</div>
+<div class="div container4">
+	<div class="moveObj">container4拖我</div>
+	<span style="color:white">我也可以拖哦</span>
+</div>
+<div class="div container5">
+	<div class="moveObj">
+		<div class="moveTitle" style="color:white">拖我</div>
+	</div>
+</div>
+<script>
+
+W.use('j/m_drag',function(Drag){
+	/*************布局****************/
+	// 1.左右两列布局
+	var layout1 = new Drag({
+		'container': '.container',
+		'animal': 200,
+		'getLayoutContainer': function($dragHandle){
+			if($dragHandle && $dragHandle.length > 0){
+				return $dragHandle.closest('ul');
+			}
+			else{
+				return $('.container ul')
+			}			
+		},
+		// 'getMoveHandle': function(){
+		// 	return $(this);
+		// },
+		'dragHandle': '.container li'
+	}).layout();
+	$('.container input').click(function(){
+		layout1.addLayout($('<ul>'));
+
+//		setTimeout(function(){
+//			layout1.removeLayout($('.container ul:last'));
+//		},2000);
+	});
+	//2.上下行布局
+	var layout2 = new Drag({
+		'container': '.container2',
+		'animal': 200,
+		'getLayoutContainer': function($dragHandle){
+			if($dragHandle && $dragHandle.length > 0){
+				return $dragHandle.closest('ul');
+			}
+			else{
+				return $('.container2 ul')
+			}			
+		},
+		'getMoveHandle': function(){
+			return $(this).parent();
+		},
+		'dragHandle': '.container2 li div'
+	}).layout();
+
+	setTimeout(function(){
+		//这里要外部控制添加顺序，Drag内容维持拖动元素索引
+		var tempDrag = $('.container2 li:first').clone().appendTo($('.container2 ul:first')).find('div');
+		
+		layout2.addDrag(tempDrag);
+
+		setTimeout(function(){
+			layout2.removeDrag(tempDrag);
+		},2000);
+	},1000);
+	//3.普通布局
+	new Drag({
+		'container': '.container6',
+		// 'getLayoutContainer': function($dragHandle){
+		// 	if($dragHandle && $dragHandle.length > 0){
+		// 		return $dragHandle.closest('ul');
+		// 	}
+		// 	else{
+		// 		return $('.container6')
+		// 	}			
+		// },
+		'dragHandle': '.container6 li'
+	}).layout();
+
+	/*************拖动****************/
+	// 1.拖动指定容器里的元素
+	new Drag({
+		'container': '.container3',
+		'dragHandle': '.container3 .moveObj'
+	}).drag();
+	//2.拖动指定容器及容器里的子元素
+	new Drag({
+		'dragHandle': '.container4'
+	}).drag();
+	new Drag({
+		'container': '.container4',
+		'dragHandle': '.container4 .moveObj'
+	}).drag();
+	//3.拖动指定容器里的子元素，并指定子元素的鼠标响应范围（或子元素）
+	new Drag({
+		'container': '.container5',
+		'getMoveHandle': function(){
+			return $(this).parent();
+		},
+		'dragHandle': '.container5 .moveTitle'
+	}).drag();
+});
+</script>
+<script>
+
+</script>
+</body>
+</html>

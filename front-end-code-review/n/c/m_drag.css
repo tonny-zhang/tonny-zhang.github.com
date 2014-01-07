@@ -1,0 +1,30 @@
+body{
+	position: relative;
+	zoom: 1;
+}
+.drag_mouseover{
+	cursor: move;
+}
+.drag_container{
+	position: relative;
+	*zoom: 1;
+}
+.drag_move{
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.drag_opacity{
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; /* ie8  */
+    filter:alpha(opacity=80);    /* ie5-7  */
+    -moz-opacity:0.8;    /* old mozilla browser like netscape  */
+    -khtml-opacity: 0.8;    /* for really really old safari */ 
+    opacity: 0.8;    /* css standard, currently it works in most modern browsers like firefox,  */
+}
+.drag_move.on{
+	z-index: 100;
+	-moz-user-select:none;
+}
+.drag_placeholder{
+	/*鼠标按下点位符样式*/
+}

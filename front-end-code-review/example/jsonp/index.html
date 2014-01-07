@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6" lang="zh-CN"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7" lang="zh-CN"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8" lang="zh-CN"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html> <!--<![endif]-->
+<head>
+	<meta charset="utf-8"/>
+	<title>天气网改版静态文件数据伪jsonp处理方案</title>
+	<script src="../../n/j/jsonp.js"></script>
+	<link href="../../n/c/1.css?20130715_1" media="all" rel="stylesheet" type="text/css"></link>
+</head>
+<body>
+<div class="container">基于数据文件为静态文件的伪jsonp处理方案</div>
+<div class="container" id="result"></div>
+<script>
+var result = document.getElementById('result');
+W.jsonp('./data/2.js',function(data){
+	result.innerHTML += 'from 2.js ' + (data && data.name)+'<br/>';
+});
+W.jsonp('./data/3.js',function(data){
+	result.innerHTML += 'from 3.js ' + (data && data.name)+'<br/>';
+});
+</script>
+</body>
+</html>

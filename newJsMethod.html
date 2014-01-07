@@ -1,0 +1,485 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--[if lt ie 7]> <html class="ie ie6" lang="zh-CN"> <![endif]-->
+<!--[if ie 7]>    <html class="ie ie7" lang="zh-CN"> <![endif]-->
+<!--[if ie 8]>    <html class="ie ie8" lang="zh-CN"> <![endif]-->
+<!--[if gt ie 8]><!-->  <html> <!--<![endif]-->
+ <head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<!--[if lt ie 7]> <title>IE 7 以下版本</title> <![endif]-->
+<!--[if ie 7]> <title>IE 7</title> <![endif]-->
+<!--[if ie 8]> <title>IE 8</title> <![endif]-->
+<!--[if gt ie 8]><title>IE 8 以上版本</title><![endif]-->
+		<meta name="Generator" content="EditPlus"/>
+		<meta name="Author" content=""/>
+		<meta name="Keywords" content=""/>
+		<meta name="Description" content=""/>
+		<style>
+			ul{
+				margin:0;
+				padding:0;
+			}
+			ul li{
+				cursor:pointer;
+				line-height:25px;
+			}
+			ul li span{
+				font-size:12px;
+				margin-left:10px;
+				color:#ccc;
+				cursor:default;
+			}
+			ul li pre{
+				margin:3px 0;
+				padding:3px;
+				border:1px solid #ccc;
+				background-color:#eee;
+				display:none;
+				cursor:text;
+			}
+		</style>
+	</head>
+
+	<body>
+	<h1>js1.6 和 1.8的新增的方法</h1>
+	<ul>
+		<li>forEach<span>遍历数组（并将每一个成员放入回调中执行）</span>
+<pre>
+array.forEach(callback[, thisObject]);
+
+参数
+
+callback( element/* 当前值 */, index /* 当前索引 */, array /* 数组本身 */ )
+回调函数
+
+thisObject
+可选项。指定callback中的上下文this
+
+
+兼容实现：
+
+if (!Array.prototype.forEach)
+{
+  Array.prototype.forEach = function(fun /*, thisp*/)
+  {
+    var len = this.length >>> 0;
+    if (typeof fun != "function")
+      throw new TypeError();
+
+    var thisp = arguments[1];
+    for (var i = 0; i < len; i++)
+    {
+      if (i in this)
+        fun.call(thisp, this[i], i, this);
+    }
+  };
+}
+</pre>
+		</li>
+		<li>
+			every
+			<span>返回一个布尔值，其结果是数组的每一个元素是否都符合指定的条件。</span>
+<pre>
+var allPassed = array.every( callback[, thisObject] );
+
+参数
+
+callback 
+用来确定条件的函数
+
+thisObject
+可选项。指定callback中的上下文this
+
+备注
+
+callback函数接受三个参数 callback( element/* 当前值 */, index /* 当前索引 */, array /* 数组本身 */ )
+
+	如果callback返回true，那么继续循环，callback将处理下一个数组成员，如果所有成员全部符合条件，那么every返回true
+	如果callback返回false 那说明其中一个数组成员不符合条件，终止循环，并且返回false
+
+兼容实现：
+
+if (!Array.prototype.every)
+{
+  Array.prototype.every = function(fun /*, thisp*/)
+  {
+    var len = this.length >>> 0;
+    if (typeof fun != "function")
+      throw new TypeError();
+
+    var thisp = arguments[1];
+    for (var i = 0; i < len; i++)
+    {
+      if (i in this &&
+          !fun.call(thisp, this[i], i, this))
+        return false;
+    }
+
+    return true;
+  };
+}
+</pre>
+		</li>
+		<li>filter<span>返回一个新创建的，符合指定条件的数组</span>
+<pre>
+var filteredArray = array.filter(callback[, thisObject]);
+
+参数
+
+callback
+用来确定过滤条件的函数
+
+thisObject
+可选项。指定callback中的上下文this
+
+备注
+
+filter方法会遍历所有数组成员
+
+callback函数接受三个参数 callback( element/* 当前值 */, index /* 当前索引 */, array /* 数组本身 */ )
+
+	如果callback返回true，那么当前循环的成员会被加入返回的新数组中
+	如果callback返回false 那么循环继续
+	最后返回所有符合条件的新数组
+
+
+兼容实现：
+
+if (!Array.prototype.filter)
+{
+  Array.prototype.filter = function(fun /*, thisp*/)
+  {
+    var len = this.length >>> 0;
+    if (typeof fun != "function")
+      throw new TypeError();
+
+    var res = [];
+    var thisp = arguments[1];
+    for (var i = 0; i < len; i++)
+    {
+      if (i in this)
+      {
+        var val = this[i]; // in case fun mutates this
+        if (fun.call(thisp, val, i, this))
+          res.push(val);
+      }
+    }
+
+    return res;
+  };
+}
+</pre>
+		</li>
+		<li>map<span>返回一个由指定函数修改的数组成员形成的新数组</span>
+<pre>
+var mappedArray = array.map(callback[, thisObject]);
+
+参数
+
+callback
+用来确定过滤条件的函数
+
+thisObject
+可选项。指定callback中的上下文this
+
+备注
+
+map方法遍历整个数组，将每个成员应用于所指定的函数，该函数的返回值被放进一个新数组中，遍历并且执行完成后，返回这个新数组
+
+兼容实现:
+
+if (!Array.prototype.map)
+{
+  Array.prototype.map = function(fun /*, thisp*/)
+  {
+    var len = this.length >>> 0;
+    if (typeof fun != "function")
+      throw new TypeError();
+
+    var res = new Array(len);
+    var thisp = arguments[1];
+    for (var i = 0; i < len; i++)
+    {
+      if (i in this)
+        res[i] = fun.call(thisp, this[i], i, this);
+    }
+
+    return res;
+  };
+}
+</pre>
+		</li>
+		<li>some<span>返回一个布尔值，指定数组中是否含有符合指定条件的成员</span>
+<pre>
+var someElementPassed = array.some(callback[, thisObject]);
+
+参数
+
+callback
+用来确定过滤条件的函数
+
+thisObject
+可选项。指定callback中的上下文this
+
+备注
+
+some方法类似every方法。区别在于，只要有一个符合条件的成员，那么some 返回true，如果一个都没有才返回false
+
+兼容实现
+
+if (!Array.prototype.some)
+{
+  Array.prototype.some = function(fun /*, thisp*/)
+  {
+    var i = 0,
+        len = this.length >>> 0;
+
+    if (typeof fun != "function")
+      throw new TypeError();
+
+    var thisp = arguments[1];
+    for (; i < len; i++)
+    {
+      if (i in this &&
+          fun.call(thisp, this[i], i, this))
+        return true;
+    }
+
+    return false;
+  };
+}
+
+例子:
+
+function isBigEnough(element, index, array) {
+  return (element >= 10);
+}
+var passed = [2, 5, 8, 1, 4].some(isBigEnough);
+// passed is false
+passed = [12, 5, 8, 1, 4].some(isBigEnough);
+// passed is true
+</pre>
+		</li>
+		<li>reduce (js 1.8)<span>提供了一种计算数组的方式(从左往右)</span>
+<pre>
+var result = array.reduce(callback[, initialValue]);
+
+参数
+
+callback ( previousValue /*前一个结果*/, currentValue /*当前值*/ , index /*当前索引*/, array /*整个数组*/ )
+用来确定过滤条件的函数
+
+initialValue
+第一次触发callback时的第一个参数
+
+备注
+
+reduce的工作方式如下
+
+var array = [0,1,2,3,4,5];
+
+第一种情况，没有传递initialValue
+
+1. 将array[0],array[1] 传入callback,记录下callback执行结果存入Result
+2. 将Result,array[2] 传入callback,记录下callback执行结果存入Result
+3. 将Result,array[3] 传入callback,记录下callback执行结果存入Result
+...
+
+一直到循环到数组结尾，返回结果Result
+
+
+第二种情况，传递了initialValue
+
+
+1. 将initialValue,array[0] 传入callback,记录下callback执行结果存入Result
+2. 将Result,array[1] 传入callback,记录下callback执行结果存入Result
+3. 将Result,array[2] 传入callback,记录下callback执行结果存入Result
+...
+
+一直到循环到数组结尾，返回结果Result
+
+兼容实现:
+
+if (!Array.prototype.reduce)
+{
+  Array.prototype.reduce = function(fun /*, initial*/)
+  {
+    var len = this.length >>> 0;
+    if (typeof fun != "function")
+      throw new TypeError();
+
+    // no value to return if no initial value and an empty array
+    if (len == 0 && arguments.length == 1)
+      throw new TypeError();
+
+    var i = 0;
+    if (arguments.length >= 2)
+    {
+      var rv = arguments[1];
+    }
+    else
+    {
+      do
+      {
+        if (i in this)
+        {
+          var rv = this[i++];
+          break;
+        }
+
+        // if array contains no values, no initial value to return
+        if (++i >= len)
+          throw new TypeError();
+      }
+      while (true);
+    }
+
+    for (; i < len; i++)
+    {
+      if (i in this)
+        rv = fun.call(null, rv, this[i], i, this);
+    }
+
+    return rv;
+  };
+}
+</pre>
+		</li>
+		<li>reduceRight (js 1.8)<span>和  reduce相反，它是从右往左</span>
+<pre>
+var result = array.reduce(callback[, initialValue]);
+
+参数
+
+callback ( previousValue /*前一个结果*/, currentValue /*当前值*/ , index /*当前索引*/, array /*整个数组*/ )
+用来确定过滤条件的函数
+
+initialValue
+第一次触发callback时的第一个参数
+
+备注
+
+reduce的工作方式如下
+
+var array = [0,1,2,3,4,5];
+
+第一种情况，没有传递initialValue
+
+1. 将array[5],array[4] 传入callback,记录下callback执行结果存入Result
+2. 将Result,array[3] 传入callback,记录下callback执行结果存入Result
+3. 将Result,array[2] 传入callback,记录下callback执行结果存入Result
+...
+
+一直到循环到数组结尾，返回结果Result
+
+
+第二种情况，传递了initialValue
+
+
+1. 将initialValue,array[5] 传入callback,记录下callback执行结果存入Result
+2. 将Result,array[4] 传入callback,记录下callback执行结果存入Result
+3. 将Result,array[3] 传入callback,记录下callback执行结果存入Result
+...
+
+一直到循环到数组开头，返回结果Result
+
+兼容实现:
+
+if (!Array.prototype.reduceRight)
+{
+  Array.prototype.reduceRight = function(fun /*, initial*/)
+  {
+    var len = this.length >>> 0;
+    if (typeof fun != "function")
+      throw new TypeError();
+
+    // no value to return if no initial value, empty array
+    if (len == 0 && arguments.length == 1)
+      throw new TypeError();
+
+    var i = len - 1;
+    if (arguments.length >= 2)
+    {
+      var rv = arguments[1];
+    }
+    else
+    {
+      do
+      {
+        if (i in this)
+        {
+          var rv = this[i--];
+          break;
+        }
+
+        // if array contains no values, no initial value to return
+        if (--i < 0)
+          throw new TypeError();
+      }
+      while (true);
+    }
+
+    for (; i >= 0; i--)
+    {
+      if (i in this)
+        rv = fun.call(null, rv, this[i], i, this);
+    }
+
+    return rv;
+  };
+}
+</pre>
+		</li>
+		<li>indexOf<span>从左往右搜索数组，返回第一次出现指定的值的索引位置,如果未找到指定的值,则返回-1</span>
+<pre>
+var index = array.indexOf(searchElement[, fromIndex]);
+
+参数
+
+searchElement 
+指定搜索的元素（或值）
+
+fromIndex
+可选项，指定搜索的起点索引
+
+备注
+
+fromIndex 指定从哪里开始反向搜索，默认值是数组的长度，也就是说，默认情况下整个数组都会被搜索一次。如果formIndex大于数组的长度，那么整个数组依然被搜索。如果是formIndex负数，那么将使用formIndex到数组结尾的偏移量做为formIndex（也就是formIndex + arry.length）.注意，虽然formIndex是负数 但是数组还是从后往前搜索的。如果搜索结果小于0，那么说明数组中没有搜索到结果，并且返回-1
+
+</pre>
+		</li>
+		<li>lastIndexOf<span>从右向左搜索数组，返回第一次出现指定的值的索引位置,如果未找到指定的值,则返回-1</span>
+<pre>
+var index = array.lastIndexOf(searchElement[, fromIndex]);
+
+参数
+
+searchElement 
+指定搜索的元素（或值）
+
+fromIndex
+可选项，指定搜索的起点索引
+
+
+备注
+
+fromIndex 指定从哪里开始反向搜索，默认值是数组的长度，也就是说，默认情况下整个数组都会被搜索一次。如果formIndex大于数组的长度，那么整个数组依然被搜索。如果是formIndex负数，那么将使用formIndex到数组结尾的偏移量做为formIndex（也就是formIndex + arry.length）.注意，虽然formIndex是负数 但是数组还是从后往前搜索的。如果搜索结果小于0，那么说明数组中没有搜索到结果，并且返回-1
+
+注意。indexOf 和 lastIndexOf 都使用严格相等 (也就是===).
+
+</pre>
+		</li>
+	</ul>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript">
+	<!--
+		$(function(){
+			$('ul>li').mouseenter(function(){
+				$(this).find('pre').stop().fadeIn();
+			}).mouseleave(function(){
+				$(this).find('pre').stop().fadeOut();
+			});
+		});
+	//-->
+	</script>
+	</body>
+</html>

@@ -1,0 +1,19 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script type="text/javascript" src="../n/j/core.js"></script>
+</head>
+<body>
+	<script>
+	W.use('jquery',function(){
+		W.use('../n/j/jquery.lazyload.js',function(){
+			$('img.lazy').lazyload();
+		});
+	});
+	
+	</script>
+<img class="lazy" src="img/example.jpg" data-original="http://i.weather.com.cn/images/cn/index/2013/07/03/DAE7F625EB4551EAB47F41C5A9DF6567.jpg"/>
+</body>
+</html>

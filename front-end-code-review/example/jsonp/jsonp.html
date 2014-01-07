@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6" lang="zh-CN"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7" lang="zh-CN"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8" lang="zh-CN"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>天气网改版静态文件数据伪jsonp处理方案</title>
+<script src="../../n/j/core.js"></script>
+<script>
+W.css('../../n/c/1.css');
+</script>
+</head>
+<body>
+<script>
+window.onload = function(){
+	W.use('./data/1.js',function(data){
+		var result = document.getElementById('result');
+		result.innerHTML = '我是从静态文件里来的数据，我的名字是：'+data.name;
+		setTimeout(function(){
+			W(function(){
+				result.innerHTML += '<br/>' + '在W(function(){/*这里你已经可以使用jquery了*/})<br/>'+$.toString();
+			});
+		});
+	});
+}
+
+</script>
+<div class="container">基于数据文件为静态文件的伪jsonp处理方案</div>
+<div class="container" id="result"></div>
+</body>
+</html>

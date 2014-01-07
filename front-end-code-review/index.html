@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6" lang="zh-CN"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7" lang="zh-CN"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8" lang="zh-CN"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>天气网改版测试用例</title>
+<style>
+.doc{}
+.doc pre{
+	margin-left: -150px;
+}
+.doc p{width: 70%; text-indent: 40px;line-height: 25px;}
+</style>
+
+</head>
+<body>
+<div class="doc">
+	<h2>整体基于<a href="https://github.com/seajs/seajs/issues/266" target="_blank">seajs</a>异步加载js,运行时同步写入css</h2>
+	<p>异步加载JS可以不堵塞页面渲染，提高用户体验。css要求第一时间加载，这里采用运行时用document.writeln同步写入的方案（第一时间加载css），即在&lt;head&gt;里调用W.css以加载页面核心css,基于seajs开发的模块依赖css可延用seajs的处理方式，异步写入css。<br/><a href="./example/1.html" target="_blank">示例</a> <br/>
+	<a href="http://tonny-zhang.github.io/front-end-code-review/example/weather-index/" target="_blank">天气网首页新(正常加载css)</a>
+	<a href="http://tonny-zhang.github.io/front-end-code-review/example/weather-index/index-css.html" target="_blank">天气网首页新(js加载css)</a>
+  	<a href="http://tonny-zhang.github.io/front-end-code-review/example/weather-index/old-index.html" target="_blank">天气网首页旧</a><br/>
+  	<a href="http://tonny-zhang.github.io/front-end-code-review/example/weather-index/old-index-ad.html" target="_blank">天气网首页旧(有广告)</a>
+  	<a href="http://tonny-zhang.github.io/front-end-code-review/example/weather-index/index-ad.html" target="_blank">天气网首页新(有广告)</a>
+  </p>
+	<h3>常用接口</h3>
+	<ul>
+		<li>W(类似于$，但当jquery没有加载时用内部机制先缓存，jquery加载后再调用$(fn)批量回调)
+			<pre>
+			W(function(){
+				showResult('before delay');
+			});
+			</pre>
+		</li>
+		<li>W.css(document.writeln写入css)
+			<pre>
+			W.css('./n/c/1.css');
+			W.css('./n/c/2.css',{'media':'screen'});
+				||
+				||
+				\/
+			&lt;link href="http://github.zk.com/front-end-code-review/n/c/1.css?20130701" media="all" rel="stylesheet" type="text/css">
+			&lt;link href="http://github.zk.com/front-end-code-review/n/c/2.css?20130701" media="screen" rel="stylesheet" type="text/css">
+			</pre>
+		</li>
+		<li>W.use(异步引入脚本,基于<a href="https://github.com/seajs/seajs/issues/260" target="_blank">seajs.use</a>)
+			<pre>
+			W.use('n/j/p_1'); => 引入 "n/j/p_1.js"
+			W.use('n/j/p_1',function(module){
+				// 可用module
+			}); => 引入 "n/j/p_1.js",并回调
+
+			W.use(['n/j/p_1','n/j/p_2'],function(module){
+				// 可用module
+			}); => 引入 "n/j/p_1.js"和"n/j/p_2.js",并回调
+			</pre>
+		</li>
+		<li>W.util(全局的工具对象,可在此命名空间上进行扩展)，现已经实现W.util.log
+			<pre>
+			W.util.log(1,2,3,4);
+			</pre>
+		</li>
+	</ul>
+</div>
+</body>
+</html>

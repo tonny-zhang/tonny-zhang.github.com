@@ -1,0 +1,23 @@
+<html>
+<head>
+<style>
+body{padding:0;margin: 0;background-color:transparent}
+</style>
+<script type="text/javascript" src="http://www.weather.com.cn/m2/j/shibo/caoyu-min.js"></script>
+<script type="text/javascript" src="http://ad.321tq.com/ex2?posid=i"></script>
+</head>
+<body>
+<script>
+if(parent != this){
+	var match = /#(.+)/.exec(location.href);
+	if(match){
+		var fnName = match[1];
+		var code = parent[fnName] && parent[fnName]();
+		if(code){
+			document.write('<script>'+code+'</'+'script>');
+		}
+	}
+}
+</script>
+</body>
+</html>

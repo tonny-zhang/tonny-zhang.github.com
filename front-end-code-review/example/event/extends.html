@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6" lang="zh-CN"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7" lang="zh-CN"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8" lang="zh-CN"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>1天气网改版测试用例</title>
+<script src="../../n/j/core.js"></script> 
+<!--<script>
+W.css('../n/c/1.css');
+W.css('../n/c/2.css',{'media':'screen'});
+</script>-->
+</head>
+<body>
+<script>
+W.use(['j/m_event','j/global'],function(Event){
+	var Person = W.util.inherits(Event,{
+		'init': function(name,age){
+			this.name = name;
+			this.age = age;
+			this.on('say',function(d){
+				console.log('I know you say: ',d);
+			});
+		},
+		'prototype': {
+			'say': function(content){
+				content = this.age+','+this.name + ' say "'+ content + '"';
+				this.emit('say',content);
+				console.log(content);
+			}
+		}
+	});
+	// console.log(Person);
+	var person = new Person('tonny',100);
+	// console.log(person,person.test);
+	person.say('hello');
+});
+</script>
+<script>
+
+</script>
+<div class="container">after async load,I'm in HMLT</div>
+</body>
+</html>

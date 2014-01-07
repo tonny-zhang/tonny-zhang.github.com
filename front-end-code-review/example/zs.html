@@ -1,0 +1,447 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<base href="http://dev.weather.com.cn"/>
+<meta charset="utf-8" />
+<title>中国天气网-专业天气预报、气象服务门户</title>
+<meta  name="keywords" content="天气,天气预报,北京天气,天气在线,气候,气象" />
+<meta name="description" content="中国天气网为您提供实时全国天气气象信息,及时发布天气预报、灾害预警、气象云图、旅游天气、台风、暴雨雪等气象信息，为我国的生产生活提供全面精确的气象服务" />
+<meta name="msapplication-task" content="name=天气资讯;action-uri=http://www.weather.com.cn/news/index.shtml;icon-uri=http://www.weather.com.cn/favicon.ico" />
+<meta name="msapplication-task" content="name=生活天气;action-uri=http://www.weather.com.cn/life/index.shtml;icon-uri=http://www.weather.com.cn/favicon.ico" />
+<meta name="msapplication-task" content="name=气象科普;action-uri=http://www.weather.com.cn/science/index.shtml;icon-uri=http://www.weather.com.cn/favicon.ico" />
+<meta name="msapplication-task" content="name=灾害预警;action-uri=http://www.weather.com.cn/alarm/index.shtml;icon-uri=http://www.weather.com.cn/favicon.ico" />
+<meta name="msapplication-task" content="name=旅游天气;action-uri=http://www.weather.com.cn/trip/index.shtml;icon-uri=http://www.weather.com.cn/favicon.ico" />
+<script src="../../n/j/core.js"></script>
+<script>
+W.css("./n/c/common.css","./n/c/zs.css");
+</script>
+<link rel="stylesheet" href="./n/c/common.css" />
+<link rel="stylesheet" href="./n/c/zs.css" />
+<script type="text/javascript" language="JavaScript" src="./n/j/jquery-1.8.2.js"></script>
+<script type="text/javascript" language="JavaScript" src="./n/j/jquery.easing.1.3.js"></script>
+<script type="text/javascript" language="JavaScript" src="./n/j/zsLevel.js"></script>
+<script type="text/javascript" language="JavaScript" src="./n/j/color.js"></script>
+<script type="text/javascript" language="JavaScript" src="./n/j/raphael-min.js"></script>
+<script type="text/javascript" language="JavaScript" src="./n/j/common.js"></script>
+<script type="text/javascript" language="JavaScript" src="./n/j/zs.js"></script>
+<!--<script type="text/javascript" language="JavaScript" src="./n/j/zsGetData.js"></script> -->
+<script type="text/javascript" language="JavaScript" src="./n/j/line.js"></script>
+<!--<script type="text/javascript" language="JavaScript" src="./n/j/pie.js"></script> -->
+<script type="text/javascript" language="JavaScript" src="./n/j/init.js"></script>
+<script>
+
+	/* var aaa='{"it":{"it0":"20130491100","it1":"紫外线","it2":"uv","it3":[{"it31":"强","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304090000","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304090300","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304090600","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304090900","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304091200","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304091500","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304091800","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304092100","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304100000","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304100300","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304100600","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304100900","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304101200","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304101500","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304101800","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304102100","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304110000","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304110300","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304110600","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304110900","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304111200","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304111500","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304111800","it34":"1"},{"it31":"中等","it32":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。","it33":"201304112100","it34":"1"}],"it4":[{"it41":"弱"},{"it41":"较弱"},{"it41":"中等"},{"it41":"强"},{"it41":"极强"}]}}'; */
+	
+	<!-- 模块6: 3小时指数预报曲线 -->
+	var aaa='{"it":{"it0":"201306290800","it1":"旅游指数","it2":"tr","it3":[{"it31":"适宜","it32":"天气较好，可尽情地享受大自然的风光。","it33":"2013-06-29 08:00:00.0","it34":"2"},{"it31":"适宜","it32":"天气较好，可尽情地享受大自然的风光。","it33":"2013-06-29 11:00:00.0","it34":"2"},{"it31":"适宜","it32":"稍感觉有些热，但仍是个好天气。","it33":"2013-06-29 14:00:00.0","it34":"2"},{"it31":"适宜","it32":"稍感觉有些热，但仍是个好天气。","it33":"2013-06-29 17:00:00.0","it34":"2"},{"it31":"适宜","it32":"天气较好，可尽情地享受大自然的风光。","it33":"2013-06-29 20:00:00.0","it34":"2"},{"it31":"适宜","it32":"天气较好，可尽情地享受大自然的风光。","it33":"2013-06-29 23:00:00.0","it34":"2"},{"it31":"适宜","it32":"天气较好，可尽情地享受大自然的风光。","it33":"2013-06-30 02:00:00.0","it34":"2"},{"it31":"适宜","it32":"天气较好，可尽情地享受大自然的风光。","it33":"2013-06-30 05:00:00.0","it34":"2"},{"it31":"适宜","it32":"天气较好，可尽情地享受大自然的风光。","it33":"2013-06-30 08:00:00.0","it34":"2"},{"it31":"适宜","it32":"天气较好，可尽情地享受大自然的风光。","it33":"2013-06-30 11:00:00.0","it34":"2"},{"it31":"适宜","it32":"稍感觉有些热，但仍是个好天气。","it33":"2013-06-30 14:00:00.0","it34":"2"},{"it31":"适宜","it32":"稍感觉有些热，但仍是个好天气。","it33":"2013-06-30 17:00:00.0","it34":"2"},{"it31":"适宜","it32":"天气较好，可尽情地享受大自然的风光。","it33":"2013-06-30 20:00:00.0","it34":"2"},{"it31":"适宜","it32":"天气较好，可尽情地享受大自然的风光。","it33":"2013-06-30 23:00:00.0","it34":"2"},{"it31":"适宜","it32":"天气较好，可尽情地享受大自然的风光。","it33":"2013-07-01 02:00:00.0","it34":"2"},{"it31":"适宜","it32":"天气较好，可尽情地享受大自然的风光。","it33":"2013-07-01 05:00:00.0","it34":"2"},{"it31":"较不宜","it32":"有强降雨，建议您最好还是在室内活动。","it33":"2013-07-01 08:00:00.0","it34":"5"},{"it31":"较不宜","it32":"有强降雨，建议您最好还是在室内活动。","it33":"2013-07-01 11:00:00.0","it34":"5"},{"it31":"适宜","it32":"天气较好，可尽情地享受大自然的风光。","it33":"2013-07-01 14:00:00.0","it34":"2"},{"it31":"较不宜","it32":"有强降雨，建议您最好还是在室内活动。","it33":"2013-07-01 17:00:00.0","it34":"5"},{"it31":"较不宜","it32":"有强降雨，建议您最好还是在室内活动。","it33":"2013-07-01 20:00:00.0","it34":"5"},{"it31":"较不宜","it32":"有强降雨，建议您最好还是在室内活动。","it33":"2013-07-01 23:00:00.0","it34":"5"},{"it31":"较不宜","it32":"有强降雨，建议您最好还是在室内活动。","it33":"2013-07-02 02:00:00.0","it34":"5"},{"it31":"较不宜","it32":"有强降雨，建议您最好还是在室内活动。","it33":"2013-07-02 05:00:00.0","it34":"5"},{"it31":"较不宜","it32":"有强降雨，建议您最好还是在室内活动。","it33":"2013-07-02 08:00:00.0","it34":"5"}],"it4":[{"it41":"适宜"},{"it41":"较适宜"},{"it41":"一般"},{"it41":"较不宜"}]}}';
+	
+	
+</script>
+<!--[if lt IE 7]>
+		<script type="text/javascript" src="./n/j/DD_belatedPNG.js"></script>
+		 <script>DD_belatedPNG.fix("nav h1,#summary,#share,#rMain h2 b,#month_avg aside table tr td b,#hotNew figure#video i,#expert .tabs ul li,#encyclopedias figure i,#encyclopedias #rBlock dl dt,#bbs ul li");</script>
+		<![endif]-->
+<!--[if lt IE 9]>
+		<script>'section header nav aside article footer figure figcaption'.replace(/\w+/g, function (n) { document.createElement(n) })</script>
+		<![endif]-->
+</head>
+<body style="background-image:url(./n/i/ultraviolet_bg.png);">
+<div class="content">
+    		<nav>
+			<h1><a href="#" title="中国天气网" alt="中国天气网">中国天气网</a></h1>
+			<ul>
+					<li><a href="#" target="_blank">首页</a>|</li>
+					<li><a href="#" target="_blank">灾难预警</a>|</li>
+					<li><a href="#" target="_blank">天气预报</a>|</li>
+					<li><a href="#" target="_blank">生活旅游</a><i></i>
+					<div class="dropList"><i></i><span><a href="#" target="_blank">中国旅游天气网</a><a href="#" target="_blank">生活天气</a><a href="#" target="_blank">旅游天气</a></span></div>
+					|</li>
+					<li><a href="#" target="_blank">服务产品</a>|</li>
+					<li><a href="#" target="_blank">天气应用</a><i></i>
+					<div class="dropList"><i></i><span><a href="#" target="_blank">中国天气通</a><a href="#" target="_blank">Mobile版</a><a href="#" target="_blank">桌面版</a><a href="#" target="_blank">气象商城</a></span></div>
+					|</li>
+					<li><a href="#" target="_blank">互动天气</a><i></i>
+					<div class="dropList"><i></i><span><a href="#" target="_blank">天气视频</a><a href="#" target="_blank">天气社区</a><a href="#" target="_blank">天气百科</a><a href="#" target="_blank">问卷调查</a></span></div>
+					|</li>
+					<li><a href="#" target="_blank">知识天气</a></li>
+			</ul>
+		</nav>
+  <div id="ad_banner"> <span id="ad1"><img src="./n/i/warn_test/img_01.jpg" /></span> <span id="ad2"><img src="./n/i/warn_test/img_02.jpg" /></span> <span id="ad3"><img src="./n/i/warn_test/img_03.jpg" /></span> </div>
+  <div id="zs_content">
+    <section id="container">
+      <h1>
+       旅游指数
+            <a href="http://www.weather.com.cn/weather/101230609.shtml" target="_blank">返回城市天气页>></a></h1>
+      <div id="summary">
+        <!--<h2>三亚</h2><h3>海南&nbsp;&nbsp;中国</h3>-->
+        
+      <!-- 模块1：头部——地区信息 -->
+      <!--<h2>三亚</h2><h3>海南&nbsp;&nbsp;中国</h3>-->
+            	<h2>云霄</h2><h3>福建&nbsp;&nbsp;中国</h3>
+              
+      </div>
+      
+      <!-- 模块3：一天及相关指数——头部指数适宜度及建议信息 -->
+                  	            	            	            	      <p><b>天气网建议:</b>
+      <!--<a href="#" target="_blank">紫外线</a>辐射强，建议涂擦<a href="#" target="_blank">SPF</a>20左右、PA++的防晒护肤品。避免在10点至14点暴露于日光下。<a target="_blank" href="#" class="more">更多&gt;&gt;</a>-->
+      	天气较好，同时有微风相伴，但温度较高，天气热，请尽量避免高温时段外出，若外出请注意防暑降温和防晒。
+      </p>
+      <span id="icon"><img src="./n/i/tr-icon.jpg"></span> <span id="level">
+      <!--强-->
+      	一般
+      </span> <span id="info">
+      	            	            	            
+            
+      <!-- 模块2：头部——实时信息 -->
+            <!--<b>温度：23摄氏度</b><b>天气：晴</b><b>风速：2级</b>-->
+      <b>温度：29摄氏度</b><b>风向：
+              	    		东南风
+    	      </b><b>风速：3级</b><b>相对湿度：79%</b>
+      </span> <span id="time">
+      
+      <!--发布时间：2012-03-24 10:54:10-->  
+     	 发布时间：
+ 		 		2013年06月29日&nbsp;19:10
+            
+      </span> <!--<span id="more">订阅</span>--> <span id="share">分享：</span> <!--<span class="land">您好，李昶|<a target="_blank" href="#">我的气象台</a><a target="_blank" href="#" class="quit">退出</a></span>-->
+      <div class="clear"></div>
+    </section>
+  </div>
+  <section id="main">
+    <div id="lMain">
+      <div id="forecast">
+        <div id="tabs">
+          <ul>
+            <li class="on">指数预报</li>
+            <li>未来6天指数</li>
+            <!--<li class="last">历史指数查询</li>-->
+          </ul>
+          <span class="time">更新时间：06-29 19:10</span> </div>
+        <section class="mask">
+          <div class="items" style="display:block;">
+            <div class="time">
+              <h5>时间</h5>
+              <div class="scroll">
+                <ul>
+                </ul>
+              </div>
+              <span class="lBtn"></span> <span class="rBtn"></span> </div>
+            <div class="sp">
+              <h5>指数色谱</h5>
+              <ul>
+              </ul>
+            </div>
+            <div id="svgArea"></div>
+            <div id="labelText"><span></span><b></b></div>
+          </div>
+          <div class="items" style="display:none;">
+            <section id="wllt">
+            	<ul>
+            <!-- 模块5：六天指数信息 -->
+            <!--<ul>
+						<li><p>明天</p><p class="detail"><b>最弱</b>安全&nbsp;&nbsp;可以不采取措施</p></li>
+						<li><p>后天</p><P class="detail"><b>弱</b>正常&nbsp;&nbsp;外出带防护帽或太阳镜</p></li>
+						<li><p>9月29日</p><p class="detail"><b>最弱</b>安全&nbsp;&nbsp;可以不采取措施</p></li>
+						<li><p>9月30日</p><p class="detail"><b>强</b>安全&nbsp;&nbsp;可以不采取措施</p></li>
+						<li><p>10月1日</p><p class="detail"><b>很强</b>安全&nbsp;&nbsp;可以不采取措施</p></li>
+						<li><p>10月2日</p><p class="detail"><b>中等</b>安全&nbsp;&nbsp;可以不采取措施</p></li>
+						</ul>-->
+            
+                          	<li><p>
+              	<!--明天 -->
+              	              		今天
+              	              	</p><p class="detail"><b>一般</b>天气热，外出请注意防暑降温和防晒。</p></li>
+						
+			              	<li><p>
+              	<!--明天 -->
+              	              		明天
+              	              	</p><p class="detail"><b>一般</b>天气较热，有较强降雨不便出行。</p></li>
+						
+			              	<li><p>
+              	<!--明天 -->
+              	              		后天
+              	              	</p><p class="detail"><b>适宜</b>有降水，稍热，出游请注意携带雨具。</p></li>
+						
+			              	<li><p>
+              	<!--明天 -->
+              	              		07月02日
+              	              	</p><p class="detail"><b>较适宜</b>天气较热，外出时要注意防暑防晒哦！</p></li>
+						
+			              	<li><p>
+              	<!--明天 -->
+              	              		07月03日
+              	              	</p><p class="detail"><b>较适宜</b>天气较热，外出时要注意防暑防晒哦！</p></li>
+						
+			              	<li><p>
+              	<!--明天 -->
+              	              		07月04日
+              	              	</p><p class="detail"><b>适宜</b>温度稍高，但有风相伴，仍属好天气。</p></li>
+						
+						
+            	</ul>
+            </section>
+          </div>
+          <div class="items" style="display:none">
+            <div class="selLine"><span>请选择日期</span> <span id="month"><b></b><span class="Items"></span><i></i></span> <span id="day"><b></b><span class="Items"></span><i></i></span> <span id="selBtn">查询</span> </div>
+            <div class="pieArea">
+              <div id="pie"></div>
+              <dl>
+                <dt><b class="percentage"></b>可能性<br/>
+                  <b class="zsName"></b>为<b class="level"></b></dt>
+                <dd></dd>
+              </dl>
+            </div>
+          </div>
+        </section>
+        
+      </div>
+      
+      <div class="block">
+				<figure><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="/n/i/warn_test/img_05.jpg"></a><figcaption><a target="_blank" href="#">震撼壮美的“超级细胞”风暴2</a><p>1日中午前后，北京“憋”了几天的雨终于爆发，来势汹涌...</p></figcaption></figure>
+				<figure><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="/n/i/warn_test/img_06.jpg"></a><figcaption><a target="_blank" href="#">震撼壮美的“超级细胞”风暴2</a><p>1日中午前后，北京“憋”了几天的雨终于爆发，来势汹涌...</p></figcaption></figure>
+			</div>
+      <div id="aboutZS">
+        <h2>相关指数</h2>
+        <div class="zs">
+          <ul>
+            
+      <!-- 模块4：一天的相关指数 -->
+                  	      		<li>
+              <section class="mask">
+                <section class="area">
+                  <section class="detail co">
+                    <aside><b>很不舒适</b>烈日炎炎，很热。</aside>
+                    <a target="_blank" href="#"></a></section>
+                  <section class="imgArea"><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="./n/i/img01.jpg"></a></section>
+                </section>
+              </section>
+                  <h3><a target="_blank" href="#">
+                  <!--过敏指数 -->
+                   舒适度指数
+                                    </a></h3>
+            </li>
+       	               	      		<li>
+              <section class="mask">
+                <section class="area">
+                  <section class="detail ct">
+                    <aside><b>炎热</b>建议穿短衫、短裤等清凉夏季服装。</aside>
+                    <a target="_blank" href="#"></a></section>
+                  <section class="imgArea"><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="./n/i/img01.jpg"></a></section>
+                </section>
+              </section>
+                  <h3><a target="_blank" href="#">
+                  <!--过敏指数 -->
+                   穿衣指数
+                                    </a></h3>
+            </li>
+       	               	      		<li>
+              <section class="mask">
+                <section class="area">
+                  <section class="detail fs">
+                    <aside><b>中等</b>适合涂擦SPF大于15，PA+护肤品。</aside>
+                    <a target="_blank" href="#"></a></section>
+                  <section class="imgArea"><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="./n/i/img01.jpg"></a></section>
+                </section>
+              </section>
+                  <h3><a target="_blank" href="#">
+                  <!--过敏指数 -->
+                   防晒指数
+                                    </a></h3>
+            </li>
+       	               	             	      		<li>
+              <section class="mask">
+                <section class="area">
+                  <section class="detail uv">
+                    <aside><b>中等</b>涂擦SPF大于15、PA+防晒护肤品。</aside>
+                    <a target="_blank" href="#"></a></section>
+                  <section class="imgArea"><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="./n/i/img01.jpg"></a></section>
+                </section>
+              </section>
+                  <h3><a target="_blank" href="#">
+                  <!--过敏指数 -->
+                   紫外线指数
+                                    </a></h3>
+            </li>
+       	               	      		<li>
+              <section class="mask">
+                <section class="area">
+                  <section class="detail ys">
+                    <aside><b>不带伞</b>天气较好，不用带雨伞。</aside>
+                    <a target="_blank" href="#"></a></section>
+                  <section class="imgArea"><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="./n/i/img01.jpg"></a></section>
+                </section>
+              </section>
+                  <h3><a target="_blank" href="#">
+                  <!--过敏指数 -->
+                   雨伞指数
+                                    </a></h3>
+            </li>
+       	                    
+           <!-- 
+              <section class="mask">
+                <section class="area">
+                  <section class="detail ag">
+                    <aside><b>较易发</b>推荐您进行室内运动。</aside>
+                    <a target="_blank" href="#"></a></section>
+                  <section class="imgArea"><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="./n/i/img01.jpg"></a></section>
+                </section>
+              </section>
+              <h3><a target="_blank" href="#">过敏指数</a></h3>
+              <span class="xsm"></span> </li>
+            <li>
+              <section class="mask">
+                <section class="area">
+                  <section class="detail yd">
+                    <aside><b>少发</b>各项气象条件适宜，无明显降温过程</aside>
+                    <a target="_blank" href="#"></a></section>
+                  <section class="imgArea"><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="./n/i/img02.jpg"></a></section>
+                </section>
+              </section>
+              <h3><a target="_blank" href="#">运动指数</a></h3>
+            </li>
+            <li>
+              <section class="mask">
+                <section class="area">
+                  <section class="detail xc">
+                    <aside><b>最弱</b>属弱紫外线辐射天气，无需特别防</aside>
+                    <a target="_blank" href="#"></a></section>
+                  <section class="imgArea"><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="./n/i/img03.jpg"></a></section>
+                </section>
+              </section>
+              <h3><a target="_blank" href="#">洗车指数</a></h3>
+            </li>
+            <li>
+              <section class="mask">
+                <section class="area">
+                  <section class="detail pp">
+                    <aside><b>较不宜</b>天气较好，但考虑天气寒冷，推荐您进行室内运动</aside>
+                    <a target="_blank" href="#"></a></section>
+                  <section class="imgArea"><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="./n/i/img04.jpg"></a></section>
+                </section>
+              </section>
+              <h3><a target="_blank" href="#">化妆指数</a></h3>
+            </li>
+            <li>
+              <section class="mask">
+                <section class="area">
+                  <section class="detail gm">
+                    <aside><b>中</b>气象条件对空气污染物稀释</aside>
+                    <a target="_blank" href="#"></a></section>
+                  <section class="imgArea"><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="./n/i/img05.jpg"></a></section>
+                </section>
+              </section>
+              <h3><a target="_blank" href="#">感冒指数</a></h3>
+            </li>
+            <li>
+              <section class="mask">
+                <section class="area">
+                  <section class="detail uv">
+                    <aside><b>不宜</b>不宜洗车，未来24小时内有雨</aside>
+                    <a target="_blank" href="#"></a></section>
+                  <section class="imgArea"><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="./n/i/img06.jpg"></a></section>
+                </section>
+              </section>
+              <h3><a target="_blank" href="#">紫外线指数</a></h3>
+            </li>
+            <li>
+              <section class="mask">
+                <section class="area">
+                  <section class="detail tr">
+                    <aside><b>较易发</b>推荐您进行室内运动。</aside>
+                    <a target="_blank" href="#"></a></section>
+                  <section class="imgArea"><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="./n/i/img07.jpg"></a></section>
+                </section>
+              </section>
+              <h3><a target="_blank" href="#">旅游指数</a></h3>
+            </li>
+            <li>
+              <section class="mask">
+                <section class="area">
+                  <section class="detail pl">
+                    <aside><b>冷</b>天气冷，建议着棉服、羽绒服、皮</aside>
+                    <a target="_blank" href="#"></a></section>
+                  <section class="imgArea"><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="./n/i/img08.jpg"></a></section>
+                </section>
+              </section>
+              <h3><a target="_blank" href="#">空气污染扩散指数</a></h3>
+            </li>
+            <li>
+              <section class="mask">
+                <section class="area">
+                  <section class="detail ct">
+                    <aside><b>保湿</b>皮肤易缺水，用润唇膏后再抹口红。</aside>
+                    <a target="_blank" href="#"></a></section>
+                  <section class="imgArea"><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="./n/i/img09.jpg"></a></section>
+                </section>
+              </section>
+              <h3><a target="_blank" href="#">穿衣指数</a></h3>
+            </li>          
+            -->
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <aside id="rMain">
+     <h2 id="Statistics"><b>90%</b>用户访问了旅游指数</h2>
+<div id="recommend">
+				<p><b>60%</b>天气网用户定制了紫外线指数</p><p>注册天气网用户可定时收取天气信息</p>
+				<span><a href="#" target="_blank" class="regiter">注册</a><a href="#" target="_blank" class="subscribe">订阅</a></span>
+			</div>
+      <div class="ad"><img src="/n/i/test/index_15.jpg"></div>
+      <div id="hotNew">
+				<h3>热点</h3>
+				<figure id="video"><a href="#" target="_blank" title="震撼壮美的“超级细胞”风暴" alt="震撼壮美的“超级细胞”风暴"><img src="/n/i/warn_test/img_11.jpg" title="震撼壮美的“超级细胞”风暴" alt="震撼壮美的“超级细胞”风暴"><i></i></a><figcaption><a href="#" target="_blank">震撼壮美的“超级细胞”风暴2</a></figcaption></figure>
+				<figure><a alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" target="_blank" href="#"><img alt="震撼壮美的“超级细胞”风暴" title="震撼壮美的“超级细胞”风暴" src="/n/i/city_test/img_07.jpg" style="width:300px;height:135px;"></a><figcaption><a target="_blank" href="#">震撼壮美的“超级细胞”</a></figcaption></figure>
+			</div>
+      <div id="keywords">
+				<h3>防晒关键词</h3>
+				<ul>
+					<li><a target="_blank" href="#"  style="width:136px;">解读SPF防晒系数</a><a target="_blank" href="#"  style="width:158px;">日晒会造成光老化</a></li>
+					<li><a target="_blank" href="#"  style="width:110px;"> 防晒防什么</a><a target="_blank" href="#"  style="width:184px;">最易受紫外线伤害的人</a></li>
+					<li><a target="_blank" href="#"  style="width:160px;">紫外线对皮肤的影响</a><a target="_blank" href="#"  style="width:134px;">防晒几项必要措施</a></li>
+					<li><a target="_blank" href="#" style="width:296px;">3个重要防晒时刻 各种肤色MM的防晒要诀</a></li>
+				</ul>
+			</div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </aside>
+    <div class="clear"></div>
+  </section>
+  <div id="linksbar">
+			<a href="http://www.weather.com.cn/wzfw/gywm/index.shtml">关于我们</a>|<a target="_blank" href="http://marketing.weather.com.cn/">营销中心</a>|<a target="_blank" href="http://ad.weather.com.cn/">广告服务</a>|<a href="http://www.weather.com.cn/wzfw/lxwm/index.shtml">联系我们</a>|<a href="http://www.weather.com.cn/wzfw/ryzp/index.shtml">人员招聘</a>|<a href="http://www.weather.com.cn/wzfw/wzls/index.shtml">网站律师</a>|<a href="http://www.weather.com.cn/wzfw/kfzx/index.shtml">客服中心</a>|<a href="http://club.weather.com.cn/member.php?mod=reuser.php">会员注册</a>|<a href="http://3g.weather.com.cn" target="_blank">3G版</a>|<a href="http://www.weather.com.cn/wzfw/wapb/index.shtml">WAP版</a>|<a href="http://www.weather.com.cn/wzfw/sybz/index.shtml">使用帮助</a>|<a href="http://www.weather.com.cn/wzfw/wzdt/index.shtml">网站地图</a>|<a href="http://www.weather.com.cn/wzfw/bqsm/index.shtml">版权声明</a>
+		</div>
+		
+		
+		<footer>
+			<p>客户服务热线：<span>400-6000-121</span>客服邮箱：<span>service@weather.com.cn</span>广告服务：<span>010-58993799</span></p>
+			<p>Copyright&copy;中国气象局公共气象服务中心 All Rights Reserved (2008-2012) 版权所有 复制必究</p>
+			<p>制作维护：中国气象局公共气象服务中心、北京市气象局</p>
+			<p>郑重声明：中国天气网版权所有，未经书面授权禁止使用</p>
+			<p class="copyIcp">京ICP证010385号 京公网安备11041400134号 增值电信业务经营许可证B2-20050053</p>
+		</footer>
+  
+</div>
+<div class="icons">
+			<ul>
+				<li class="icon1"><a href="#" target="_blank">移动天气</a></li>
+				<li class="icon2"><a href="#" target="_blank">灾难预警</a></li>
+				<li class="icon3"><a href="#" target="_blank">北京首页</a></li>
+				<li class="icon4 product"><a href="javascript:void(0);" target="_self">天气产品</a></li>
+			</ul>
+			<ul class="products">
+				<li class="icon1"><a href="#" target="_blank">温度变化</a></li>
+				<li class="icon2"><a href="#" target="_blank">十天气温</a></li>
+				<li class="icon3"><a href="#" target="_blank">降雨量</a></li>
+			</ul>
+		</div>
+</body>
+</html>

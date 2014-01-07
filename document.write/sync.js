@@ -1,0 +1,1 @@
+document.write('2 I\' an in outer document.write,sync.js<br/>');

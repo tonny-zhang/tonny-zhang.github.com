@@ -1,0 +1,769 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--[if lt ie 7]> <html class="ie ie6" lang="zh-CN"> <![endif]-->
+<!--[if ie 7]>    <html class="ie ie7" lang="zh-CN"> <![endif]-->
+<!--[if ie 8]>    <html class="ie ie8" lang="zh-CN"> <![endif]-->
+<!--[if gt ie 8]><!-->  <html> <!--<![endif]-->
+ <head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>俄罗斯方块</title>
+		<meta name="Author" content="tonny zhang"/>
+		<meta name="Keywords" content="俄罗斯方块"/>
+		<meta name="Description" content="俄罗斯方块"/>
+	<style>
+	body{
+		background-color:black;
+	}
+	.ab{
+		position:absolute;
+	}
+	.container{
+		position:absolute;
+		left:200px;
+		top:0;
+		border:1px solid white;
+		background:#ccc;
+	}
+	.block{
+		background:blue;
+		border:1px solid white;
+		width:8px;
+		height:8px;
+	}
+	.block1{
+		
+	}
+	.block1 .b1{
+		left:0;
+		top:0;
+	}
+	.block1 .b2{
+		left:10px;
+	}
+	.block1 .b3{
+		top:10px;
+	}
+	.block1 .b4{
+		left:10px;
+		top:10px;
+	}
+	.block2{
+		top:50px;
+	}
+	.block2 .b1{
+		left:0;
+		top:0;
+	}
+	.block2 .b2{
+		top:10px;
+	}
+	.block2 .b3{
+		top:10px;
+		left:10px;
+	}
+	.block2 .b4{
+		left:10px;
+		top:20px;
+	}
+
+	.block21{
+		top:50px;
+		left:50px;
+	}
+	.block21 .b1{
+		top:10px;
+	}
+	.block21 .b2{
+		left:10px;
+	}
+	.block21 .b3{
+		top:10px;
+		left:10px;
+	}
+	.block21 .b4{
+		left:20px;
+	}
+
+	.block3{
+		top:100px;
+	}
+	.block3 .b2{
+		left:10px;
+	}
+	.block3 .b3{
+		left:20px;
+	}
+	.block3 .b4{
+		left:10px;
+		top:10px;
+	}
+
+	.block31{
+		top:100px;
+		left:50px;
+	}
+	.block31 .b1{
+		top:10px;
+	}
+	.block31 .b2{
+		left:10px;
+	}
+	.block31 .b3{
+		left:10px;
+		top:10px;
+	}
+	.block31 .b4{
+		left:10px;
+		top:20px;
+	}
+
+	.block32{
+		top:100px;
+		left:100px;
+	}
+	.block32 .b1{
+		left:10px;
+	}
+	.block32 .b2{
+		top:10px;
+	}
+	.block32 .b3{
+		left:10px;
+		top:10px;
+	}
+	.block32 .b4{
+		left:20px;
+		top:10px;
+	}
+
+	.block33{
+		top:100px;
+		left:150px;
+	}
+	.block33 .b2{
+		top:10px;
+	}
+	.block33 .b3{
+		top:20px;
+	}
+	.block33 .b4{
+		left:10px;
+		top:10px;
+	}
+
+	.block4{
+		top:150px;
+	}
+	.block4 .b1{
+		top:0px;
+	}
+	.block4 .b2{
+		top:10px;
+	}
+	.block4 .b3{
+		top:20px;
+	}
+	.block4 .b4{
+		top:30px;
+	}
+
+	.block41{
+		top:150px;
+		left:50px;
+	}
+	.block41 .b1{
+		left:0px;
+	}
+	.block41 .b2{
+		left:10px;
+	}
+	.block41 .b3{
+		left:20px;
+	}
+	.block41 .b4{
+		left:30px;
+	}
+
+	.block5{
+		top:200px;
+	}
+	.block5 .b1{
+		top:0px;
+	}
+	.block5 .b2{
+		top:10px;
+	}
+	.block5 .b3{
+		top:20px;
+	}
+	.block5 .b4{
+		left:10px;
+	}
+
+	.block51{
+		top:200px;
+		left:50px;
+	}
+	.block51 .b1{
+		top:0px;
+	}
+	.block51 .b2{
+		left:10px;
+	}
+	.block51 .b3{
+		left:20px;
+	}
+	.block51 .b4{
+		left:20px;
+		top:10px;
+	}
+
+	.block52{
+		top:200px;
+		left:100px;
+	}
+	.block52 .b1{
+		top:20px;
+	}
+	.block52 .b2{
+		left:10px;
+	}
+	.block52 .b3{
+		left:10px;
+		top:10px;
+	}
+	.block52 .b4{
+		left:10px;
+		top:20px;
+	}
+
+	.block53{
+		top:200px;
+		left:150px;
+	}
+	.block53 .b1{
+		top:0px;
+	}
+	.block53 .b2{
+		top:10px;
+	}
+	.block53 .b3{
+		left:10px;
+		top:10px;
+	}
+	.block53 .b4{
+		left:20px;
+		top:10px;
+	}
+
+	#result{
+		left:500px;
+		top:0px;
+	}
+	#showProcess{
+		width:100px;
+		height:110px;
+		left:20px;
+		text-align:center;
+	}
+	#nextM{
+		width:60px;
+		height:60px;
+		margin:0 auto;
+		position:relative;
+	}
+	.hide{
+		display:none;
+	}
+  </style>
+ </head>
+
+ <body>
+	<div class="container ab hide" style="top:200px;left:0">
+		<div class="block1 ab">
+			<div class="b1 block ab"></div>
+			<div class="b2 block ab"></div>
+			<div class="b3 block ab"></div>
+			<div class="b4 block ab"></div>
+		</div>
+		<div class="block2 ab">
+			<div class="b1 block ab"></div>
+			<div class="b2 block ab"></div>
+			<div class="b3 block ab"></div>
+			<div class="b4 block ab"></div>
+		</div>
+		<div class="block21 ab">
+			<div class="b1 block ab"></div>
+			<div class="b2 block ab"></div>
+			<div class="b3 block ab"></div>
+			<div class="b4 block ab"></div>
+		</div>
+		<div class="block3 ab">
+			<div class="b1 block ab"></div>
+			<div class="b2 block ab"></div>
+			<div class="b3 block ab"></div>
+			<div class="b4 block ab"></div>
+		</div>
+		<div class="block31 ab">
+			<div class="b1 block ab"></div>
+			<div class="b2 block ab"></div>
+			<div class="b3 block ab"></div>
+			<div class="b4 block ab"></div>
+		</div>
+		<div class="block32 ab">
+			<div class="b1 block ab"></div>
+			<div class="b2 block ab"></div>
+			<div class="b3 block ab"></div>
+			<div class="b4 block ab"></div>
+		</div>
+		<div class="block33 ab">
+			<div class="b1 block ab"></div>
+			<div class="b2 block ab"></div>
+			<div class="b3 block ab"></div>
+			<div class="b4 block ab"></div>
+		</div>
+
+		<div class="block4 ab">
+			<div class="b1 block ab"></div>
+			<div class="b2 block ab"></div>
+			<div class="b3 block ab"></div>
+			<div class="b4 block ab"></div>
+		</div>
+
+		<div class="block41 ab">
+			<div class="b1 block ab"></div>
+			<div class="b2 block ab"></div>
+			<div class="b3 block ab"></div>
+			<div class="b4 block ab"></div>
+		</div>
+
+		<div class="block5 ab">
+			<div class="b1 block ab"></div>
+			<div class="b2 block ab"></div>
+			<div class="b3 block ab"></div>
+			<div class="b4 block ab"></div>
+		</div>
+		<div class="block51 ab">
+			<div class="b1 block ab"></div>
+			<div class="b2 block ab"></div>
+			<div class="b3 block ab"></div>
+			<div class="b4 block ab"></div>
+		</div>
+		<div class="block52 ab">
+			<div class="b1 block ab"></div>
+			<div class="b2 block ab"></div>
+			<div class="b3 block ab"></div>
+			<div class="b4 block ab"></div>
+		</div>
+		<div class="block53 ab">
+			<div class="b1 block ab"></div>
+			<div class="b2 block ab"></div>
+			<div class="b3 block ab"></div>
+			<div class="b4 block ab"></div>
+		</div>
+	</div>
+	<div class="container ab" id="showProcess">
+		<div id="nextM"></div>
+		<div id="score">0</div>
+		<input type="button" id="btStart" value="开始" onclick="startGame()"/>
+		<input type="button" id="btPause" value="暂停" onclick="pauseGame()"/>
+	</div>
+	<script type="text/javascript">
+	//<![CDATA[ 
+		var tool = {
+			extend : function(a,b){//a继承b
+				for(var v in b){
+					a[v] = b[v];
+				}
+				a.prototype = b.prototype;
+			},create : function(cN,styleConfig,parent,eleName){
+				eleName = eleName?eleName:'div';
+				parent = parent ? parent : document.body;
+				var newDiv = document.createElement(eleName);
+				newDiv.className = cN;
+				for(var i in styleConfig){
+					newDiv.style[i] = styleConfig[i];
+				}
+				parent.appendChild(newDiv);
+				return newDiv;
+			},$ : function(id){
+				return document.getElementById(id);
+			}
+		}		
+
+		//构建模型
+		function Module(container,cConf,vNum){
+			this.x = Math.floor((width-cConf.v[0].length)/2);
+			this.y = 0;
+			this.config;
+			this.cConfig = cConf;
+			this.isCanMove = false;
+			this.block = tool.create('ab '+cConf.cN,{
+				left : this.x * blockSize + 'px',
+				top : this.y * blockSize + 'px'
+			},container);
+			for(var i = 1,vNum=vNum?vNum:4;i<=vNum;i++){
+				tool.create('block ab b'+i,{},this.block);
+			}
+		}
+		//根据模型值得到最大Ｘ轴宽度
+		Module.prototype.getMaxWidth = function(val){
+			var maxWidth = -1;
+			val = val?val:this.cConfig.v;
+			for(var i = 0,j=val.length;i<j;i++){
+				if(val[i].length>maxWidth){
+					maxWidth = val[i].length;
+				}
+			}
+			return maxWidth;
+		}
+		//改变模型形状
+		Module.prototype.changeType = function(){
+			if(this.isCanMove){
+				var changeIndex = -1;
+				for(var i = 0,c=this.config,cc=this.cConfig,j=c.length;i<j&&j>1;i++){
+					if(cc.cN == c[i].cN){
+						changeIndex = (i==j-1&&i>0)?0:i+1;
+					}
+				}
+				if(changeIndex>=0){
+					var val = this.config[changeIndex].v;
+					if(this.getMaxWidth(val)+this.x > width || val.length + this.y > height){
+						return;
+					}
+					for(var i = 0,j = val.length,x = this.x,y = this.y;i<j;i++){//y
+						for(var ii = 0,jj = val[i].length;ii<jj;ii++){//x
+							if(dataArr[y+i][x+ii] && val[i][ii]){
+								return;
+							}
+						}
+					}
+					this.cConfig = this.config[changeIndex];
+					this.block.className = 'ab '+this.cConfig.cN;
+				}
+			}
+		}
+		//移动
+		Module.prototype.move = function(){
+			this.isCanMove = true;
+			var _this = this;
+			this.tt = setInterval(function(){
+				_this.down();
+			},500);
+			return this;
+		}
+		//停止
+		Module.prototype.stop = function(){
+			this.isCanMove = false;
+			maxY = maxY > this.y?this.y:maxY;
+			this.translate();
+			clearInterval(this.tt);
+			delete currentModule;
+			getScore();
+			if(maxY>1){
+				changeModule();
+			}else{
+				alert('结束了');
+			}
+		}
+		//计算结果
+		function getScore(startY){
+			startY = startY?startY:height-1;
+			for(var i = startY;i>=maxY;i--){
+				var isHaveScore = true;
+				for(var ii = 0;ii<width;ii++){
+					if(!dataArr[i][ii]){
+						isHaveScore = false;
+						break;
+					}
+				}
+				if(isHaveScore){
+					for(var xI = 0;xI<width;xI++){//处理要去除的一层
+						var blockObj = tool.$('b_'+xI+'_'+i);
+						container.removeChild(blockObj);
+						dataArr[i][xI] = 0;
+					}
+					for(var sI = i-1;sI>=maxY;sI--){//处理层上面依次下移
+						for(var xI = 0;xI<width;xI++){
+							dataArr[sI+1][xI] = dataArr[sI][xI];					
+							var blockObj = tool.$('b_'+xI+'_'+(sI));
+							if(blockObj){
+								blockObj.id = 'b_'+xI+'_'+(sI+1);
+								blockObj.style.left = xI * blockSize + 'px';
+								blockObj.style.top = (sI+1) * blockSize + 'px';
+							}
+						}
+					}
+					for(var xI = 0;xI<width;xI++){//处理最上次塌陷
+						dataArr[maxY][xI] = 0;
+					}
+					maxY++;//最大Ｙ值向下移
+					i++;//保证从最底层处理
+					showScore.innerHTML = parseInt(showScore.innerHTML)+1;
+				}
+			}
+		}
+		//是否可以向下移动
+		Module.prototype.canDown = function(){
+			for(var i = 0,v=this.cConfig.v,len=v.length,x = this.x,y=this.y+1<height?this.y+1:this.y;i<len;i++){//y
+				for(var ii = 0,jj=v[i].length;ii<jj;ii++){//x
+					if(dataArr[y+i][x+ii] && v[i][ii]){
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		//向下
+		Module.prototype.down = function(){
+			if(this.isCanMove){
+				var oTop = this.block.offsetTop;
+				if(oTop + blockSize*this.cConfig.v.length < height * blockSize && this.canDown()){
+					this.block.style.top = oTop + blockSize + 'px';
+					this.y++;
+				}else{//到底后初始化数据
+					for(var i = 0,v=this.cConfig.v,len=v.length,x = this.x,y = this.y;i<len;i++){//y
+						for(var ii = 0,jj=v[i].length;ii<jj;ii++){//x
+							if(!dataArr[y+i][x+ii]){
+								dataArr[y+i][x+ii] = v[i][ii];
+							}
+						}
+					}
+					this.stop();
+					writeValue();
+				}
+			}
+			return this;
+		}
+		//转成可直接操作的对象
+		Module.prototype.translate = function(){
+			var x = this.x * blockSize,
+				y = this.y * blockSize;
+			for(var i=0,c= this.block.childNodes,j=c.length;i<j;i++){
+				var bLeft = c[i].offsetLeft + x,
+					bTop = c[i].offsetTop + y;
+				var b = tool.create('block ab',{
+					left : bLeft + 'px',
+					top : bTop + 'px'
+				},container,'span');
+				b.id = "b_"+(bLeft/blockSize)+"_"+(bTop/blockSize);
+				b.onmouseover = function(){
+					tool.$(this.id+'_txt').style.backgroundColor = 'red';
+				}
+				b.onmouseout = function(){
+					tool.$(this.id+'_txt').style.backgroundColor = '';
+				}
+			}
+			container.removeChild(this.block);	
+		}
+		//调试时显示值
+		function writeValue(){
+			if(debug){
+				var ss = '';
+				for(var i = 0,j=dataArr.length;i<j;i++){
+					var str = '';
+					for(var ii = 0,jj=dataArr[i].length;ii<jj;ii++){
+						str += '<span id="b_'+ii+'_'+i+'_txt">'+dataArr[i][ii]+' </span>';
+					}
+					ss += str+'<br/>';
+				}
+				tool.$('result').innerHTML = (ss);
+			}
+		}
+		//是否可以向左
+		Module.prototype.canLeft = function(){
+			for(var i = 0,
+				j = this.getMaxWidth(),
+				v = this.cConfig.v,
+				len = v.length,
+				x = this.x>0?this.x-1:this.x,
+				y = this.y;i<j;i++){
+				for(var ii = 0;ii < len;ii++){
+					if(dataArr[y+ii][x+i] && v[ii][i]){
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		//向左
+		Module.prototype.left = function(){
+			if(this.isCanMove){
+				var oLeft = this.block.offsetLeft;
+				if(oLeft > 0 && this.canLeft()){
+					this.x--;
+					this.block.style.left = oLeft - blockSize + 'px';
+				}
+			}
+			return this;
+		}
+		//是否可以向右
+		Module.prototype.canRight = function(){
+			for(var i = 0,
+				j = this.getMaxWidth(),
+				v = this.cConfig.v,
+				len = v.length,
+				x = this.x<width?this.x+1:this.x,
+				y = this.y;i<j;i++){
+				for(var ii = 0;ii < len;ii++){
+					if(dataArr[y+ii][x+i] && v[ii][i]){
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		//向右
+		Module.prototype.right = function(){
+			if(this.isCanMove){
+				var oLeft = this.block.offsetLeft;
+				if(oLeft + blockSize*this.getMaxWidth() < width * blockSize && this.canRight()){
+					this.x++;
+					this.block.style.left = oLeft + blockSize + 'px';
+				}
+			}
+			return this;
+		}
+
+		
+		//模型1
+		function Module1(container){
+			this.config = [{
+				v:[[1,1],[1,1]],cN:'block1',
+				v:[[1,1],[1,1]],cN:'block1'
+			}]
+			Module.call(this,container,this.config[0]);
+		}
+		tool.extend(Module1,Module);
+		//模型2
+		function Module2(container){
+			this.config = [
+				{v:[[1,0],[1,1],[0,1]],cN:'block2'},
+				{v:[[0,1,1],[1,1,0]],cN:'block21'}
+			]
+			Module.call(this,container,this.config[0]);
+		}
+		tool.extend(Module2,Module);
+		
+		//模型3
+		function Module3(container){
+			this.config = [
+				{v:[[1,1,1],[0,1,0]],cN:'block3'},
+				{v:[[0,1],[1,1],[0,1]],cN:'block31'},
+				{v:[[0,1,0],[1,1,1]],cN:'block32'},
+				{v:[[1,0],[1,1],[1,0]],cN:'block33'}
+			]
+			Module.call(this,container,this.config[0]);
+		}
+		tool.extend(Module3,Module);
+		//模型4
+		function Module4(container){
+			this.config = [
+				{v:[[1],[1],[1],[1]],cN:'block4'},
+				{v:[[1,1,1,1]],cN:'block41'}
+			]
+			Module.call(this,container,this.config[0]);
+		}
+		tool.extend(Module4,Module);
+		
+		//模型5
+		function Module5(container){
+			this.config = [
+				{v:[[1,1],[1,0],[1,0]],cN:'block5'},
+				{v:[[1,1,1],[0,0,1]],cN:'block51'},
+				{v:[[0,1],[0,1],[1,1]],cN:'block52'},
+				{v:[[1,0,0],[1,1,1]],cN:'block53'}
+			]
+			Module.call(this,container,this.config[0]);
+		}
+		tool.extend(Module5,Module);
+
+		//产生一个模型索引
+		function getNextModuleIndex(){
+			nexIndex = Math.floor(Math.random()*moduleArr.length);//nexIndex=4;
+			showNextModule.innerHTML = '';
+			var m = new moduleArr[nexIndex](showNextModule);
+			var b = m.block;
+			b.style.left = (showNextModule.offsetWidth - blockSize * m.getMaxWidth())/2 + 'px';
+			b.style.top = 10 + 'px';
+		}
+		//改变模型
+		function changeModule(){
+			if(!currentModule.isCanMove){
+				currentModule = new moduleArr[nexIndex](container).move();
+				getNextModuleIndex();
+			}
+		}
+		//暂停游戏
+		function pauseGame(){
+			currentModule.isCanMove = !currentModule.isCanMove;
+		}
+		//开始游戏
+		function startGame(){
+			initData();
+			changeModule();
+			var btStart = tool.$('btStart');
+			btStart.value = '重来';
+		}
+
+		//初始化键盘事件
+		document.onkeydown = function(e){
+			e = e || window.event;
+			switch (e.keyCode){
+				case 32 ://空格
+				case 38 ://上
+					currentModule.changeType();//改变模型形状
+					break;
+				case 37 ://左
+					currentModule.left();
+					break;
+				case 39 ://右
+					currentModule.right();
+					break;
+				case 40 ://下
+					currentModule.down();
+					break;
+			}
+		}
+		
+		var width = 20;//画布宽度（区块单位）
+		var height = 30;//画布高度（区块单位）
+		var blockSize = 10;//区块大小（ＰＸ单位）
+		var debug = false;//调试状态
+		var container = null;//显示容器
+
+		var dataArr = [];//画布数据
+		var showNextModule = tool.$('nextM');//显示下一个模型
+		var showScore = tool.$('score');	//显示分数
+		var moduleArr = [Module1,Module2,Module3,Module4,Module5];
+		var currentModule = null;	//当前模型
+		var nexIndex = 0;	//下一个模型数据中的随机索引
+		var maxY = height;	//记录最上层Ｙ座标，方便计算
+
+		//初始化数据
+		var initData = (function (){
+			for(var i = 0; i < height; i++){
+				dataArr[i] = [];
+				for(var j = 0;j<width;j++){
+					dataArr[i][j] = 0;
+				}
+			}
+
+			if(debug){
+				tool.create('container ab').id = "result";
+				writeValue();
+			}		
+			//创建最外层容器
+			container = tool.create('container',{
+				width : width * blockSize + 'px',
+				height : height * blockSize + 'px'
+			});
+			
+			currentModule = {isCanMove:false};//当前模型
+			getNextModuleIndex();//初始化索引
+			maxY = height;
+			return arguments.callee;
+		})();
+	//]]>  
+	</script>
+ </body>
+</html>

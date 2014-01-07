@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6" lang="zh-CN"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7" lang="zh-CN"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8" lang="zh-CN"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>1天气网改版测试用例</title>
+<script src="../n/j/core.js"></script>
+<script>
+W.css('../n/c/1.css');
+W.css('../n/c/2.css',{'media':'screen'});
+</script>
+</head>
+<body>
+<script>
+window.onload = function(){
+	showResult('window.onload');
+}
+
+function showResult(html){
+	W.use('jquery',function(){
+		var div = $('<div>').addClass('container').html(html).hide();
+		$('body').append(div);
+		div.fadeIn();
+	});
+}
+//这里可以先加载jquery,但W(function(){})重写W
+W.use('jquery',function(){
+	showResult('after loaed jquery');
+});
+W(function(){
+	showResult('first init');
+});
+W(function(){
+	showResult('first init again');
+});
+W.use('../n/j/m_2',function(m_2){
+	showResult(m_2.name);
+});
+W.use(['../n/j/p_1','../php/delay.js.php#'],function(){
+	W(function(){
+		showResult('after delay');
+	});
+});
+</script>
+<div class="container">after async load,I'm in HMLT</div>
+</body>
+</html>

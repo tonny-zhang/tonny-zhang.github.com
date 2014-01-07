@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6" lang="zh-CN"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7" lang="zh-CN"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8" lang="zh-CN"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>1天气网改版测试用例</title>
+<script src="../../n/j/core.js"></script> 
+<!--<script>
+W.css('../n/c/1.css');
+W.css('../n/c/2.css',{'media':'screen'});
+</script>-->
+</head>
+<body>
+<script>
+W.use('j/m_event',function(Event){
+	var one = new Event();
+	one.on('test',function(data){
+		console.log('one say',data);
+	});
+	one.on('test',function(data){
+		console.log('two say',data);
+	});
+	one.emit('test',{name:'win'});
+});
+</script>
+<script>
+
+</script>
+<div class="container">after async load,I'm in HMLT</div>
+</body>
+</html>

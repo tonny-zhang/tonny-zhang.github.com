@@ -1,0 +1,96 @@
+/*
+@-webkit-keyframes dice{
+	0%{-webkit-transform:rotateX(0deg) rotateY(0deg);}
+	16.7%{-webkit-transform:rotateX(180deg) rotateY(0deg);}
+	33.4%{-webkit-transform: rotateX(0deg) rotateY(-90deg);}
+	50.1%{-webkit-transform:  rotateX(0deg) rotateY(90deg);}
+	66.8%{-webkit-transform:rotateX(-90deg) rotateY(0deg);}
+	100%{-webkit-transform:rotateX(90deg) rotateY(0deg);}
+}*/
+.dice{
+	color:black;
+	position:relative;
+	width:100px;
+	height:100px;
+	font-size:30px;
+	font-weight:bold;
+	margin:0 auto;
+	/*-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: rgb(100, 100, 100);
+	-webkit-text-fill-color: rgb(0, 0, 0);*/
+	text-shadow:2px 1px 3px #ccc;
+	/*-webkit-perspective: 400;  triggers a 3D space */  
+	-webkit-transform-style: preserve-3d; /* maintains 3D space */  
+	-webkit-transform: translateZ(200px);
+	-webkit-transition: -webkit-transform 1.5s;
+	-webkit-transform-origin:50px 50px 0;
+	/*
+	-webkit-animation-duration: 6s;
+	-webkit-animation-delay: 2s;
+	-webkit-animation-name: dice;
+	-webkit-animation-fill-mode: both;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-iteration-count: infinite;*/
+}
+.dice.one{
+	-webkit-transform:rotateX(0deg) rotateY(0deg);
+}
+.dice.two{
+	-webkit-transform:rotateX(180deg) rotateY(0deg);
+}
+.dice.three{
+	-webkit-transform: rotateX(0deg) rotateY(-90deg);
+}
+.dice.four{
+	-webkit-transform:  rotateX(0deg) rotateY(90deg);
+}
+.dice.five{
+	-webkit-transform:rotateX(-90deg) rotateY(0deg);
+}
+.dice.six{
+	-webkit-transform:rotateX(90deg) rotateY(0deg);
+}
+.dice .face{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100px;
+	height:100px;
+	line-height:100px;
+	text-align:center;
+	border-radius:10px;
+	box-shadow:0px 0px 100px rgba(100,100,100,0.5) inset;
+}
+.dice .face_1{
+	z-index:6;
+	background:red;
+	-webkit-transform: rotateX(0deg) translateZ(50px); 
+}
+.dice .face_2{
+	z-index:5;
+	background:black;
+	color:white;
+	-webkit-transform: rotateX(180deg) translateZ(50px);
+}
+.dice .face_3{
+	z-index:4;
+	background:blue;
+	color:white;
+	-webkit-transform: rotateY(90deg) translateZ(50px)
+}
+.dice .face_4{	
+	z-index:3;
+	background:yellow;
+	-webkit-transform: rotateY(-90deg) translateZ(50px)
+}
+.dice .face_5{
+	z-index:2;
+	background:#ccc;
+	-webkit-transform: rotateX(90deg) translateZ(50px);  
+}
+.dice .face_6{
+	z-index:1;
+	background:green;
+	color:white;
+	-webkit-transform: rotateX(-90deg) translateZ(50px);  
+}

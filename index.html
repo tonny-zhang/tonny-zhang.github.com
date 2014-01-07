@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--[if lt ie 7]> <html class="ie ie6" lang="zh-CN"> <![endif]-->
+<!--[if ie 7]>    <html class="ie ie7" lang="zh-CN"> <![endif]-->
+<!--[if ie 8]>    <html class="ie ie8" lang="zh-CN"> <![endif]-->
+<!--[if gt ie 8]><!-->  <html> <!--<![endif]-->
+ <head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>tonny zhang，放飞心灵</title>
+		<meta name="Author" content="tonny zhang"/>
+		<meta name="Keywords" content="tonny zhangkai,wodexintiao@gmail.com"/>
+		<meta name="Description" content="tonny zhangkai,wodexintiao@gmail.com"/>
+		<link rel="stylesheet" type="text/css" media="screen" href="css/base.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="css/animate.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="css/pice.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="css/index.css">
+		<style>
+			#diceContainer{
+				display: -webkit-box;
+				display: -moz-box;
+				display:box;
+				width:100%;
+				-moz-box-orient: horizontal;
+				-moz-box-pack: center;
+				-moz-box-align: center;
+				-webkit-box-orient: horizontal;
+				-webkit-box-pack: center;
+				-webkit-box-align: center;
+				box-orient: horizontal;
+				box-pack: center;
+				box-align: center;
+				min-width:400px;
+			}
+			.diceCon{
+				-webkit-box-flex:1;
+				-moz-box-flex:1;
+				-ms-box-flex:1;
+				-o-box-flex:1;
+				box-flex:1;
+			}
+			#dice1 .face{
+				border-radius:30px;
+			}
+			#dice2 .face{
+				border-radius:50px;
+			}
+			.info_list li{
+				white-space: nowrap;
+				overflow:hidden;
+				text-overflow:ellipsis;
+			}			
+			.info_list li>a{
+				max-width: 250px;
+				height:100%;
+				overflow:hidden;
+				display:inline-block;
+				vertical-align: middle;/*修复firefox下，和span错位*/
+				text-overflow:ellipsis;
+			}
+		</style>
+		<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "//hm.baidu.com/hm.js?b1168e149164755c23c038d0bac508b6";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+		</script>
+	</head>
+	<body>
+	<div class="p20">
+		<h1 class="welcome mb20">welcome to <span class="flame">tonny zhang</span></h1>
+		<div class="container">
+			<div id="left" class="mr10">
+				<div class="ui_box">
+					<h3 class="box_title">常用网站</h3>
+					<ul class="box_con info_list">
+						<li><a href="https://github.com/tonny-zhang" target="_blank">tonny zhang GitHub</a><span>这里有js、css、flash、php、nodejs</span></li>
+						<li><a href="http://jsfiddle.net/" target="_blank">jsFiddle在线代码调试</a><span>在线调试</span></li>
+						<li><a href="http://jsperf.com/" target="_blank">js性能对比</a><span>在线调试</span></li>
+						<li><a href="http://www.daqianduan.com/tag/css3-explain/" target="_blank">css3属性</a><span>css3属性详解-大前端</span></li>
+						<li><a href="http://www.w3schools.com/css3/default.asp" target="_blank" class="import">w3school.com详解css3</a><span>css3</span></li>
+						<li><a href="http://daneden.me/animate/" target="_blank">animate.css在线演示</a><span>css3</span></li>
+						<li><a href="http://www.css3maker.com/index.html" target="_blank">css3maker</a><span>css3</span></li>
+						<li><a href="http://ecd.tencent.com/css3/guide.html" target="_blank">腾讯CSS3</a><span>css3</span></li>
+						<li><a href="http://www.zhaoxiaoqing.cn/a/php/php1/2012/0723/580.html" target="_blank">git常用操作</a><span>git</span></li>
+						<li><a href="http://www.regexper.com/" target="_blank">正则表达式可视化工具</a><span>正则</span></li>
+						<li><a href="http://www.yiiyaa.net" target="_blank">意雅</a><span>web前端开发</span></li>
+						<li><a href="http://www.mycodes.net" target="_blank">源码网</a><span>源码下载</span></li>
+						<li><a href="http://www.ostools.net/codeformat/js" target="_blank">代码格式化</a><span>格式化</span></li>
+						<li><a href="http://smarty.jz123.cn/" target="_blank">Smarty文档</a><span>PHP</span></li>
+					</ul>
+				</div>
+				<div class="ui_box mt10">
+					<h3 class="box_title">技术网站</h3>
+					<ul class="box_con info_list">
+						<li><a href="http://www.nodecn.org/" target="_blank">Node.js 中文手册</a><span>文档</span></li>
+						<li><a href="http://www.51cto.com/" target="_blank">51cto</a><span>技术统合</span></li>
+						<li><a href="http://www.itniwo.net" target="_blank">开源IT</a><span>技术统合</span></li>
+						<li><a href="http://www.oschina.net/" target="_blank">开源中国社区</a><span>技术统合</span></li>
+						<li><a href="http://css3please.com/" target="_blank">css3please.com</a><span>css3应用技巧</span></li>
+						<li><a href="http://www.alloyteam.com/" target="_blank">腾讯Web前端 Alloy 团队</a><span>前端技术</span></li>
+						<li><a href="http://www.ecmascript.cn" target="_blank">Ecma script规范</a><span>文档</span></li>
+						<li><a href="http://www.admin10000.com/" target="_blank">WEB 开发者</a><span>技术综合</span></li>
+						<li><a href="http://www.ecmascript.cn/" target="_blank">ecmascript</a><span>js标准</span></li>
+						<li><a href="http://css.doyoe.com/" target="_blank">ecmascript</a><span>Css在线参考手册</span></li>
+						<li><a href="https://developer.mozilla.org/" target="_blank">MOZILLA 开发者网络</a><span>mozilla</span></li>
+					</ul>
+				</div>
+				<div class="ui_box mt10">
+					<h3 class="box_title">技术社区网站</h3>
+					<ul class="box_con info_list">
+						<li><a href="http://segmentfault.com/" target="_blank">SegmentFault </a><span>社区</span></li>
+						<li><a href="http://stackoverflow.com/" target="_blank">stackoverflow </a><span>社区</span></li>
+						<li><a href="http://dev.duoshuo.com/" target="_blank">多说评论系统 </a><span>社区</span></li>
+					</ul>
+				</div>
+				<div class="ui_box mt10">
+					<h3 class="box_title">推荐代码</h3>
+					<ul class="box_con info_list">
+						<li><a href="https://github.com/tonny-zhang/nodeJS/tree/master/uglifyJS_compress" target="_blank">借助于Sublime Text和Uglify实现程序自动压缩脚本</a><span>nodeJs、phthon</span></li>
+						<li><a href="https://github.com/tonny-zhang/flash/tree/gh-pages/upload2" target="_blank">flash上传组件</a><span>js、as</span></li>
+						<li><a href="./newJsMethod.html" target="_blank">js 1.6、1.8新增方法</a><span>js</span></li>
+						<li><a href="http://www.alloyteam.com/2012/06/nodejs-smart-merging-css-wizard-tool-intelligentspriter/" target="_blank">NodeJs智能合并CSS精灵图工具iSpriter</a><span>nodeJS、css</span></li>
+						<li><a href="http://raphaeljs.com/" target="_blank">js报表</a><span>js 图表</span></li>
+						<li><a href="http://www.jointjs.com/" target="_blank">js画图</a><span>js 图表</span></li>
+						<li><a href="http://bost.ocks.org/mike/" target="_blank">Mike Bostock</a><span>js 图表</span></li>
+						<li><a href="http://mbostock.github.com/protovis/" target="_blank">Protovis</a><span>js 图表</span></li>
+						<li><a href="http://www.highcharts.com/" target="_blank">highcharts</a><span>js 图表</span></li>
+					</ul>
+				</div>
+				<div class="ui_box mt10">
+					<h3 class="box_title">前端框架</h3>
+					<ul class="box_con info_list">
+						<li><a href="http://tangram.baidu.com/" target="_blank">百度</a><span>前端框架</span></li>
+						<li><a href="http://alloyteam.github.com/" target="_blank">腾讯</a><span>前端框架</span></li>
+						<li><a href="https://github.com/aui" target="_blank">aui(作者：<a href="http://www.planeart.cn/?page_id=8" target="_blank">糖饼</a>)</a><span>前端牛人</span></li>
+						<li><a href="http://www.aralejs.org/" target="_blank">Arale 基于 SeaJS 的前端解决方</a><span>前端框架</span></li>
+					</ul>
+				</div>
+				<div class="ui_box mt10">
+					<h3 class="box_title">网站管理</h3>
+					<ul class="box_con info_list">
+						<li><a href="https://phpfog.com/account" target="_blank">phpfog</a><span>phpfog网站管理</span></li>
+						<li><a href="http://www.appfog.com/" target="_blank">appfog</a><span>appfog网站管理</span></li>
+						<li><a href="http://my.dot.tk" target="_blank">免费域名</a><span>域名</span></li>
+						<li><a href="http://www.namecheap.com/" target="_blank">免费DNS</a><span>DNS</span></li>
+						<li><a href="http://www.dreamlu.net/blog/7" target="_blank">搭建免费域名+DNS+空间</a><span>域名+DNS+空间</span></li>
+						<li><a href="https://tonny-zhang.squarespace.com" target="_blank">squarespace.com</a><span>空间</span></li>
+					</ul>
+				</div>
+			</div>
+			<div id="right">
+				<div class="ui_box">
+					<h3 class="box_title">游戏</h3>
+					<ul class="box_con info_list">
+						<li>
+							<a href="./game/silding-block.html" target="_blank">俄罗斯方块</a>
+							<span>用原生JS写的俄罗斯方块游戏</span>
+						</li>
+						<li>
+							<a href="./game/gobang/index.html" target="_blank">在线五子棋</a>
+							<span>算法：博弈树（canvas）</span>	
+						</li>
+						<li>
+							<a href="http://wellcaffeinated.net/PhysicsJS/" target="_blank">物理算法引擎（要用于写游戏）</a>
+							<span></span>	
+						</li>
+					</ul>
+					<div class="mb20" id="diceContainer">
+						<div class="diceCon">
+							<div class="dice" id="dice">
+								<div class="face face_1">1</div>
+								<div class="face face_2">2</div>
+								<div class="face face_3">3</div>
+								<div class="face face_4">4</div>
+								<div class="face face_5">5</div>
+								<div class="face face_6">6</div>
+							</div>
+						</div>
+						<div class="diceCon">
+							<div class="dice" id="dice1">
+								<div class="face face_1">1</div>
+								<div class="face face_2">2</div>
+								<div class="face face_3">3</div>
+								<div class="face face_4">4</div>
+								<div class="face face_5">5</div>
+								<div class="face face_6">6</div>
+							</div>
+						</div>
+						<div class="diceCon">
+							<div class="dice" id="dice2">
+								<div class="face face_1">1</div>
+								<div class="face face_2">2</div>
+								<div class="face face_3">3</div>
+								<div class="face face_4">4</div>
+								<div class="face face_5">5</div>
+								<div class="face face_6">6</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ui_box mt10">
+					<h3 class="box_title">问题解决办法</h3>
+					<ul class="box_con info_list">
+						<li>
+						<a href="http://blog.sina.com.cn/s/blog_7664961701013s5j.html" target="_blank">block元素包含img下边界有空隙的解决方法</a><span>css</span></li>
+						<li><a href="http://www.onderhond.com/blog/work/ie6-core-bug-fixing" target="_blank">修复IE6下的常见bug</a><span>css</span></li>
+						<li><a href="http://www.satzansatz.de/cssd/onhavinglayout.html" target="_blank">Layout</a><span>css</span></li>
+					</ul>
+				</div>
+				<div class="ui_box mt10">
+					<h3 class="box_title">前端测试</h3>
+					<ul class="box_con info_list">
+						<li><a href="http://jsperf.com" target="_blank">性能对比并统计</a><span>性能统计</span></li>
+						<li><a href="http://jsperf.com/browse/tonny" target="_blank">我在jsperf.com上的测试</a><span>性能统计</span></li>
+						<li><a href="http://www.browserscope.org/" target="_blank">性能统计</a><span>性能统计</span></li>
+						<li><a href="http://benchmarkjs.com/" target="_blank">benchmarkjs.com</a><span>测试性能</span></li>
+						<li><a href="http://visionmedia.github.io/mocha/" target="_blank">mocha</a><span>测试框架</span></li>
+					</ul>
+				</div>
+				<div class="ui_box mt10">
+					<h3 class="box_title">前端</h3>
+					<ul class="box_con info_list">
+						<li><a href="http://beforweb.com/front-end" target="_blank">前端个人博客</a><span>前端</span></li>
+						<li><a href="http://kb.cnblogs.com/page/129756/" target="_blank">浏览器工作原理</a><span>前端</span></li>
+						<li><a href="http://www.spoon.net/Browsers" target="_blank">浏览器沙箱环境</a><span>前端</span></li>
+						<li><a href="http://lab.lepture.com/nico/zh/" target="_blank">nico</a><span>文档生成工具</span></li>
+						<li><a href="http://www.smushit.com/ysmush.it/" target="_blank">smushit</a><span>Yahoo图片压缩</span></li>
+						<li><a href="http://www.w3help.org/zh-cn/causes/" target="_blank">W3help.org</a><span>Web标准推广网站</span></li>
+						<li><a href="http://ued.taobao.com/blog/" target="_blank">淘宝UED</a><span>前端</span></li>
+						<li><a href="http://errors.totorojs.org/" target="_blank">JavaScript 异常档案</a><span>前端</span></li>
+						<li><a href="http://ecd.tencent.com/css3/guide.html" target="_blank">腾讯ECD</a><span>css3</span></li>
+					</ul>
+				</div>
+				<div class="ui_box mt10">
+					<h3 class="box_title">牛逼网站</h3>
+					<ul class="box_con info_list">
+						<li><a href="https://developer.mozilla.org/zh-CN/" target="_blank">MOZILLA 开发者网络</a><span>前端</span></li>
+						<li><a href="http://kb.cnblogs.com/page/129756/" target="_blank">浏览器工作原理</a><span>前端</span></li>
+						<li><a href="http://www.pdfdo.com" target="_blank">在线PDF处理</a><span>PDF</span></li>
+						<li><a href="http://asciinema.org/a/5638" target="_blank">代码在线record</a><span>录制代码</span></li>
+						<li><a href="http://icomoon.io/" target="_blank">代码图标</a><span></span></li>
+					</ul>
+				</div>
+				<div class="ui_box mt10">
+					<h3 class="box_title">收藏文章</h3>
+					<ul class="box_con info_list">
+						<li><a href="http://www.extjs.org.cn/node/664" target="_blank">Sencha Touch和jQuery Mobile的比较</a><span>前端</span></li>
+					</ul>
+				</div>
+				<div class="ui_box mt10">
+					<h3 class="box_title">在线工具</h3>
+					<ul class="box_con info_list">
+						<li><a href="http://kangax.github.io/html-minifier/" target="_blank">HTML Minifier</a><span>前端工具</span></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript">
+	(function(){
+		if(![].indexOf){
+			Array.prototype.indexOf = function(ele){
+				for(var i = 0,_this = this,j = _this.length;i<j;i++){
+					if(_this[i] == ele){
+						return i;
+					}
+				}
+				return -1;
+			}
+		}
+	})();
+	//自动轮转
+	(function(){
+		var classArr = ['one','two','three','four','five','six'];
+		var delay = 2000;
+		function showDice(dice,_delay){
+			setTimeout(function(){
+				var cN = dice.className.split(/\s/);
+				if(cN.length > 1){
+					var toIndex = classArr.indexOf(cN[1]);
+					toIndex = toIndex == classArr.length-1?0:toIndex+1;
+				}else{
+					var toIndex = 1;
+				}
+				dice.className = 'dice '+classArr[toIndex];
+				setTimeout(arguments.callee,_delay);
+			},_delay);
+		}
+		function $(id){
+			return document.getElementById(id);
+		}
+		showDice($('dice'),delay);
+		showDice($('dice1'),delay+500);
+		showDice($('dice2'),delay*2);
+	})();
+	(function(){
+		$('.info_list li > a,.info_list > a').hover(function(){
+			$(this).attr('title',$(this).text()+'  ('+$(this).siblings().text()+')');
+		});
+	})();
+	</script>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-45496733-1', 'tonny-zhang.github.io');
+	  ga('send', 'pageview');
+
+	</script>
+	</body>
+</html>

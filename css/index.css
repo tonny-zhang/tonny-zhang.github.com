@@ -1,0 +1,106 @@
+@-webkit-keyframes flame{
+	0%,50%,100%{text-shadow: 0 0 4px white, 0 -5px 4px #FF3, 2px -10px 6px #FD3, 2px -15px 11px #F80, 2px -25px 18px #F20;}
+	20%,70%{text-shadow: -2px 0 4px white, -4px -5px 4px #FF3, -6px -10px 6px #FD3, -8px -15px 11px #F80, -10px -25px 18px #F20;}
+}
+@-moz-keyframes flame{
+	0%,50%,100%{text-shadow: 0 0 4px white, 0 -5px 4px #FF3, 2px -10px 6px #FD3, 2px -15px 11px #F80, 2px -25px 18px #F20;}
+	20%,70%{text-shadow: -2px 0 4px white, -4px -5px 4px #FF3, -6px -10px 6px #FD3, -8px -15px 11px #F80, -10px -25px 18px #F20;}
+}
+@-ms-keyframes flame{
+	0%,50%,100%{text-shadow: 0 0 4px white, 0 -5px 4px #FF3, 2px -10px 6px #FD3, 2px -15px 11px #F80, 2px -25px 18px #F20;}
+	20%,70%{text-shadow: -2px 0 4px white, -4px -5px 4px #FF3, -6px -10px 6px #FD3, -8px -15px 11px #F80, -10px -25px 18px #F20;}
+}
+@-o-keyframes flame{
+	0%,50%,100%{text-shadow: 0 0 4px white, 0 -5px 4px #FF3, 2px -10px 6px #FD3, 2px -15px 11px #F80, 2px -25px 18px #F20;}
+	20%,70%{text-shadow: -2px 0 4px white, -4px -5px 4px #FF3, -6px -10px 6px #FD3, -8px -15px 11px #F80, -10px -25px 18px #F20;}
+}
+@keyframes flame{
+	0%,50%,100%{text-shadow: 0 0 4px white, 0 -5px 4px #FF3, 2px -10px 6px #FD3, 2px -15px 11px #F80, 2px -25px 18px #F20;}
+	20%,70%{text-shadow: -2px 0 4px white, -4px -5px 4px #FF3, -6px -10px 6px #FD3, -8px -15px 11px #F80, -10px -25px 18px #F20;}
+}
+.flame{
+	-webkit-animation-name: flame;
+	-webkit-animation-duration: 3s;
+	-webkit-animation-fill-mode: both;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-iteration-count: infinite;
+
+	-moz-animation-name: flame;
+	-moz-animation-duration: 3s;
+	-moz-animation-fill-mode: both;
+	-moz-animation-timing-function: linear;
+	-moz-animation-iteration-count: infinite;
+
+	-ms-animation-name: flame;
+	-ms-animation-duration: 3s;
+	-ms-animation-fill-mode: both;
+	-ms-animation-timing-function: linear;
+	-ms-animation-iteration-count: infinite;
+
+	-o-animation-name: flame;
+	-o-animation-duration: 3s;
+	-o-animation-fill-mode: both;
+	-o-animation-timing-function: linear;
+	-o-animation-iteration-count: infinite;
+
+	animation-name: flame;
+	animation-duration: 3s;
+	animation-fill-mode: both;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
+.welcome{
+	font-size:34px;
+	display:block;
+	text-align:center;
+}
+.container{
+	width:100%;
+	width:980px\9;
+	margin:0 auto;
+	display: -webkit-box;
+	display: -moz-box;
+	display:box;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	-webkit-box-orient: horizontal;
+	box-orient: horizontal;
+	-webkit-box-pack:center;
+	-moz-box-pack:center;
+	box-pack:center;
+	-webkit-box-align:start;
+	-moz-box-align:start;
+	box-align:start;
+}
+#left{
+	min-width:200px;
+	float:left\9;
+	width:400px;
+}
+#right{
+	-webkit-box-flex:1;
+	-moz-box-flex:1;
+	-ms-box-flex:1;
+	-o-box-flex:1;
+	box-flex:1;
+	min-width:400px;
+	float:left\9;
+	width:560px\9;
+}
+.info_list{
+	line-height:25px;
+}
+.info_list .import{
+	font-weight:bold;
+	font-size:14px;
+}
+.info_list span{
+	color:#aaa;
+}
+.info_list span:before{
+	content:'　(';
+}
+.info_list span:after{
+	content:')';
+}
