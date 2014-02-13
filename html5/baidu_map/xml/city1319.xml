@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<tfinfo>
+  <citydata>
+	<tfprops name="汕尾" jd="115.6" wd="22.7" yx="3" url="http://www.weather.com.cn/html/weather/101282101.shtml" pos="2" info="22日19时40分在广东省汕尾市沿海登陆。" infoPos="1"/>
+	<tfprops name="福州" jd="119.303" wd="26.071" yx="0" url="http://www.weather.com.cn/weather/101230101.shtml" pos="1" />
+	<tfprops name="香港" jd="114.177" wd="22.307" yx="2" url="http://www.weather.com.cn/weather/101320101.shtml" pos="3" />
+	<tfprops name="高雄" jd="120.276" wd="22.619" yx="2" url="http://www.weather.com.cn/weather/101340201.shtml" pos="2" />
+  </citydata>
+</tfinfo>

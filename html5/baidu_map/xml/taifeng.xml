@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<tfsj>
+   <tfProps code="1305"  title="贝碧嘉(第05号，BEBINCA)" data="1305.xml" city="city1305.xml" incPoint="IncPoint1305.xml"/>
+   <tfProps code="1401"  title="玲玲(第01号台风LINGLING)" data="1401.xml" city="city1401.xml" incPoint="IncPoint1401.xml"/>
+   <tfProps code="1319"  title="天兔(第19号，USAGI)" data="1319.xml" city="city1319.xml" incPoint="IncPoint1319.xml"/>
+</tfsj>

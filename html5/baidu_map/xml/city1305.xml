@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<tfinfo>
+  <citydata>
+	<tfprops name="越南北部太平省沿海" jd="106.6" wd="20.4" yx="3" url="#" pos="1" info="“贝碧嘉”于23日22时30分前后在越南北部的太平省沿海" infoPos="4"/>
+	<tfprops name="海口" jd="110.343" wd="20.039" yx="0" url="http://www.weather.com.cn/weather/101310101.shtml" pos="3" />
+	<tfprops name="阳江" jd="111.923" wd="21.846" yx="0" url="http://www.weather.com.cn/weather/101281801.shtml" pos="2" />
+	<tfprops name="北海" jd="109.105" wd="21.485" yx="0" url="http://www.weather.com.cn/weather/101301301.shtml" pos="1" />
+  </citydata>
+</tfinfo>

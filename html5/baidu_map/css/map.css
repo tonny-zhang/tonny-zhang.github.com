@@ -1,0 +1,151 @@
+ul{
+	list-style:outside none none;
+	padding: 0;
+	margin: 0;
+}
+.fl{
+	float: left;
+}
+.fr{
+	float: right;
+}
+
+@-webkit-keyframes rotate 
+{
+	from {-webkit-transform: rotate(0deg);}
+	to {-webkit-transform: rotate(360deg);}
+}
+.rotate{
+	-webkit-animation-name:'rotate';
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function:linear;
+	/*-webkit-animation-direction: alternate;*/
+}
+
+.map_c div img{
+	float: left;
+}
+.anchorBL{
+	display: none;
+}
+.map{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: #A6C2DE;
+	font-size: 14px;
+}
+.map .loading{
+	width: 100px;
+	position: absolute;
+	left: 50%;
+	margin-left: -50px;
+	top: 50%;
+	margin-top: -20px;
+}
+.map .title{
+	color: white;
+	background: rgba(255,255,255,0.6);
+	border-radius: 5px;
+	border:1px solid white;
+	padding: 5px;
+	position: absolute;
+	z-index: 2;
+	left: 5px;
+	top: 20px;
+	color: #07076A;
+	border: 1px solid #07076A;
+	display: none;
+}
+.map .info{
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 2;
+	display: none;
+}
+.map .info div{
+	background: black;
+	color: yellow;
+}
+.map .info ul{
+	background: rgba(255,255,255,0.6);
+	color: #000;
+	padding: 0 3px;
+	display: none;
+}
+.map .info ul li{
+	overflow: hidden;
+}
+.map .info ul li span:first-child{
+	float: left;
+}
+.map .info ul li span:last-child{
+	float: right;
+}
+.map .info .btn{
+	background: #006633;
+	color: white;
+	padding: 3px 10px;
+	border-radius: 0 0 0 5px;
+}
+
+.map .tool_bar{
+	position: absolute;
+	z-index: 2;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 5px;
+	background: rgba(255,255,255,0.8);
+}
+
+.map .tool_bar .logo img{
+	height: 25px;
+	vertical-align: -7px;
+	margin-right: 4px;
+}
+
+.map .tool_bar .btn_reset,
+.map .tool_bar .btn_legend,
+.map .tool_bar .typhoon_list{
+	color: #07076A;
+	border: 1px solid #07076A;
+	padding: 3px;
+	position: relative;
+	margin-right: 10px;
+}
+.map .tool_bar .btn_legend img{
+	position: absolute;
+	z-index: 2;
+	right: 0;
+	bottom: 30px;
+	display: none;
+}
+.map .tool_bar .typhoon_list ul{
+	display: none;
+	position: absolute;
+	bottom: 31px;
+	right: 0;
+	width: 220px;
+	background: white;
+	overflow-x: hidden;
+	line-height: 25px;
+	border: 1px solid #07076A;
+	max-height: 352px;
+	overflow-y: auto;
+}
+.map .tool_bar .typhoon_list li{
+	padding: 3px;
+	border-bottom: 1px solid #07076A;
+}
+.map .tool_bar .typhoon_list li:last-child{
+	border: none;
+}
+.map .map_c{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
+}
