@@ -1,4 +1,9 @@
 !function(){
+	// 在手机上调试不可预知的错误
+	window.onerror = function(e){
+		alert(e);
+		return true;
+	}
 	var map;
 	var cache = {};
 	/*得到xml并缓存数据*/
