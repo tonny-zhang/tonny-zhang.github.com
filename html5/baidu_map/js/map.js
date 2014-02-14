@@ -28,6 +28,13 @@
 				        xmlDoc.async=false;
 				        xmlDoc.load(xmlURl);
 					}
+					var nodes = xmlDoc.childNodes;
+					if(nodes[0].nodeName.toLowerCase() == 'xml'){
+						xmlDoc = nodes[1];
+					}else{
+						xmlDoc = nodes[0];
+					}
+					// alert(xmlDoc.childNodes[0].nodeName);
 					endTiming();
 			        return xmlDoc;
 				}
