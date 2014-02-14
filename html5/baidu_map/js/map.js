@@ -3,20 +3,32 @@
 	var cache = {};
 	/*得到xml并缓存数据*/
 	var loadXML = (function(){
+		var loadTT;
+		var timeoutDelay = 2000;//超时时间
+		var timing = function(xmlUrl){
+			loadTT = setTimeout(function(){
+				alert('加载"'+xmlUrl+'"超时或出现错误！');
+			},timeoutDelay);
+		}
+		var endTiming = function(){
+			clearTimeout(loadTT);
+		}
 		try{
 			if (window.ActiveXObject){
 				return function(xmlURl){
+					timing(xmlURl);
 					var xmlDoc = cache[xmlURl];
 					if(!xmlDoc){
 						xmlDoc = new ActiveXObject('Msxml2.DOMDocument');
 				        xmlDoc.async=false;
 				        xmlDoc.load(xmlURl);
 					}
-					
+					endTiming();
 			        return xmlDoc;
 				}
 			}else if (document.implementation && document.implementation.createDocument){
 				return function(xmlURl){
+					timing(xmlURl);
 					var xmlDoc = cache[xmlURl];
 					if(!xmlDoc){
 						var xmlhttp = new window.XMLHttpRequest();
@@ -24,6 +36,7 @@
 				        xmlhttp.send(null);
 				        xmlDoc =  xmlhttp.responseXML.documentElement; 
 					}
+					endTiming();
 					return xmlDoc;
 				}
 			}else{
