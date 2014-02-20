@@ -1,0 +1,12 @@
+<html>
+<head>
+    <title>HTTP Live Streaming Example</title>
+</head>
+<body>
+    <video height="300" width="400">
+    	<source src="rtmp://s12345.cloudfront.net/cfx/st,mp4:video.mp4" type='rtmp/mp4' />
+    </video>
+</body>
+</html>
+For browsers that don’t support the HTML5 video element, or browsers that don’t support HTTP Live Streaming, you can include fallback code between the <video> and </video> tags. For example, you could fall back to a progressive download movie or an RTSP stream using the QuickTime plug-in. See Safari HTML5 Audio and Video Guide for examples.
+
