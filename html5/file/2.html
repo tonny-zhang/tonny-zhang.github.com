@@ -1,0 +1,80 @@
+<html>
+<head>
+  <title>HTML5操作文件</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+</head>
+<body>
+	<script type="text/javascript">// --unlimited-quota-for-files
+	// Note: The file system has been prefixed as of Google Chrome 12:  
+	window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem; //文件系统请求标识
+	window.resolveLocalFileSystemURL = window.resolveLocalFileSystemURL || window.webkitResolveLocalFileSystemURL; //根据URL取得文件的读取权限
+	function errorHandler(e) {
+	  var msg = '';
+		alert(e);
+	  switch (e.code) {
+	    case FileError.QUOTA_EXCEEDED_ERR:
+	      msg = 'QUOTA_EXCEEDED_ERR';
+	      break;
+	    case FileError.NOT_FOUND_ERR:
+	      msg = 'NOT_FOUND_ERR';
+	      break;
+	    case FileError.SECURITY_ERR:
+	      msg = 'SECURITY_ERR';
+	      break;
+	    case FileError.INVALID_MODIFICATION_ERR:
+	      msg = 'INVALID_MODIFICATION_ERR';
+	      break;
+	    case FileError.INVALID_STATE_ERR:
+	      msg = 'INVALID_STATE_ERR';
+	      break;
+	    default:
+	      msg = 'Unknown Error';
+	      break;
+	  };
+
+	  alert('Error: ' + msg);
+	}
+	// webkitStorageInfo.PERSISTENT
+	var permission = window.TEMPORARY;
+	window.webkitStorageInfo.queryUsageAndQuota(permission,function(used, remaining){
+        if(remaining == ""){
+            alert("未申请空间");
+            
+        }else{
+            alert("已经使用："+used);
+            alert("全部："+remaining);
+        }
+        window.requestFileSystem(permission, 5*1024*1024 /*5MB*/, function(fs){
+        	fs.root.getDirectory('catwrite_documents', {create: true}, function(dirEntry) {
+			      alert('You have just created the ' + dirEntry.name + ' directory.');
+			}, errorHandler); 
+			fs.root.getFile("info.txt", {create: true})
+			test();
+        }, errorHandler);
+    },errorHandler);
+    function test(){
+    	//temporary | persistent
+    	var url = "filesystem:http://" + window.location.host + "/temporary/";
+		window.resolveLocalFileSystemURL(url,function(fileEntry){                    
+		    alert(fileEntry);
+		    var dirReader = fileEntry.createReader();
+		    var readEntries = function(){
+		        dirReader.readEntries(function(results){
+		            if(!results.length){
+		                // create_file_title("默认文件", "");
+		                alert("没有文件！");
+		            }else{
+		                alert("读取到" + results.length + "个文件");
+		                for(var i = 0; i < results.length; i++){
+		                    alert(results[i].name);
+		                    alert(fileEntry+results[i].name);                            
+		                }
+		            }
+		        },errorHandler);
+		    };
+		    readEntries();
+		},errorHandler);
+    }
+	</script>
+</body>
+</html>

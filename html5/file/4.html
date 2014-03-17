@@ -1,0 +1,230 @@
+<html>
+<head>
+  <title>HTML5操作文件</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+</head>
+<body>
+	<script type="text/javascript">// --unlimited-quota-for-files
+	FileReferrence = function(callback) {
+		var self = this,
+			// reader = new FileReader(),
+			targetFile,
+			fileName,
+			fileType,
+			fileSystem,
+			fileContent,
+			fileURL;
+		// var grant = 'TEMPORARY';
+		var grant = 'PERSISTENT';
+		var base_url = "filesystem:http://" + window.location.host + "/"+grant.toLowerCase();
+		grant = window[grant];
+		function getPath(url){
+			return base_url + url;
+		}
+		this.clone = function(file) {
+			if (file == null) {
+				throw new Error('文件错误');
+			}
+			if (file.fileSize > 10 * 1024 * 1024) {
+				throw new Error('不能使用超过10M的素材');
+			}
+			if (file.type.match(/image/) == null) {
+				throw new Error('只能上传图片类素材');
+			}
+			targetFile = file;
+			fileSystem.root.getFile(file.name, {
+				create: true
+			}, fileEntry_cloneReadyHandler, errorHandler);
+		}
+
+		// var readStack = [];
+		// reader.onloadend = function(event) {
+		// 	console.log('complete:read', event.target,event.target.result);
+		// }
+		function orderRead(){
+			var url = readStack.shift();
+			window.webkitResolveLocalFileSystemURL(getPath(url), function(fileEntry){
+				fileEntry.file(function(file){
+					var reader = new FileReader();
+					reader.onloadend = function(event) {
+						console.log('complete:read', event.target,event.target.result);
+					}
+					// reader.readAsBinaryString(file);
+					reader.readAsText(file);
+				}, errorHandler);
+			});
+		}
+		this.read = function(url) {
+			window.webkitResolveLocalFileSystemURL(getPath(url), function(fileEntry){
+				fileEntry.file(function(file){
+					var reader = new FileReader();
+					reader.onloadend = function(event) {
+						console.log('complete:read', url,event.target.result);
+						reader.onloadend = null;
+						reader = null;
+					}
+					reader.readAsText(file);
+				}, errorHandler);
+			});
+		}
+
+		this.readDir = function(dir,notShowSam){
+			var _this = this;
+			window.webkitResolveLocalFileSystemURL(getPath(dir), function(fileEntry){
+				var dirReader = fileEntry.createReader();
+				var readEntries = function(){
+			        dirReader.readEntries(function(results){
+			            if(!results.length){
+			                // create_file_title("默认文件", "");
+			                
+			                if(!notShowSam){
+			            		console.log("没有文件！");
+			            	}
+			            }else{
+			            	// if(!notShowSam){
+			            	// 	console.log("读取到" + results.length + "个文件");
+			            	// }
+			                
+			                for(var i = 0; i < results.length; i++){
+			                	var entry = results[i];
+			                	if(entry.isDirectory){
+			                		// readEntries
+			                		console.log('(D)',entry.fullPath);
+			                		_this.readDir(entry.fullPath,true);
+			                	}else{
+			                		console.log('(F)',entry.fullPath);
+			                		_this.read(entry.fullPath);
+			                	}
+			                    // console.log(entry.name,entry);
+			                    // getFileContentByName(fileEntry, results[i].name);                            
+			                }
+			            }
+			        },errorHandler);
+			    };
+			    readEntries();
+			});
+		}
+		this.save = function(name, content, type) {
+			fileName = name;
+			fileContent = content;
+			fileType = type || 'text/plain';
+			fileSystem.root.getFile(fileName, {
+				create: true,
+				exclusive: false
+			}, fileEntry_saveReadyHandler, errorHandler);
+		}
+		this.creadDir = function(dir){
+			fileSystem.root.getDirectory(dir, {create: true}, function(dirEntry) {
+			      console.log('created dir: ' + dirEntry.name);
+			}, errorHandler); 
+		}
+		function fileSystemReadyHandler(fs) {
+			fileSystem = fs;
+			callback && callback();
+		}
+
+		function fileEntry_cloneReadyHandler(fileEntry) {
+			fileURL = fileEntry.toURL();
+			fileEntry.createWriter(fileWriter_cloneReadyHandler, errorHandler);
+		}
+
+		function fileEntry_saveReadyHandler(fileEntry) {console.log(fileEntry);
+			fileURL = fileEntry.toURL();
+			fileEntry.createWriter(fileWriter_saveReadyHandler, errorHandler);
+		}
+
+		function fileEntry_removeReadyHandler(fileEntry) {
+			fileEntry.remove(fileRemoveHandler, errorHandler);
+		}
+
+		function fileWriter_cloneReadyHandler(fileWriter) {
+			fileWriter.onwriteend = function(e) {
+				console.log('Write completed.');
+				console.log('complete:clone', fileURL);
+			};
+			fileWriter.onerror = function(e) {
+				console.log('Write failed: ' + e.toString());
+			};
+			fileWriter.write(targetFile);
+			targetFile = null;
+		}
+
+		function fileWriter_saveReadyHandler(fileWriter) {
+			fileWriter.onwriteend = function(event) {
+				console.log('Write completed.');
+				console.log('complete:save', fileURL);
+			};
+			fileWriter.onerror = function(error) {
+				console.log('Write failed: ' + error.toString());
+			};
+
+
+			var blob,
+				byteArray
+				i = len = 0;
+			if (/text/i.test(fileType)) {
+				blob = new Blob([fileContent]);
+			} else {
+				len = fileContent.length;
+				byteArray = new Uint8Array(len);
+
+				for (; i < len; i++) {
+					byteArray[i] = fileContent.charCodeAt(i) & 0xFF;
+				}
+				blob = new Blob([byteArray], {type: fileType});
+			}
+			fileWriter.write(blob);
+			fileContent = null;
+		}
+
+		function fileRemoveHandler() {
+			console.log('Removed: ' + fileName);
+			self.save(fileName, fileContent, fileType);
+		}
+
+		function errorHandler(error) {
+			console.log('Error: ' + error.code, Error);
+			if (error.code == FileError.INVALID_MODIFICATION_ERR) {
+				fileSystem.root.getFile(fileName, {
+					create: false
+				}, fileEntry_removeReadyHandler, errorHandler);
+			}
+		}
+		// _.extend(this, Backbone.Events);
+		// window.webkitStorageInfo.requestQuota(grant,function(used, remaining){
+	 //        if(remaining == ""){
+	 //            console.log("未申请空间");
+	            
+	 //        }else{
+	 //            console.log("已经使用："+used);
+	 //            console.log("全部："+remaining);
+	 //        }
+	 //    },errorHandler);
+	 	// window.webkitRequestFileSystem(grant, 128 * 1024 * 1024, fileSystemReadyHandler, errorHandler)
+		window.webkitStorageInfo.requestQuota(grant, 128 * 1024 * 1024, function(grantedBytes) {
+			// console.log(arguments);
+		  window.webkitRequestFileSystem(grant, grantedBytes, fileSystemReadyHandler, errorHandler);
+		}, function(e) {
+		  console.log('Error', e);
+		});
+
+		// window.webkitStorageInfo.requestQuota(grant, 128 * 1024 * 1024, function(grantedBytes) {
+		// 	console.log(arguments);
+		//   window.webkitRequestFileSystem(grant, grantedBytes, fileSystemReadyHandler, errorHandler);
+		// }, function(e) {
+		//   console.log('Error', e);
+		// });
+	}
+
+	var file = new FileReferrence(function(){
+		// 复制文件到本地
+		// file.clone(file);
+		// 保存内容到指定文件
+		// file.save('catwrite_documents/temp.txt', '你好');
+		file.creadDir('/hello/');
+		file.save('/hello/1.log','1abc');
+		file.readDir('/');
+	});
+	</script>
+</body>
+</html>

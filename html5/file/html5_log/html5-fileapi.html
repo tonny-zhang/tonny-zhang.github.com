@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>   
+<html>   
+   <head>   
+	 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+     <title>HTML5 File API实现客户端log</title>   
+    <style type="text/css">
+		@import "dojo161/dijit/themes/claro/document.css";
+		
+		table{
+			padding: 0; 
+			margin: 0; 
+			border-collapse: collapse;
+			width:500px;
+		}
+		th { 
+			font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; 
+			color: #4f6b72; 
+			border: 1px solid #C1DAD7; 
+			letter-spacing: 2px; 
+			text-transform: uppercase; 
+			text-align: center; 
+			padding: 6px 6px 6px 12px; 
+			background: #CAE8EA  no-repeat; 
+		}
+		td { 
+			border: 1px solid #C1DAD7; 
+			background: #fff; 
+			font-size:11px; 
+			padding: 6px 6px 6px 12px; 
+			color: #4f6b72; 
+		} 
+		
+		.item{
+			margin-bottom:10px;
+		}
+		
+		.item label{
+			font-weight:bold;
+			margin-right:10px;
+		}
+
+	</style>
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="dojo161/dijit/themes/claro/claro.css"/>
+
+	<!-- required: dojo.js -->
+		
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js" data-dojo-config="parseOnLoad: true, isDebug: true"></script>
+	<script type="text/javascript" src="HTML5Log.js"></script>
+	<script type="text/javascript">
+		dojo.require("dijit.dijit"); // optimize: load dijit layer
+		dojo.require("dijit.form.Button");
+		
+		
+		var logger = null;
+		window.webkitStorageInfo.requestQuota(PERSISTENT, 1024*1024*10/*10MB*/, function(grantedBytes) {
+			console.log(grantedBytes);
+			logger = new html5.Log(grantedBytes);
+			logger.setLogLevel(4);
+		});
+		
+		
+		function sum(a,b){
+			logger.entry("Enter function sum","a="+a+",b="+b);
+			var result = a+b;
+			logger.debug("function sum,line 66","The result is:",result);
+			logger.exit("Exit function sum");
+			return result;
+		}
+		
+		function sub(a,b){
+			logger.entry("Enter function sub","a="+a+",b="+b);
+			var result = a-b;
+			logger.debug("function sub,line 74","The result is:",result);
+			logger.exit("Exit function sub");
+			return result;
+		}
+		
+		function mul(a,b){
+			logger.entry("Enter function mul","a="+a+",b="+b);
+			var result = a*b;
+			logger.debug("function mul,line 82","The result is:",result);
+			logger.exit("Exit function mul");
+			return result;
+		}
+		
+		function div(a,b){
+			logger.entry("Enter function div","a="+a+",b="+b);
+			var result = a/b;
+			logger.debug("function div,line 90","The result is:",result);
+			logger.exit("Exit function div");
+			return result;
+		}
+		
+		function runCase(){
+			sum(2,3);
+			sub(2,3);
+			mul(2,3);
+			div(2,3);
+		}
+		
+		function listLogFiles(){
+			html5.log.manager().listLogFiles();
+		}
+		
+	</script>
+   </head>   
+   <body class="claro">   
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="onClick:runCase">写日志</button>
+		<button data-dojo-type="dijit.form.Button" data-dojo-props="onClick:listLogFiles">显示日志列表</button>
+		<div id="filelist" style="margin:50px;padding:0"></div>
+		
+   </body>   
+  
+</html>   
