@@ -5,8 +5,8 @@
 
 		var video_info = [];
 		video_info.push({'poster':'9639.jpg','video':'http://61.4.185.122/webcam/v/SWEeyes04_24H_201403181638.mp4','text': '文字一'});
-		video_info.push({'poster':'22.jpg','video':'http://61.4.185.122/webcam/v/SWEeyes04_24H_201403181638.mp4','text': '文字二'});
-		video_info.push({'poster':'44.jpg','video':'http://61.4.185.122/webcam/v/SWEeyes04_24H_201403181638.mp4','text': '文字三'});
+		video_info.push({'poster':'22.jpg','video':'http://61.4.185.122/webcam/v/SWEEYESBJ02_24H_201403182258.mp4','text': '文字二'});
+		video_info.push({'poster':'44.jpg','video':'http://61.4.185.122/webcam/v/SWEEYESBJ01_24H_201403201259.mp4','text': '文字三'});
 		video_info.push({'poster':'55.jpg','video':'http://61.4.185.122/webcam/v/SWEeyes04_24H_201403181638.mp4','text': '文字四'});
 		video_info.push({'poster':'333.jpg','video':'http://61.4.185.122/webcam/v/SWEeyes04_24H_201403181638.mp4','text': '文字五'});
 		video_info.push({'poster':'66.jpg','video':'http://61.4.185.122/webcam/v/SWEeyes04_24H_201403181638.mp4','text': '文字六'});

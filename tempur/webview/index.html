@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  	<title>摇一摇</title>
+</head>
+<body>
+	
+	<script type="text/javascript" src="http://i.tq121.com.cn/j/jquery-1.8.2.js"></script>
+	<script type="text/javascript">
+	!function(){
+		// 格式化数字
+		function fixNum(num,digit){
+			digit = digit || 2;
+			var biggerNum = Math.pow(10,digit-1);
+			if(num < biggerNum){
+				var str = '';
+				for(var i = 0;i<digit-1;i++){
+					str += '0';
+				}
+				num = str+num;
+			}
+			return num;
+		}
+		// 到计时
+		function countdown(){
+			var currentTime = new Date();
+			var remainMinutes = 59 - currentTime.getMinutes();
+			var remainSeconds = 60 - currentTime.getSeconds();
+
+			console.log('00:'+fixNum(remainMinutes)+':'+fixNum(remainSeconds));
+		}
+
+		// setInterval(countdown,1000);
+
+		// 得到总数
+		$.getJSON('./php/counter.php',function(num){
+			console.log(fixNum(num,5));
+		});
+	}()
+	</script>
+</body>
+</html>
