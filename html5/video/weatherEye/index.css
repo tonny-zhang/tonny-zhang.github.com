@@ -1,0 +1,95 @@
+/* 这里定义浏览器重复样式 */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,p,blockquote,th,td,
+article, aside, summary, details, figcaption, figure, footer, header, hgroup, menu, nav, section{ 
+	margin: 0; 
+	padding: 0;
+}
+article, aside, summary, details, figcaption, figure, footer, header, hgroup, menu, nav, section{
+  display: block;
+}
+table{ 
+	border-collapse:collapse; 
+	border-spacing:0;
+}
+fieldset,img { 
+	border: 0; 
+	vertical-align: middle;
+}
+address,caption,cite,code,dfn,em,strong,th,var { 
+	font-style: normal; 
+	font-weight: normal;
+}
+ul,ol{
+	/*
+	IE6 IE7 IE8(Q) 中如果列表元素设置 'list-style-type:none' 时 'list-style-position:inside' 设置产生的标记框不消失，依然占据布局位置。
+	http://www.w3help.org/zh-cn/causes/RG1002
+	*/
+	list-style:outside none none;
+}
+q:before,q:after { 
+	content: '';
+}
+abbr,acronym { 
+	border: 0;
+}
+input, button, select{ 
+	vertical-align: middle;
+}
+/*常用样式及整体风格*/
+
+/*常用样式*/
+.fl{
+	float: left;
+	display: inline;
+}
+.fr{
+	float: right;
+	display: inline;
+}
+
+body{
+	overflow: hidden;
+}
+.video-player{
+	width: 60%;
+	height: 100%;
+	/*background: #ccc;*/
+}
+.video-list{
+	width: 40%;
+	height: 100%;
+	position: relative;
+	/*margin-top: 60px;*/
+	/*margin-top: -15px;
+	margin-left: -50px;*/
+}
+.video-list div{
+	/*width: 46%;*/
+	/*margin: 2%;*/
+	position: absolute;
+}
+.video-list em{
+	width: 100%;
+	height: 100%;
+	border: 2px solid #F45E5F;
+	position: absolute;
+	left: -2px;
+	top: -2px;
+	z-index: 100;
+}
+.video-list div img{
+	width: 100%;
+	height: 100%;
+}
+.video-list div span{
+	position: absolute;
+	display: inline;
+	bottom: 3px;
+	left: 3px;
+	background: rgba(48,48,48,.5);
+	color: #eee;
+	font-weight: bold;
+	text-align: center;
+	padding: 5px;
+	border-radius: 5px;
+}
