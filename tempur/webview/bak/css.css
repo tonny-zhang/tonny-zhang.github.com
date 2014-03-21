@@ -49,7 +49,7 @@ a:hover { color:#F60; text-decoration:underline; }
 .xq a
 {width:50px;
 	height:50px;
-
+	background:#ccc;
 	display:block;}
 .hdxq
 {
@@ -223,7 +223,7 @@ a:hover { color:#F60; text-decoration:underline; }
 {
 	background:url(images/jiang.jpg) no-repeat;
 	background-size:cover;
-	height:620px;
+	height:504px;
 	width:100%;
 	overflow:hidden;
 	position:relative;
@@ -473,9 +473,8 @@ a:hover { color:#F60; text-decoration:underline; }
 #img_num{
 	position: absolute;
 	bottom: 90px;
-	left: 10px;
+	left: 50%;
 	padding: 3px;
-	width:158px;
 }
 
 .content
@@ -493,11 +492,11 @@ a:hover { color:#F60; text-decoration:underline; }
 {
 	text-align:center;
 	margin-bottom:40px;
-	font-size:22px;
-	padding-top:100px;}
+	font-size:30px;
+	padding-top:50px;}
 .content h2
 {
-	font-size:18px;
+	font-size:26px;
 	color:#4bc8fc;
 	font-weight:bold;
 	text-align:center;}
@@ -513,13 +512,14 @@ background-size:cover;
 .big_small h1
 {
 	font-size:30px;
-	
+	padding-top:50px;
+	margin-bottom:20px;
 padding-left:5%;}
 .big_small p
 {
 font-size:16px;
 height:auto;
-text-align:center;
+padding-left:5%;
 line-height:30px;}
 
 
@@ -542,17 +542,3 @@ line-height:30px;}
 	width: 100%;
 	overflow-x: auto;
 }
-.djs
-{
-position:absolute;
-bottom:150px;
-left:10px;}
-.hd
-{
-bottom:100px;
-position:absolute;
-right:10px;
-}
-.big_small p img
-{
-width:100%;}

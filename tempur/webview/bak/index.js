@@ -1,13 +1,3 @@
-function run(){
-			var s = document.getElementById("dd");
-			if(s.innerHTML == 0){
-			//alert("a");
-			return false;
-			}
-			s.innerHTML = s.innerHTML * 1 - 1;
-			}
-		
-
 $(function(){
 	$(".hdxq h1 span img").click(function(){
 		$("#show_info").hide();
@@ -39,9 +29,6 @@ $(function(){
 	// 到计时
 	function countdown(){
 		var currentTime = new Date();
-		
-		//var hour=currentTime.getHours(); 
-		//alert(hour);
 		var remainMinutes = 59 - currentTime.getMinutes();
 		var remainSeconds = 60 - currentTime.getSeconds();
 
@@ -50,21 +37,7 @@ $(function(){
 		checkAction();
 	}
 	var countdown_tt = setInterval(countdown);
-     
-	
-	
-	
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	function checkAction(){
 		if(new Date().getMinutes() <= 3 || true){
 			clearInterval(countdown_tt);
@@ -74,7 +47,6 @@ $(function(){
 				$step2.hide();
 				$('.box').show();
 				runYao();
-				window.setInterval("run();", 1000);
 			});
 		}else{
 			// 不可以摇
@@ -161,30 +133,25 @@ $(function(){
 	    	var num = getImgArr.length;;
 	    	$img_num.html("您已经摇出"+num+"/18,继续努力！");
 	    	if(num >= 18){
-	    	    
 	    		getAwards(true);
 				window.removeEventListener('devicemotion', deviceMotionHandler, false);
-				
 			}else{
-		
 				noNumCB && noNumCB();
-				
 			}
 	    }
-	    var award_arr = ['images/j1.jpg','images/j2.jpg','images/j3.jpg','images/j4.jpg']
 	    function getAwards(isBig){
 			$.getJSON('./php/counter.php?add=1');
 			var $big_small = $('.big_small');
-			var award_img;
 	    	if(isBig){
 	    		var text = '恭喜您获得TEMPUR体验大奖';
-	    		award_img = 'images/bigjiang.jpg';
 	    	}else{
 	    		var text = '恭喜您获得TEMPUR鼓励奖';
-	    		award_img = randArr(award_arr);
+	    		var $p_arr = $big_small.find('p');
+				var $rand_p = $(randArr($p_arr));
+				$rand_p.html($rand_p.html().replace(/^\d、?/,''));
+				$p_arr.remove();
+				$rand_p.appendTo($big_small);
 	    	}
-
-	    	$big_small.append('<p><img src="'+award_img+'"></p>');
 			$('.box').hide();
 			var $content = $('.content').show();
 			$content.find('h1').text(text);
@@ -199,21 +166,21 @@ $(function(){
 			});
 			// var cont=$(".content h1 img").attr('src');
 			//alert(cont);
-			$('#btn_share').attr('target','_blank').attr('href',share(location.href,'我在Tempur泰普尔微信摇一摇“享睡十八式”游戏中获得Tempur专享礼券，参与即可获奖，集齐18种睡姿更多奖品等着你！赶快来参加吧~~','http://html5cn.com.cn/webview/images/yao.jpg'));
+			$('#btn_share').click(function(){
+				share(location.href,'我在Tempur泰普尔微信摇一摇“享睡十八式”游戏中获得Tempur专享礼券，参与即可获奖，集齐18种睡姿更多奖品等着你！赶快来参加吧~~','http://html5cn.com.cn/webview/images/yao.jpg');
+			});
 	    }
 		if (window.DeviceMotionEvent) {
             window.addEventListener('devicemotion', deviceMotionHandler, false);
         } else {
-            alert('对不起，不支持您的手机型号！');
+            alert('not support mobile event');
         }	
 		
 		setTimeout(function(){
 			checkImgNum(getAwards);
-		},100*60*5);
+		},1000*60*5);
 	}
 	function share(url,title,pic){
-		return 'http://service.t.sina.com.cn/share/share.php?url='+url+'&title='+title+'&pic='+pic;
+		window.location = 'http://service.t.sina.com.cn/share/share.php?url='+url+'&title='+title+'&pic='+pic;
 	}
 })
-
-
