@@ -184,6 +184,7 @@ $(function(){
 	    		award_img = randArr(award_arr);
 	    	}
 
+	    	$big_small.find('p').remove();
 	    	$big_small.append('<p><img src="'+award_img+'"></p>');
 			$('.box').hide();
 			var $content = $('.content').show();
