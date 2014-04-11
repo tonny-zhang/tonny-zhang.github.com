@@ -1,6 +1,8 @@
 body{
-	background-color: #0091d0;
-	font-family: "微软雅黑"
+	/*background-color: #0091d0;*/
+	font-family: "微软雅黑";
+	padding: 0;
+	margin: 0;
 }
 .fl{
 	display: inline;
@@ -23,6 +25,7 @@ body{
 	width: 1280px;
 	height: 720px;
 	margin: 0 auto;
+	overflow: hidden;
 }
 #loading{
 	width: 340px;
@@ -34,4 +37,73 @@ body{
 	margin-left: -170px;
 	top: 50%;
 	margin-top: -30px;
+	display: none;
+}
+#main{
+	width: 100%;
+	height: 100%;
+}
+section{
+	/*border: 1px solid #C6E0F7;*/
+	margin-bottom: 10px;
+}
+section article{
+	font-size: 30px;
+	font-weight: bold;
+	padding: 3px 10px 5px;
+	margin-bottom: 10px;
+	background-color: rgba(10, 10, 10, .15);
+	background-image: url(img/bg_title.png);
+	background-repeat: repeat-x;
+}
+section article img{
+	vertical-align: -13px;
+}
+section article span{
+	font-size: 16px;
+	color: #333;
+}
+section p{
+	padding: 3px 10px;
+}
+
+#chart{
+	width: 40%;
+	height: 280px;
+	margin-left: 50px;
+}
+#chart_temp{
+	height: 350px;;
+	clear: both;
+}
+#desc{
+	color: #383838;
+	width: 45%;
+	font-weight: bold;
+	font-size: 20px;
+	background: url(img/bg_desc.png) repeat-x;
+	border-radius: 5px;
+	padding: 15px;
+	margin-left: 50px; 
+}
+#desc span{
+	font-size: 26px;
+	color: #be0c00;
+}
+#desc p{
+	font-size: 16px;
+	color: #333;
+	margin: 30px 0 0;
+	padding: 0;
+	font-weight: normal;
+}
+#desc p span{
+	font-weight: bold;
+	font-size: 16px;
+	color: #F05133;
+
+}
+#desc p a{
+	color: #0062CA;
+	text-decoration: none;
 }

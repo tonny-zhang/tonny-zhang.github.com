@@ -1,6 +1,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <title>数据统计</title>
     <link rel="stylesheet" type="text/css" href="./index.css" />
     <script type="text/javascript" src="http://mobile.weather.com.cn/js/jquery-1.8.2.js"></script>
@@ -11,18 +12,20 @@
 	<div class="container">
 		<div id="loading">正在努力加载...</div>
 		<div id="main">
-			<section>
-				<header>历史天气统计 <span>(2014-01-01到2014-03-01)</span></header>
-				<section>
+			<section class="clear">
+				<article><img src="img/text.png"/> <span>(2014-01-01到2014-03-01)</span></article>
+				<div id="chart" class="fl">
 
-				</section>
+				</div>
+				<p id="desc" class="fl"></p>
+				<div id="chart_temp">
+					
+				</div>
 			</section>
-			<section>
-				<header>历史天气综述 <span>(2014-01-01到2014-03-01)</span></header>
-				<section>
-
-				</section>
-			</section>
+			<!-- <section>
+				<article>历史天气综述 <span>(2014-01-01到2014-03-01)</span></article>
+				<p>自2014-01-01到2014-03-01,共出现了100个睛天，多去321天</p>
+			</section> -->
 		</div>
    </div>
 </body>
