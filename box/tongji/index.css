@@ -48,19 +48,20 @@ section{
 	margin-bottom: 10px;
 }
 section article{
-	font-size: 30px;
+	font-size: 34px;
 	font-weight: bold;
 	padding: 3px 10px 5px;
 	margin-bottom: 10px;
 	background-color: rgba(10, 10, 10, .15);
 	background-image: url(img/bg_title.png);
 	background-repeat: repeat-x;
+	text-indent: 20px;
 }
 section article img{
 	vertical-align: -13px;
 }
 section article span{
-	font-size: 16px;
+	font-size: 20px;
 	color: #333;
 }
 section p{
@@ -80,18 +81,20 @@ section p{
 	color: #383838;
 	width: 45%;
 	font-weight: bold;
-	font-size: 20px;
+	font-size: 24px;
 	background: url(img/bg_desc.png) repeat-x;
+	background-color: #f5fbff;
 	border-radius: 5px;
 	padding: 15px;
 	margin-left: 50px; 
+	margin-top: 10px;
 }
 #desc span{
 	font-size: 26px;
 	color: #be0c00;
 }
 #desc p{
-	font-size: 16px;
+	font-size: 20px;
 	color: #333;
 	margin: 30px 0 0;
 	padding: 0;

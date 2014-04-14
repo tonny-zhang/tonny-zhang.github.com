@@ -1,6 +1,6 @@
 !function(){
 	var style = {
-        fontSize: '18px'
+        fontSize: '22px'
     };
 	$.getJSON('./data/all.json',function(data){
 		var xArr = [],
