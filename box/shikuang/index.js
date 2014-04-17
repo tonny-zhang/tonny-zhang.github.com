@@ -114,7 +114,6 @@
                 })
             },
             title: {
-                text: '温度',
                 style: $.extend({},style,{
                     color: COLOR_TEMP,
                 })
@@ -123,7 +122,6 @@
         }, { // Secondary yAxis
             allowDecimals: false,
             title: {
-                text: '降水量',
                 style: $.extend({},style,{
                     color: COLOR_JS,
                 })
@@ -139,7 +137,6 @@
         }, { // Secondary yAxis
             allowDecimals: false,
             title: {
-                text: '湿度',
                 style: $.extend({},style,{
                     color: COLOR_SD,
                 })
@@ -154,7 +151,6 @@
         }, { // Secondary yAxis
             allowDecimals: false,
             title: {
-                text: '风速',
                 style: $.extend({},style,{
                     color: COLOR_WIND,
                 })
@@ -180,7 +176,9 @@
             // y: 100,
             // floating: true,
             backgroundColor: '#FFFFFF',
-            itemStyle: style
+            itemStyle: {
+                fontSize: '24px'
+            }
         },
         series: [],
         plotOptions: {

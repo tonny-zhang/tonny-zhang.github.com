@@ -1,0 +1,29 @@
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <title>现在天气</title>
+    <link rel="stylesheet" type="text/css" href="./index.css" />
+    <script type="text/javascript" src="http://mobile.weather.com.cn/js/jquery-1.8.2.js"></script>
+</head>
+<body>
+    <!-- <div style="position:absolute;left:100px;top:100px;background:red;width:100px;height:100px;z-index:10001">
+        <div class="weatherOverlay" style="-webkit-user-select: none; ">
+            <div id="test">
+                <span><img src="http://www.weather.com.cn/m/i/weatherpic/29x20/d1.gif"/><i>-111℃</i><b></b><a></a></span><ul><li>本站气压:</li><li>风向:</li><li>风速:</li><li>相对温度:</li><li>当前时刻能见度:</li><li>观测前1小时降水量:</li><li>24小时最高气温:</li><li>24小时最低气温:</li></ul>
+            </div>
+        </div>
+    </div> -->
+    <div id="main">
+        <h1>现在天气</h1>
+        <!-- <div id="logo"><img src="img/logo.png"/>国家预警发布中心</div> -->
+        <div id="loading">正在努力加载...</div>
+        <div id="map"></div>
+        <div id="info_list">
+            <div><span></span></div>
+            <ul>正在加载。。。</ul>
+        </div>
+    </div>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=E8MDMS4BVFEMeAxVP3YddQ6X"></script>
+    <script type="text/javascript" src="index.js"></script>
+</body>
+</html>

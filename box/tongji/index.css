@@ -64,6 +64,12 @@ section article span{
 	font-size: 20px;
 	color: #333;
 }
+section article span.fr{
+	margin-top: 15px;
+}
+section article span.fr span{
+	color: #F05133;
+}
 section p{
 	padding: 3px 10px;
 }
@@ -79,7 +85,7 @@ section p{
 }
 #desc{
 	color: #383838;
-	width: 45%;
+	width: 49%;
 	font-weight: bold;
 	font-size: 24px;
 	background: url(img/bg_desc.png) repeat-x;
@@ -88,6 +94,7 @@ section p{
 	padding: 15px;
 	margin-left: 50px; 
 	margin-top: 10px;
+	margin-right: 10px;
 }
 #desc span{
 	font-size: 26px;

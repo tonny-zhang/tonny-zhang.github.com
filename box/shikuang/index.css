@@ -23,17 +23,18 @@ body{
 	width: 1280px;
 	height: 720px;
 	margin: 0 auto;
+	position: relative;
 }
 #loading{
-	width: 340px;
-	height: 30px;
+	width: 400px;
 	font-size: 50px;
 	line-height: 30px;
 	position: absolute;
 	left: 50%;
-	margin-left: -170px;
+	margin-left: -200px;
 	top: 50%;
 	margin-top: -30px;
+	text-align: center;
 }
 #main{
 	/*min-width: 1080px;*/
