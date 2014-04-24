@@ -1,4 +1,5 @@
 !function(){
+    $('.top_right').width($('#main').width()-288-15);
     var yjlb = ['台风', '暴雨', '暴雪', '寒潮', '大风', '沙尘暴', '高温', '干旱', '雷电', '冰雹', '霜冻', '大雾', '霾', '道路结冰'];
     var gdlb = ['寒冷', '灰霾', '雷雨大风', '森林火险', '降温', '道路冰雪','干热风','低温','冰冻'];
     var yjyc = ['蓝色', '黄色', '橙色', '红色'];
@@ -9,11 +10,36 @@
     var currentCityId = '101010100';//'101280902';
     // var currentCityId = '101281108';
     /*加载实况信息*/
-    var ajax_sk = $.getJSON('http://mobile.weather.com.cn/data/sk/'+currentCityId+'.html');
+    var ajax_sk = $.getJSON('http://mobile.weather.com.cn/data/sk/'+currentCityId+'.html',function(sk_data){
+        if(sk_data && sk_data.sk_info){
+            var data = sk_data.sk_info;
+            var date_str = '';
+            var date = data.date;
+            var m = /\d{4}(\d{2})(\d{2})/.exec(date);
+            if(m){
+                date_str += m[1]+'月'+m[2]+'日<br/>'; 
+            }
+            date_str += data.time;
+            $('.date').html(date_str);
+            var temp = data.temp;
+            $('.value b').text(temp);
+            $('.value span:first').text('体感温度：'+temp);
+            $('.value span:eq(1)').text('相对温度：'+data.sd);
+            $('.value span:eq(2)').text('舒适度：'+'较舒适');
+            $('.wind .text').text(data.wd);
+            $('.wind .text_inner').text(data.ws);
+            $('body').addClass('loaded ');
+            // -50- 9 |0 -49 |5 - 68
+            var height = 50 + parseFloat(temp)*(19/25);
+            $('.temp span').height(height);
+        }else{
+            $('#loading').text('出现错误！');
+        }
+    });
     var ajax_alarm = $.getScript('http://product.weather.com.cn/alarm/grepalarm.php?areaid='+currentCityId+'&type=[0-9]{2}&count=1');
     var ajax_line = $.getJSON('http://mobile.weather.com.cn/data/UsedLive/'+currentCityId+'.html');
-    var der = $.when(ajax_sk,ajax_line,ajax_alarm);
-    der.done(function(sk_data,line_data){
+    var der = $.when(ajax_line,ajax_alarm);
+    der.done(function(line_data){
         var hasAlarm = false;
         if(alarminfo && alarminfo.data.length > 0){
             var data = alarminfo.data[0];
@@ -48,40 +74,13 @@
             }
         }
         
-        sk_data = sk_data[0];
-        if(sk_data && sk_data.sk_info){
-            var data = sk_data.sk_info;
-            var date_str = '';
-            var date = data.date;
-            var m = /\d{4}(\d{2})(\d{2})/.exec(date);
-            if(m){
-                date_str += m[1]+'月'+m[2]+'日<br/>'; 
-            }
-            date_str += data.time;
-            $('.date').html(date_str);
-            var temp = data.temp;
-            $('.value b').text(temp);
-            $('.value span:first').text('体感温度：'+temp);
-            $('.value span:eq(1)').text('相对温度：'+data.sd);
-            $('.value span:eq(2)').text('舒适度：'+'较舒适');
-            $('.wind .text').text(data.wd);
-            $('.wind .text_inner').text(data.ws);
-            $('body').addClass('loaded ');
-            // -50- 9 |0 -49 |5 - 68
-            var height = 50 + parseFloat(temp)*(19/25);
-            $('.temp span').height(height);
-            $('.top_right').width($('#main').width()-288-15);
-            var toHeight = 700 - $('.top_container').height() - 56 - 10;
-            if(hasAlarm){
-                toHeight = toHeight - $('.alarm').outerHeight() - 10;
-            }
-            $('#line').height(toHeight);
-        }else{
-            $('#loading').text('出现错误！');
-            setTimeout(function(){
-                location.reload();
-            },1000);
+            
+        var toHeight = 700 - $('.top_container').height() - 56 - 10;
+        if(hasAlarm){
+            toHeight = toHeight - $('.alarm').outerHeight() - 10;
         }
+        $('#line').height(toHeight);
+        
         renderLine.apply(null,line_data);
     });
     var COLOR_TEMP = '#F3715C';
@@ -303,5 +302,4 @@
     setTimeout(function(){
         location.reload();
     },1000*60*10);
-}()
-
+}();

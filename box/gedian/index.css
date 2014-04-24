@@ -89,9 +89,9 @@ ul{
 	font-size: 22px;
 	overflow: hidden;
 	line-height: 30px;
+    display: none;
 }
 #info_list ul{
-
 }
 #info_list div{
 	font-size: 18px;

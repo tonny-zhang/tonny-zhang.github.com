@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>WeatherBox</title>
+		<link rel="stylesheet" type="text/css" href="css/css.css">
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/highcharts.js"></script>
+        <script type="text/javascript" src="js/highcharts-more.js"></script>
+		<script type="text/javascript" src="js/forecast.js"></script>
+
+	</head>
+	<style>
+	.right{
+	
+	margin-top:25px;
+	margin-right:55px;}
+	.tip{height:170px;}
+	.right dl.ris{height:140px;}
+	.le{width:510px;}
+	.is{width:500px;}
+	.ri{float:left;}
+	.right p#update{width:660px;}
+	.ri ul{height:144px;}
+	.ri ul li{margin-top:10px;}
+	</style>
+	<body>
+
+
+<div class="main" style="width:1280px; height:720px; overflow:hidden;background-size: cover;">
+	<div class="right" style="position:relative;">
+	<div id="container" style="width: 300px; height: 300px; margin: 0 auto; position:absolute;left:300px;top:0px;"></div>
+	
+	
+		<h1 id="cityname"></h1>
+		<p id="riqi"></p>
+		<p style="text-align:right; font-size:20px;" id="update"></p>
+		<div class="le">
+		<div class="tip">
+			
+		</div>
+		<dl class="ris">
+			<dt></dt>
+			<dd></dd>
+		</dl>
+		
+		<div class="is">
+			<dl id="oneday">
+				
+			</dl>
+		</div>
+		</div>
+		<div class="ri">
+			
+			
+		</div>
+	</div>
+	<div id="alarm"></div>
+</div>
+
+	</body>
+</html>

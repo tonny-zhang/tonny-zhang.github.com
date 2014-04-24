@@ -308,7 +308,7 @@
 			             success: callback,
 			             error: function(a,b,c){
 	                        if(b != 'abort'){
-	                            alert('加载数据出现错误，即将刷新页面！');
+	                            alert('加载数据出现错误！');
 	                            // location.reload();
 	                        }
 	                    }
@@ -355,6 +355,17 @@
         	numType = typeArr.length;
         var weatherOverlays = map.getOverlays(),
         	numOverlays = weatherOverlays.length;
+
+        var filter = function(){
+            for(var i = 0;i<numOverlays;i++){
+                var overlay = weatherOverlays[i];
+                if(overlay.data.stationid == 54511){
+                    return overlay;
+                }
+            }
+        }
+        var toShowDataOverlay = filter();
+        $('#info_list').fadeIn().find('ul').replaceWith(toShowDataOverlay.getDataHTML());
         var delay = 4000;
         var tt;
         var fn = function(){
@@ -364,9 +375,9 @@
         	$.each(weatherOverlays,function(i,v){
 	            v.resetData();
 	        });
-        	var showIndex = Math.floor(Math.random()*numOverlays);
-        	var $html = weatherOverlays[showIndex].getDataHTML();
-        	$('#info_list ul').show().replaceWith($html);
+        	// var showIndex = Math.floor(Math.random()*numOverlays);
+        	// var $html = toShowDataOverlay.getDataHTML();
+        	// $('#info_list ul').show().replaceWith($html);
         	clearTimeout(tt);
         	tt = setTimeout(fn,delay);
         }
@@ -407,4 +418,8 @@
     }
     // 第一次初始化自定义覆盖
     dragendOrZoomend();
+
+    setTimeout(function(){
+        location.reload();
+    },1000*60*10);
 }()

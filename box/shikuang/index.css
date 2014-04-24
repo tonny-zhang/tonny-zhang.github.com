@@ -35,6 +35,7 @@ body{
 	top: 50%;
 	margin-top: -30px;
 	text-align: center;
+	display: none;
 }
 #main{
 	/*min-width: 1080px;*/
@@ -42,7 +43,6 @@ body{
 	height: 700px;
 	margin: 10px auto;
 	overflow: hidden;
-	display: none;
 }
 .loaded #loading{
 	display: none;
@@ -60,7 +60,7 @@ body{
 	background-color: #414141;
 }
 .top_right{
-	/*min-width: 772px;*/
+	min-width: 772px;
 }
 .name{
 	padding: 5px 0;
@@ -196,6 +196,7 @@ body{
 	text-align: center;
 	margin: 0 auto;
 	width: 95%;
+	height: 414px;
 }
 
 .alarm{

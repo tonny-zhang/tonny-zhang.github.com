@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta content="yes" name="apple-mobile-web-app-capable"/>
+	<meta content="yes" name="apple-touch-fullscreen"/>
+	<meta content="telephone=no" name="format-detection"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<title>地图折线转成折线周围一定范围内区域</title>
+	<meta name="revisit-after"  content="1 days" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=E8MDMS4BVFEMeAxVP3YddQ6X"></script>
+	<script type="text/javascript" src="./points.js"></script>
+</head>
+<body>
+	<div id="map" style="width:100%;height:1000px;background:#ccc;"></div>
+	<script type="text/javascript">
+	function line2area(points,radius){
+		radius /= 100;
+		var arrLeft = [],
+			arrRight = [];
+		for(var i = 0,j=points.length;i<j;i++){
+		// for(var i = 0,j=20;i<j;i++){	
+			var firstPoint = points[i],
+				secondPoint = points[i==j-1?i-1:i+1];
+			var x1 = firstPoint.lng,
+				y1 = firstPoint.lat;
+			var x2 = secondPoint.lng,
+				y2 = secondPoint.lat;
+			var xStep,yStep;
+			if(x2 == x1 || y2 == y1){
+				if(x2 == x1){
+					xStep = radius;
+					yStep = 0;
+				}
+				if(y2 == y1){
+					xStep = 0;
+					yStep = radius;
+				}
+			}else{
+				var radian = Math.atan((y2-y1)/(x2-x1));
+				console.log(radian/Math.PI);
+				xStep = Math.sin(radian)*radius;
+				yStep = Math.cos(radius)*radius;
+				if(radian > Math.PI/2 && radian < Math.PI || radian > -Math.PI/2 && radian < 0){
+					xStep *= -1;
+					yStep *= -1;
+				}
+			}
+			console.log(xStep,yStep);
+			arrLeft.push({
+				lng: x1 - xStep,
+				lat: y1 - yStep 
+			});
+			arrRight.push({
+				lng: x1 + xStep,
+				lat: y1 + yStep 
+			});
+		}
+		return arrLeft.concat(arrRight.reverse());
+	}
+	
+	var map = new BMap.Map('map');
+	map.setZoom(16);
+	//右下角，仅包含缩放按钮
+	map.addControl(new BMap.NavigationControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT, type: BMAP_NAVIGATION_CONTROL_ZOOM,offset: new BMap.Size(20, 100)}));  
+	var firstPoint = points[0];		
+	map.centerAndZoom(new BMap.Point(firstPoint.lng, firstPoint.lat),16);
+
+	var searchComplete = function (results){
+	    if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+	        return ;
+	    }return;
+	  	var arr = line2area(results.Js[0].bk[0].jm,0.1);
+	  	console.log(arr);
+	  	var arr1 = [];
+  		for(var i=0,j=arr.length/2;i<j;i++){
+			var d = arr[i];
+			arr1[i] = new BMap.Point(d.lng,d.lat);
+		}
+		//Polygon Polyline
+		var polygon = new BMap.Polyline(arr1, {strokeColor:"red",fillColor:'red' ,strokeWeight:1, strokeOpacity:0.5});
+		map.addOverlay(polygon);
+		var arr2 = [];
+		for(var i=arr.length/2,len=i,j=arr.length;i<j;i++){
+			var d = arr[i];
+			arr2[i-len] = new BMap.Point(d.lng,d.lat);
+		}
+		var polygon = new BMap.Polyline(arr2, {strokeColor:"blue",fillColor:'blue' ,strokeWeight:1, strokeOpacity:0.5});
+		map.addOverlay(polygon);
+	}
+	var transit = new BMap.DrivingRoute(map, {
+		renderOptions: {map: map},
+    	onSearchComplete: searchComplete,
+    	onPolylinesSet: function(){        
+       	 	
+    	}
+    });
+	transit.search("上地", "西单");
+	
+	</script>
+</body>
+</html>

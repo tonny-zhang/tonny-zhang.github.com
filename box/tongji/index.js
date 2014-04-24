@@ -2,7 +2,34 @@
 	var style = {
         fontSize: '22px'
     };
-	$.getJSON('./data/all.json',function(data){
+    var s_time = '20140401';
+    var e_time = new Date();
+    e_time = [e_time.getFullYear(),  e_time.getMonth(), e_time.getDate()].join('');
+    var cityid = '54511'
+	// $.getJSON('./data/all.json',function(data){
+	$.ajax({
+         url: 'http://10.16.58.115:9526/weather/history?s_time='+s_time+'&e_time='+e_time+'&cityid='+cityid,
+         dataType: "jsonp",
+         jsonp: "cb",
+         success: renderData,
+         error: function(a,b,c){
+            if(b != 'abort'){
+                alert('加载数据出现错误！');
+                // location.reload();
+            }
+        }
+    });
+    var REG_DATE = /(\d{4})(\d{2})(\d{2})/;
+    function formateDate(date){
+    	var m = REG_DATE.exec(date);
+		if(m){
+			return m[1]+'-'+m[2]+'-'+m[3];
+		}
+		return date;
+    }
+	function renderData(data){
+		data.s_time = formateDate(data.s_time);
+		data.e_time = formateDate(data.e_time);
 		var xArr = [],
 			yArr = [];
 		var piepArr = [];
@@ -90,7 +117,7 @@
 				temp_max_y[i] = {
 					y: v,
 					marker: {
-						fileColor: '#ccc',
+						// fillColor: 'red',
 						radius: 10,
 						symbol: 'triangle'
 					}
@@ -103,7 +130,7 @@
 				temp_min_y[i] = {
 					y: v,
 					marker: {
-						fileColor: '#ccc',
+						// fillColor: 'blue',
 						radius: 10,
 						symbol: 'triangle-down'
 					}
@@ -111,8 +138,7 @@
 			}
 		});
 		var max_js = Math.max.apply(Math,js_y);
-		var m = /(\d{4})-(\d{2})-\d{2}/.exec(data.s_time);
-		var title = m?(m[1]+'年'+m[2]+'月数据') : '';
+		// var title = formateDate(data.s_time)+'至'+formateDate(data.e_time)+'数据';
 		$('#chart_temp').highcharts({
 	        chart: {
 	            zoomType: 'xy',
@@ -131,11 +157,12 @@
 	            labels: {
 	                format: '{value}°C',
 	                style: style
-	            },
-	            title: {
-	                text: title,
-	                style: style
 	            }
+	            // ,
+	            // title: {
+	            //     text: title,
+	            //     style: style
+	            // }
 	        },{ // Primary yAxis
 	            labels: {
 	                format: '{value}mm',
@@ -202,8 +229,10 @@
 	            }
 	        }
 	    });
-		$('article span.time').text('('+data.s_time+'至'+data.e_time+')');
-		var desc = '自'+data.s_time+'至'+data.e_time+'：<br/>日最高气温<span>'+max_temp+'</span>°C,日最低气温<span>'+min_temp+'</span>°C,日最大降水量<span>'+max_js+'</span>mm,降水日数<span>'+data.num_js+'</span>天，连续无降水日数<span>'+data.num_no_js+'</span>天，霾日数<span>'+data.num_mai+'</span>天，连续霾日数<span>'+data.num_mai_lx+'</span>天。<br/><p>更多信息可访问<a href="http://smart.weather.com.cn">http://smart.weather.com.cn</a></p>';
+		$('article .time').text('('+data.s_time+'至'+data.e_time+')');
+		var desc = '自'+data.s_time+'至'+data.e_time+'：<br/>日最高气温<span>'+max_temp+'</span>°C,日最低气温<span>'+min_temp+'</span>°C,日最大降水量<span>'+max_js+'</span>mm,降水日数<span>'+data.num_js+'</span>天，连续无降水日数<span>'+data.num_no_js+'</span>天，霾日数<span>'+data.num_mai+'</span>天，连续霾日数<span>'+data.num_mai_lx+'</span>天。<br/><p>本数据来源于<span>SmartCloud</span>云存储与计算平台,更多信息可访问<a href="http://smart.weather.com.cn/">http://smart.weather.com.cn/</a></p>';
 		$('#desc').html(desc);
-	});
+	}
+
+	setTimeout(function(){},1000*60*10);
 }()

@@ -1,0 +1,165 @@
+@charset "utf-8";
+/* CSS Document */
+
+*
+   {
+	margin: 0;
+	padding: 0;
+	list-style:none;
+	font-weight:normal;
+    }
+a img
+    {
+	border:1px solid #dcdddd;
+	}
+body 
+    {
+	font-family:微软雅黑;
+	background:#fff;
+	color:#fff;
+	font-size:12px;
+font-style:normal;
+	}
+i 
+    {
+font-style:normal;
+}
+a 
+    {
+	color:#36B;
+	text-decoration:none;
+         font-size:12px;
+         outline: medium none;
+	}
+a:hover
+    {
+	color:#F60;
+	text-decoration:underline;
+	}
+.main
+{
+	background:url(../images/2.jpg) repeat-x;
+	margin:0 auto;
+	width:1270px; 
+	overflow:hidden;
+	height:800px;}
+.right
+{
+	width:730px;
+	margin-top:45px;
+	float:right;
+	margin-right:125px;}
+.right h1
+{
+	font-size:70px;
+	margin-bottom:10px;
+	text-align:left;
+	}
+.right h1 span
+{
+	font-size:51px;
+	padding-left:30px;}
+.right p
+{
+	margin-bottom:10px;
+	font-size:25px;
+
+	text-align:left;}
+.right p span
+{
+	padding:0px 10px;}
+.right dl.ris 
+{
+	width:500px;
+	margin-top:10px;
+	float:left;
+	display:inline;
+	height:170px;
+	line-height:120px;
+	overflow:hidden;
+	margin-bottom:10px;
+	margin-left:25px;}
+.right dl.ris dt
+{
+	width:245px;
+	float:left;}
+.right dl.ris dd
+{
+	width:255px;
+	line-height:45px;
+	margin-top:20px;
+	float:right;}
+.tip
+{
+	margin-bottom:5px;
+	font-size:25px;
+	margin-top:10px;
+	line-height:40px;
+	width:450px;
+	margin-left:25px;
+	height:190px;
+	overflow:hidden;
+	clear:both;}
+.tip span
+{
+	display:block;
+	margin-bottom:10px;
+	font-size:50px;}
+.le{
+	width:555px;
+	
+	float:left;}
+.is dl
+{
+	margin-left:25px;}
+.is dl dt
+{
+	line-height:40px;
+	font-size:25px;
+
+
+margin-top:0px;
+}
+.is dl dd
+{
+	width:253px;
+
+	margin-top:0px;
+	font-size:25px;}
+.ri
+{
+	width:165px;
+	float:right;}
+.ri ul 
+{
+	margin-bottom:10px;
+	float:left;
+	height:157px;
+	display:inline;
+}
+.ri ul li
+{
+	margin-top:10px;
+	float:left;
+	width:148px;
+	display:inline;
+	padding-left:30px;}
+.ri ul li img
+{
+	float:left;
+	margin-left:5px;}
+.is
+{
+	width:520px;
+clear:both;}
+
+#alarm
+{
+position:relative;
+top:30px;
+background:#000;
+opacity:0.8;
+height:56px;
+line-height:56px;
+display: none;
+clear:both;}

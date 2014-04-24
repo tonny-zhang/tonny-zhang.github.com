@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta content="yes" name="apple-mobile-web-app-capable"/>
+	<meta content="yes" name="apple-touch-fullscreen"/>
+	<meta content="telephone=no" name="format-detection"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<title>实况</title>
+	<meta name="revisit-after"  content="1 days" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<style type="text/css">
+	.test{
+		position: absolute;
+		left: 0px;
+		top: 0px;
+		width: 100px;
+		height: 100px;
+		-webkit-transform-origin: 25% 25%;
+	}
+	#first{
+		background: rgba(100,0,0,.5);
+	}
+	#second{
+		background: rgba(0,200,0,.5);
+		-webkit-transform: scale(1.2);
+	}
+	#three{
+		background: rgba(0,0,150,.5);
+		width: 120px;
+		height: 120px;
+		left: -5px;
+		top: -5px;
+	}
+	</style>
+</head>
+<body>
+	<div style="position:absolute;left:100px;top:100px;">
+		<div class="test" id="first"></div>
+		<div class="test" id="second"></div>
+		<div class="test" id="three"></div>
+	</div>
+</body>
+</html>
