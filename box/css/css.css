@@ -38,7 +38,7 @@ a:hover
 	}
 .main
 {
-	background:url(../images/2.jpg) repeat-x;
+	/*background:url(../images/2.jpg) repeat-x;*/
 	margin:0 auto;
 	width:1270px; 
 	overflow:hidden;

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
+<link rel="stylesheet" href="../css/jquery.mobile-1.4.0.min.css">
+<script type="text/javascript" src="../js/jquery-1.9.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).bind("mobileinit", function() {
+	$.mobile.autoInitializePage = true;
+	$.mobile.pageLoadErrorMessage = "页面加载出错！";
+	$.mobile.pageLoadErrorMessageTheme = "e";
+	$.mobile.loadingMessage = "加载中...";
+	$.mobile.loadingMessageTextVisible = true;
+	$.mobile.page.prototype.options.addBackBtn = true;
+	$.mobile.ajaxEnabled = false;
+	$.mobile.page.prototype.options.backBtnText = "返回";
+});
+var _hideLoading = function() {
+	try {
+		window.android.hideLoading();
+	} catch (e) {}
+}
+$(function() {
+	$.ajax({
+		type: "GET",
+		url: "http://mobile.weather.com.cn/data/city3jdata/china.html",
+		cache: true,
+		async: false,
+		data: {},
+		dataType: "json",
+		success: function(result) {
+			$.each(result, function(i, v) {
+
+				var name = v;
+				var id = i;
+				if (id == 10101 || id == 10102 || id == 10103 || id == 10104) {
+					$("<li><a href='city.html?id=" + id + "00&name=" + escape(name) + "' data-icon='arrow-r' data-transition='slide'>" + name + "</a></li>").appendTo(".menu_list");
+				} else if (id == 10131) {
+					$("<li><a href='city.html?id=" + id + "01&name=" + escape(name) + "' data-icon='arrow-r' data-transition='slide'>" + name + "</a></li>").appendTo(".menu_list");
+				} else {
+					$("<li><a href='prov.html?id=" + id + "&name=" + escape(name) + "' data-icon='arrow-r' data-transition='slide'>" + name + "</a></li>").appendTo(".menu_list");
+				}
+			})
+			_hideLoading();
+		}
+	})
+})
+</script>
+<script type="text/javascript" src="../js/jquery.mobile-1.4.0.min.js"></script>
+<style type="text/css">
+.ui-btn{
+font-size:25px;}
+.ui-header .ui-title, .ui-footer .ui-title{
+font-size:30px;}
+</style>
+<title>添加城市</title>
+
+</head>
+
+<body>
+<div data-role="page" data-fullscreen="true">
+	<header data-role="header" data-theme="a" data-rel="dialog" data-position="fixed">
+	<h1>请选择省份</h1>
+	</header>
+	<div data-role="content">
+		<ul data-role="listview" data-filter="true" data-theme="g" class="menu_list">
+			
+		</ul>
+	</div>
+	<div data-role="footer" data-theme="a">
+		<h1>Copyright©中国气象局公共气象服务中心</h1>
+	</div>
+</div>
+</body>
+</html>

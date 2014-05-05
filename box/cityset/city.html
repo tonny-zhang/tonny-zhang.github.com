@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
+<link rel="stylesheet" href="../css/jquery.mobile-1.4.0.min.css">
+<script type="text/javascript" src="../js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript">
+$(document).bind("mobileinit", function() {
+	$.mobile.autoInitializePage = true;
+	$.mobile.pageLoadErrorMessage = "页面加载出错！";
+	$.mobile.pageLoadErrorMessageTheme = "e";
+	$.mobile.loadingMessage = "加载中...";
+	$.mobile.loadingMessageTextVisible = true;
+	$.mobile.page.prototype.options.addBackBtn = true;
+	$.mobile.ajaxEnabled = false;
+	$.mobile.page.prototype.options.backBtnText = "返回";
+});
+var _hideLoading = function() {
+	try {
+		window.android.hideLoading();
+	} catch (e) {}
+}
+
+	function getUrlParam(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+		var r = window.location.search.substr(1).match(reg); //匹配目标参数
+		if (r != null) return unescape(r[2]);
+		return null; //返回参数值 
+	}
+$(function() {
+	var areaid = getUrlParam("id");
+	var cityid = getUrlParam("name");
+	//alert(cityid);
+	$("#city_name").after(cityid);
+	$.ajax({
+		type: "GET",
+		url: "http://mobile.weather.com.cn/data/city3jdata/station/" + areaid + ".html",
+		cache: true,
+		async: false,
+		data: {},
+		dataType: "json",
+		success: function(result) {
+			$.each(result, function(i, v) {
+				//alert(v);
+				var name = v;
+				var id = i;
+				if (areaid.substring(0, 5) == '10101' || areaid.substring(0, 5) == '10102' || areaid.substring(0, 5) == '10103' || areaid.substring(0, 5) == '10104') {
+					areaid = areaid.substring(0, 5);
+					$("<li><a href='prov.html?id=" + areaid + id + "00&name=" + escape(name) + "' data-icon='arrow-r' data-transition='slide'>" + name + "</a></li>").appendTo(".menu_list");
+
+				} else if (areaid.substring(0, 5) == '10131') {
+					$("<li><a href='prov.html?id=" + id + "00&name=" + escape(name) + "' data-icon='arrow-r' data-transition='slide'>" + name + "</a></li>").appendTo(".menu_list");
+				} else {
+					$("<li><a href='prov.html?id=" + areaid + id + "&name=" + escape(name) + "' data-icon='arrow-r' data-transition='slide'>" + name + "</a></li>").appendTo(".menu_list");
+				}
+			})
+			_hideLoading();
+		}
+	})
+})
+</script>
+<script type="text/javascript" src="../js/jquery.mobile-1.4.0.min.js"></script>
+<style type="text/css">
+.ui-btn{
+font-size:25px;}
+.ui-header .ui-title, .ui-footer .ui-title{
+font-size:30px;}
+ui-link{
+font-size:25px;}
+.ui-page-theme-b .ui-btn, html .ui-bar-b .ui-btn, html .ui-body-b .ui-btn, html body .ui-group-theme-b .ui-btn, html head + body .ui-btn.ui-btn-b, .ui-page-theme-b .ui-btn:visited, html .ui-bar-b .ui-btn:visited, html .ui-body-b .ui-btn:visited, html body .ui-group-theme-b .ui-btn:visited, html head + body .ui-btn.ui-btn-b:visited{
+font-size:25px;}
+</style>
+<title>添加城市</title>
+
+</head>
+
+<body>
+<div data-role="page" data-fullscreen="true">
+	<header data-role="header" data-theme="a" data-rel="dialog" data-position="fixed">
+	<a href="#"  data-icon="back" data-role="button" data-inline="true" data-theme="b" onClick="window.history.back(-1)">返回</a>
+	<h1>请选择城市</h1>
+	</header>
+	<div data-role="content">
+		<ul data-role="listview" data-filter="true" data-theme="g" class="menu_list">
+			
+		</ul>
+	</div>
+	<div data-role="footer" data-theme="a">
+		<h1>Copyright©中国气象局公共气象服务中心</h1>
+	</div>
+</div>
+</body>
+</html>

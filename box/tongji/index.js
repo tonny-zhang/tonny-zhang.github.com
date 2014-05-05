@@ -1,10 +1,23 @@
 !function(){
+	var _hideLoading = function(){
+        try{
+            window.android.hideLoading();
+        }catch(e){}
+    }
 	var style = {
         fontSize: '22px'
     };
     var s_time = '20140401';
     var e_time = new Date();
-    e_time = [e_time.getFullYear(),  e_time.getMonth(), e_time.getDate()].join('');
+    var month = e_time.getMonth()+1;
+    if(month < 10){
+    	month = '0'+month;
+    }
+    var date = e_time.getDate();
+    if(date < 10){
+    	date = '0'+date;
+    }
+    e_time = [e_time.getFullYear(), month, date].join('');
     var cityid = '54511'
 	// $.getJSON('./data/all.json',function(data){
 	$.ajax({
@@ -232,6 +245,7 @@
 		$('article .time').text('('+data.s_time+'至'+data.e_time+')');
 		var desc = '自'+data.s_time+'至'+data.e_time+'：<br/>日最高气温<span>'+max_temp+'</span>°C,日最低气温<span>'+min_temp+'</span>°C,日最大降水量<span>'+max_js+'</span>mm,降水日数<span>'+data.num_js+'</span>天，连续无降水日数<span>'+data.num_no_js+'</span>天，霾日数<span>'+data.num_mai+'</span>天，连续霾日数<span>'+data.num_mai_lx+'</span>天。<br/><p>本数据来源于<span>SmartCloud</span>云存储与计算平台,更多信息可访问<a href="http://smart.weather.com.cn/">http://smart.weather.com.cn/</a></p>';
 		$('#desc').html(desc);
+		_hideLoading();
 	}
 
 	setTimeout(function(){},1000*60*10);

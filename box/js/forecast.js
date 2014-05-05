@@ -1,10 +1,16 @@
+var _hideLoading = function(){
+    try{
+        window.android.hideLoading();
+        _hideLoading = function(){};
+    }catch(e){}
+}
 // JavaScript Document
 function dateCount(number, mydate) {
 	var mydate = mydate;
 	mydate.setDate(mydate.getDate() + number);
 	return mydate.getDate();
 }
-
+var baseUrl = 'http://mobile.weather.com.cn/dptq/';
 function getUrlParam(name) {
 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
 	var r = window.location.search.substr(1).match(reg); //匹配目标参数
@@ -104,9 +110,9 @@ function weatherdata() {
 		"9": "11-12级"
 	};
 
-	$.ajax({
+	var ajax_forecast = $.ajax({
 		type: "GET",
-		url: "../data/forecast/" + areaid + ".html",
+		url: baseUrl+"../data/forecast/" + areaid + ".html",
 		dataType: "json",
 		success: function(result) {
 			var publish_date = result.f.f0;
@@ -194,7 +200,7 @@ function weatherdata() {
 					}
 				}
 				if (i > 0 && i < 4) {
-					$("<ul><li style='font-size:18px;'>" + timedayArr[i] + "日  " + weekArr[i] + "</li><li style='font-size:20px;'>" + temp1 + "℃/" + temp2 + "℃</li><li><img src='images/day/d" + img1 + ".png' width='40px' height='40px'/><img src='images/night/n" + img2 + ".png' width='40px' height='40px'/></li><li style='font-size:18px; clear:both;'>" + weather + "</li></ul>").appendTo(".ri");
+					$("<ul><li style='font-size:18px;'>" + timedayArr[i] + "日  " + weekArr[i] + "</li><li style='font-size:20px;'>" + temp1 + "℃/" + temp2 + "℃</li><li><img src='"+baseUrl+"images/day/d" + img1 + ".png' width='40px' height='40px'/><img src='"+baseUrl+"images/night/n" + img2 + ".png' width='40px' height='40px'/></li><li style='font-size:18px; clear:both;'>" + weather + "</li></ul>").appendTo(".ri");
 				}
 			})
 
@@ -205,9 +211,9 @@ function weatherdata() {
 	var wdContent = ["温度很低，着厚羽绒服、毛皮大衣等隆冬服装。", "气温较低，着棉衣、皮夹克加羊毛衫等冬季服装。", "着厚外套加毛衣等服装。", "天气微凉，长袖T恤、衬衫外面要加上薄外套才行哦。", "天气舒适，穿长袖上衣加单裤等服装即可。", "天热，穿T恤、短裤、连衣裙等夏装。", "今天天儿太热了，要穿清凉的短衫、短裤等盛夏服装。"];
 	var flContent = ["风力不大", "户外风比较大", "风力很强哦", "有超强劲的风"];
 	var rainContent = ["", "有小毛毛雨，记得带伞", "有中雨飘落，要带伞", "雨有点大，开车要注意安全", "雨点大又多，注意交通安全", "倾盆暴雨，注意行车安全", "伞已经遮不住了，尽量减少外出吧"];
-	$.ajax({
+	var ajax_observe = $.ajax({
 		type: "GET",
-		url: "../data/observe/" + areaid + ".html",
+		url: baseUrl+"../data/observe/" + areaid + ".html",
 		dataType: "json",
 		success: function(result) {
 			$.each(result, function(i, v) {
@@ -292,14 +298,15 @@ function weatherdata() {
 				} else {
 					var content = "亲，现在外面" + rainContent[rain] + "，" + flContent[fl] + "，" + wdContent[wd];
 				}
-				$(".tip").html("<span><img src='images/wxts.gif' style='margin-left:-15px;'></span>" + content);
+				$(".tip").html("<span><img src='"+baseUrl+"images/wxts.gif' style='margin-left:-15px;'></span>" + content);
 				$(".main").css({
-					"backgroundImage": "url(images/" + bg + ".jpg)",
+					"backgroundImage": "url("+baseUrl+"images/" + bg + ".jpg)",
 					"background-repeat": "no-repeat"
 				});
 			})
 		}
-	})
+	});
+	$.when(ajax_observe,ajax_forecast).done(_hideLoading);
 	//获取预警数据
 	$URL = 'http://product.weather.com.cn/alarm/stationalarm.php?areaid=' + areaid + '&count=-1';
 	$yjlb = ['台风', '暴雨', '暴雪', '寒潮', '大风', '沙尘暴', '高温', '干旱', '雷电', '冰雹', '霜冻', '大雾', '霾', '道路结冰'];

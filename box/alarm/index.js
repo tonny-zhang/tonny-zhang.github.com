@@ -1,4 +1,12 @@
 !function(){
+    var isLoadedMap = isLoadedData = false;
+    var _hideLoading = function(){
+        try{
+            if(isLoadedMap && isLoadedData){
+                window.android.hideLoading();
+            }
+        }catch(e){}
+    }
     var getAlarmInfo = (function(){
         var yjlb = ['台风', '暴雨', '暴雪', '寒潮', '大风', '沙尘暴', '高温', '干旱', '雷电', '冰雹', '霜冻', '大雾', '霾', '道路结冰'];
         var gdlb = ['寒冷', '灰霾', '雷雨大风', '森林火险', '降温', '道路冰雪','干热风','低温','冰冻'];
@@ -40,7 +48,7 @@
             return result
         }
     })();
-    var AlarmOverlay = (function(glo){
+    var AlarmOverlay = (function(){
         function AlarmOverlay(lon,lat,icon,data){//point,icon,text
             this._point = new BMap.Point(lon, lat);
             this._icon = icon;
@@ -77,6 +85,10 @@
     map.enableScrollWheelZoom();    //启用滚轮放大缩小，默认禁用
     map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
     map.centerAndZoom(new BMap.Point(120.408836,36.899005), currentZoom);
+    map.addEventListener("tilesloaded",function(){
+        isLoadedMap = true;
+        _hideLoading();
+    });
     // map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
     // map.addControl(new BMap.ScaleControl());                    // 添加默认比例尺控件
     $.getScript('http://product.weather.com.cn/alarm/grepalarmBox.php?areaid=[\\d]{5,9}&type=[0-9]{2}&count=-1',function(){
@@ -106,5 +118,7 @@
             $alarm_list.find('ul').html('<li>暂时没有预警信息</li>');
         }
         $alarm_list.show();
+        isLoadedData = true;
+        _hideLoading();
     });
 }();

@@ -1,6 +1,14 @@
 !function(){
+    var isLoadedMap = isLoadedData = false;
+    var _hideLoading = function(){
+        try{
+            if(isLoadedMap && isLoadedData){
+                window.android.hideLoading();
+            }
+        }catch(e){}
+    }
 	 /*自定义覆盖物*/
-    (function(global){
+    ;(function(global){
         var isCanSeeAllData = true;
         /*配色方案*/
         var COLOR = {
@@ -320,6 +328,8 @@
         global.loadData = loadData;
     })(this);
     function initData(data){
+        isLoadedData = true;
+        _hideLoading();
         map && map.clearOverlays();
         var numArr = {};
         $.each(data,function(i,v){
@@ -401,6 +411,10 @@
     map.centerAndZoom(new BMap.Point(120.408836,36.899005), currentZoom);
     map.addEventListener("dragend", dragendOrZoomend);
     map.addEventListener("zoomend", dragendOrZoomend);
+    map.addEventListener("tilesloaded",function(){
+        isLoadedMap = true;
+        _hideLoading();
+    });
     function dragendOrZoomend(){
         var zoom = map.getZoom();
         if(zoom < currentZoom){

@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="refresh" content="7200">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<title>尾号限行</title>
+<script type="text/javascript">
+$(function(){
+	//计算星期
+	var mydate=new Date();
+	var week="日一二三四五六".charAt(mydate.getDay());
+	var weekArr=new Array();
+	if(week=="一")
+	{
+		$week1="今天(周一)";
+		$week2="明天(周二)";
+		$hao1="<h3><span>5</span>和<span>0</span></h3>";
+		$hao2="<h3><span>1</span>和<span>6</span></h3>";
+	}
+	else if(week=="二")
+	{
+		$week1="今天(周二)";
+		$week2="明天(周三)";
+		$hao1="<h3><span>1</span>和<span>6</span></h3>";
+		$hao2="<h3><span>2</span>和<span>7</span></h3>";
+	}
+	else if(week=="三")
+	{
+		$week1="今天(周三)";
+		$week2="明天(周四)";
+		$hao1="<h3><span>2</span>和<span>7</span></h3>";
+		$hao2="<h3><span>3</span>和<span>8</span></h3>";
+	}
+	else if(week=="四")
+	{
+		$week1="今天(周四)";
+		$week2="明天(周五)";
+		$hao1="<h3><span>3</span>和<span>8</span></h3>";
+		$hao2="<h3><span>4</span>和<span>9</span></h3>";
+	}
+	else if(week=="五")
+	{
+		$week1="今天(周五)";
+		$week2="明天(周六)";
+		$hao1="<h3><span>4</span>和<span>9</span></h3>";
+		$hao2="<h3>不限行</h3>";
+	}
+	else if(week=="六")
+	{
+		$week1="今天(周六)";
+		$week2="明天(周日)";
+		$hao1="<h3>不限行</h3>";
+		$hao2="<h3>不限行</h3>";
+	}
+	else
+	{
+		$week1="今天(周日)";
+		$week2="明天(周一)";
+		$hao1="<h3>不限行</h3>";
+		$hao2="<h3><span>5</span>和<span>0</span></h3>";
+	}
+	
+	$(".ba").html("<h1>北京市五环内机动车尾号限行</h1><div class='left'><h2>"+$week1+"</h2>"+$hao1+"</div><div class='right'><h2>"+$week2+"</h2>"+$hao2+"</div>");
+	window.onload = function(){
+		try{
+            window.android.hideLoading();
+        }catch(e){}
+	}
+})
+</script>
+<style>
+
+*
+   {
+	margin: 0;
+	padding: 0;
+	list-style:none;
+	font-weight:normal;
+    }
+a img
+    {
+	border:0px solid #dcdddd;
+	}
+body 
+    {
+	font-family:微软雅黑;
+	background:#fff;
+	color:#000;
+	font-size:12px;
+font-style:normal;
+	}
+i 
+    {
+font-style:normal;
+}
+a 
+    {
+	color:#36B;
+	text-decoration:none;
+         font-size:12px;
+         outline: medium none;
+	}
+a:hover
+    {
+	color:#F60;
+	text-decoration:underline;
+	}
+.boxc
+{
+	background:url(images/xxbg.jpg) no-repeat; 
+	width:1480px;
+	margin:0 auto;
+	height:800px;}
+.ba h1
+{
+	height:148px;
+	line-height:148px;
+	font-weight:bold;
+	color:#fff;
+	
+	text-align:center;
+	font-size:66px;}
+.left 
+{
+	width:700px;
+	float:left;
+	text-align:center;}
+.left h2
+{
+	font-size:66px;
+	color:#fff;
+	font-weight:bold;
+	text-align:center;}
+.left h3 
+{
+	font-size:121px;
+	color:#fff;
+	height:319px;
+	overflow:hidden;
+	line-height:319px;
+	font-weight:bold;}
+.left h3 span
+{
+	font-weight:bold;
+	font-size:270px;}
+	
+	
+.right 
+{
+	width:700px;
+	
+	float:left;
+	text-align:center;}
+.right h2
+{
+	font-size:66px;
+	color:#ffc000;
+	font-weight:bold;
+	text-align:center;}
+.right h3 
+{
+	font-size:121px;
+color:#ffc000;
+	height:319px;
+	overflow:hidden;
+	line-height:319px;
+	font-weight:bold;}
+.right h3 span
+{
+	font-weight:bold;
+	font-size:270px;}
+.bottom
+{
+	clear:both;
+	width:1161px;
+	margin:0 auto;}
+.bottom h1
+{
+	height:80px;
+	font-weight:bold;
+	font-size:38px;
+	color:#fff;
+	line-height:80px;}
+.bottom ul.shang li
+{
+	float:left;
+	cursor:pointer;
+	width:160px;
+	height:56px;
+	line-height:56px;
+	font-size:38px;
+	color:#1f1f1f;
+	font-weight:bold;
+	background:#ffc800;
+	margin-bottom:20px;
+	margin-right:30px;
+	text-align:center;}
+.bottom ul.xia li
+{
+	float:left;
+	cursor:pointer;
+	width:160px;
+	height:56px;
+	line-height:56px;
+	font-size:38px;
+	color:#ffc800;
+	font-weight:bold;
+font-size:48px;
+	margin-right:30px;
+	text-align:center;}
+.bottom ul.xia li span
+{
+	font-size:64px;
+	font-weight:bold;}
+	
+	
+/*1280x720*/
+.boxc
+{
+width:1280px;
+height:720px;
+overflow:hidden;
+background-size: cover;}
+.ba h1
+{
+font-size:55px;
+height:100px;
+line-height:100px;}
+.left
+{
+width:620px;
+}
+.right
+{
+width:620px;}
+.bottom h1
+{
+height:60px;
+line-height:60px;}
+</style>
+</head>
+
+<body>
+<div class="boxc">
+	<div class="ba">
+	
+	</div>
+	<div class="bottom">
+		<h1>2014年4月14日-7月12日  限行规则</h1>
+		<ul class="shang">
+			<li>周一</li>
+			<li>周二</li>
+			<li>周三</li>
+			<li>周四</li>
+			<li>周五</li>
+			<li>周末</li>
+		</ul>
+		<ul class="xia">
+			<li><span>5</span>和<span>0</span></li>
+			<li><span>1</span>和<span>6</span></li>
+			<li><span>2</span>和<span>7</span></li>
+			<li><span>3</span>和<span>8</span></li>
+			<li><span>4</span>和<span>9</span></li>
+			<li>不限行</li>
+		</ul>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>空气质量</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/highcharts.js"></script>
+<script type="text/javascript">
+function getUrlParam(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+	var r = window.location.search.substr(1).match(reg); //匹配目标参数
+	if (r != null) return unescape(r[2]);
+	return null; //返回参数值 
+}
+var _hideLoading = function(){
+    try{
+        window.android.hideLoading();
+    }catch(e){}
+}
+function AQIData() {
+	var areaid = getUrlParam("id");
+
+	if (areaid == null) {
+		areaid = "101010100";
+	} else {
+		areaid = getUrlParam("id");
+	}
+	var cityname = getUrlParam("name");
+	if (cityname == null) {
+		cityname = "北京";
+	} else {
+		cityname = getUrlParam("name");
+	}
+	$("#cityname").html(cityname + "空气质量指数(AQI)实时查询");
+	$.ajax({
+		type: "GET",
+		url: "../data/air/" + areaid + ".html",
+		cache: false,
+		async: false,
+		data: {},
+		dataType: "json",
+		success: function(result) {
+			$pm2d5 = result.k.k2;
+			$aqi = result.k.k3;
+			$aqiArr = result.k.k3.split("|");
+			$publish_date = result.k.k4;
+			//年
+			$timeyear = $publish_date.substr(0, 4);
+			//月
+			$timemonth = $publish_date.substr(4, 2);
+
+			if ($timemonth.substr(0, 1) == 0) {
+				$timemonth = $timemonth.substr(1, 1);
+			} else {
+				$timemonth = $publish_date.substr(4, 2);
+			}
+			//截取日期
+			$timeday = $publish_date.substr(6, 2);
+			//截取小时
+			$timehours = $publish_date.substr(8, 2);
+			$xData = new Array();
+			$yData = new Array();
+			j = Number($timehours);
+			for (var i = 0; i <= 24; i++) {
+				if (j > 24) {
+					j = 1;
+				}
+				$xData.push(j);
+				j = j + 1;
+
+			}
+			$.each($aqiArr, function(i, v) {
+
+				if (v > 0 && v < 50) {
+					$yData.push({
+						y: Number(v),
+						fillColor: '#3bb64f'
+					});
+				} else if (v >= 50 && v < 100) {
+					$yData.push({
+						y: Number(v),
+						fillColor: '#ff9900'
+					});
+				} else if (v >= 100 && v < 150) {
+					$yData.push({
+						y: Number(v),
+						fillColor: '#ff6000'
+					});
+				} else if (v >= 150 && v < 200) {
+					$yData.push({
+						y: Number(v),
+						fillColor: '#f61c1c'
+					});
+				} else if (v >= 200 && v < 300) {
+					$yData.push({
+						y: Number(v),
+						fillColor: '#bb002f'
+					});
+				} else {
+					$yData.push({
+						y: Number(v),
+						fillColor: '#7e0808'
+					});
+				}
+
+			})
+			if ($aqiArr[23] > 0 && $aqiArr[23] < 50) {
+				$aqiC = "优";
+				$color = "#3bb64f";
+				$tsContent = "空气很好，可以外出活动，呼吸新鲜空气，拥抱大自然！";
+				$diannum = "2.5";
+			} else if ($aqiArr[23] >= 50 && $aqiArr[23] < 100) {
+				$aqiC = "良";
+				$color = "#ff9900";
+				$tsContent = "空气好，可以外出活动，除极少数对污染物特别敏感的人群以外，对公众没有危害！";
+				$diannum = "2.5";
+			} else if ($aqiArr[23] >= 100 && $aqiArr[23] < 150) {
+				$aqiC = "轻度污染";
+				$color = "#ff6000";
+				$tsContent = "空气一般，老人、小孩及对污染物比较敏感的人群会感到些微不适！";
+				$diannum = "2.5";
+			} else if ($aqiArr[23] >= 150 && $aqiArr[23] < 200) {
+				$aqiC = "中度污染";
+				$color = "#f61c1c";
+				$tsContent = "空气较差，老人、小孩及对污染物比较敏感的人群会感到不适！";
+				$diannum = "2.5";
+			} else if ($aqiArr[23] >= 200 && $aqiArr[23] < 300) {
+				$aqiC = "重度污染";
+				$color = "#bb002f";
+				$tsContent = "空气差，适当减少外出活动，老人、小孩出门时需做好防范措施！";
+				$diannum = "2.2";
+			} else {
+				$aqiC = "严重污染";
+				$color = "#7e0808";
+				$tsContent = "空气很差，尽量不要外出活动";
+				$diannum = "1.7";
+			}
+			$("<span class='da' style=color:" + $color + ">" + $aqiArr[23] + "</span><span class='mi' style=color:" + $color + ">" + $aqiC + "</span>").appendTo("#aqinew");
+			$(".yjh").html("温馨提示:<br />" + $tsContent);
+			$("#pubdate").html($timemonth + "月" + $timeday + "日" + $timehours + "时更新");
+			$("#jiaobiao").html("<b style='position:absolute; left:" + $aqiArr[23] * $diannum + "px;'><img src='images/jiao.png'></b>");
+			chart = new Highcharts.Chart({
+				chart: {
+					renderTo: 'container',
+					type: 'line',
+					backgroundColor: "",
+					plotBorderColor: "#115aaa"
+				},
+				title: {
+					text: "",
+					floating: false,
+
+				},
+				xAxis: {
+					categories: $xData,
+					lineColor: "#115aaa",
+					lineWidth: 5
+				},
+				yAxis: {
+					title: {
+						text: '空气质量(AQI)'
+					},
+					labels: {
+						formatter: function() {
+							return this.value;
+						}
+					}
+				},
+				plotOptions: {
+					line: {
+						dataLabels: {
+							enabled: false,
+							formatter: function() {
+								return this.y;
+							}
+
+						},
+
+						enableMouseTracking: false,
+						lineWidth: 5.5,
+
+
+					},
+
+				},
+				credits: { //版权信息,不显示
+					enabled: false,
+				},
+				legend: {
+					enabled: false
+				},
+				series: [{
+					data: $yData,
+					color: '#89A54E',
+					marker: {
+						radius: 8, //曲线点半径，默认是4
+						symbol: 'circle' //曲线点类型："circle", "square", "diamond", "triangle","triangle-down"，默认是"circle"
+					}
+				}]
+			});
+			_hideLoading();
+		}
+	})
+}
+//自动刷新
+function myrefresh() {
+	$("#aqinew").empty();
+	AQIData();
+}
+$(function() {
+	AQIData();
+	setInterval('myrefresh()', 30000); //指定10分钟刷新一次  
+})
+
+</script>
+<style>
+
+
+*
+   {
+	margin: 0;
+	padding: 0;
+	list-style:none;
+	font-weight:normal;
+    }
+a img
+    {
+	border:1px solid #dcdddd;
+	}
+body 
+    {
+	font-family:微软雅黑;
+	background:#fff;
+	color:#fff;
+	font-size:12px;
+font-style:normal;
+	}
+i 
+    {
+font-style:normal;
+}
+a 
+    {
+	color:#36B;
+	text-decoration:none;
+         font-size:12px;
+         outline: medium none;
+	}
+a:hover
+    {
+	color:#F60;
+	text-decoration:underline;
+	}
+.main
+{
+	background:url(images/kqzl.jpg) repeat-x;
+	margin:0 auto;
+	width:1420px;
+	overflow:hidden;
+	height:800px;}
+.shangban
+{
+	width:1270px;
+	position:relative;
+	margin:0 auto;
+	height:327px;}
+.shangban h1
+{
+	font-size:50px;
+	margin-bottom:10px;
+	font-weight:bold;
+	color:#191919;
+	
+	margin-top:10px;}
+	.shangban h1 p
+{
+	font-size:50px;
+	margin-bottom:10px;
+	font-weight:bold;
+	color:#191919;
+	
+	margin-top:10px;}
+.shangban h1 span
+{
+float:right;
+font-weight:bold;
+font-size:40px;}
+.shangban h2
+{
+	margin-bottom:10px;}
+.shangban h2 span
+{
+	padding-right:20px;}
+.shangban h2 span.da
+{
+	color:#cc0000;
+	font-weight:bold;
+	
+	font-size:121px;}
+.shangban h2 span.mi
+{
+font-weight:bold;
+	color:#cc0000;
+	font-size:121px;}
+.shangban h2 span.sm
+{
+	color:#666;
+	font-size:21px;}
+.sd ul li
+{
+	width:125px;
+	background:#3bb64f;
+	margin-right:8px;
+	float:left;
+	margin-bottom:7px;
+	display:inline;
+	height:20px;}
+.sd p span
+{
+	color:#666;
+	padding-right:90px;
+	font-size:24px;}
+.sds ul li
+{
+	width:125px;
+	text-align:right;
+	margin-right:8px;
+	float:left;
+	color:#666;
+	margin-bottom:7px;
+	font-size:24px;
+	display:inline;
+	height:20px;}
+.xiaban
+{
+	  height: 367px;
+    margin: 0 auto;
+    width: 1270px;}
+.xiaban h1
+{
+	color: #191919;
+    font-size: 45px;
+    font-weight:bold;
+    margin-bottom: 10px;
+    margin-top: 40px;}
+ .yjh
+ {
+ color:#a41f0d;
+ font-weight:bold;
+ font-size:25px;
+ clear:both;
+ height:70px;
+line-height:70px;}
+.yjh
+{
+position:absolute;
+width:410px;
+height:220px;
+font-size:31px;
+color:#97001c;
+right:0px;
+line-height:50px;
+top:80px;
+
+padding:10px;
+background:rgba(255,255,255,0.5);}
+
+
+
+/*1280x720*/
+.main
+{
+width:1280px;
+height:720px;
+overflow:hidden;}
+</style>
+</head>
+
+<body>
+<div class="main">
+	<div class="shangban">
+		<h1><span style="float:right;" id="pubdate"></span><p id="cityname"></p></h1>
+		<h2 id="aqinew">
+			
+		</h2>
+		<div class="sd" style="position:relative;">
+			<ul id="kedu">
+				<li></li>
+				<li style="background:#ff9900;"></li>
+				<li style="background:#ff6000;"></li>
+				<li style="background:#f61c1c;"></li>
+				<li style="background:#bb002f;"></li>
+				<li style="background:#7e0808;"></li>
+			</ul>
+			<div id="jiaobiao"></div>
+			<p><span>0</span><span>50</span><span>100</span><span>150</span><span>200</span><span>300</span><span>>500</span></p>
+		</div>
+		<div class="sds">
+			<ul>
+				<li>优</li>
+				<li>良</li>
+				<li>轻度污染</li>
+				<li>中度污染</li>
+				<li>重度污染</li>
+				<li>严重污染</li>
+			</ul>
+		</div>
+		<div class="yjh">温馨提示：<br>空气很好，可以外出活动，呼吸新鲜空气。</div>
+	</div>
+	<div class="xiaban">
+		<h1>过去24小时空气质量曲线</h1>
+		<div id="container" style="min-width: 350px; height: 280px; margin: 0 auto"></div>
+	</div>
+</div>
+</body>
+</html>
