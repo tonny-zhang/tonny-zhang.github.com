@@ -1,4 +1,18 @@
 !function(){
+    var getParam = function(){
+        var searchArr = decodeURIComponent(location.search).substr(1).split('&');
+        var params = {};
+        for(var i = 0,j=searchArr.length;i<j;i++){
+            var v = searchArr[i].split('=');
+            if(v.length == 2){
+                params[v[0]] = v[1];
+            }
+        }
+        return function (name,defaultVal){
+            return params[name] || defaultVal;
+        }
+    }();
+    
     var _hideLoading = function(){
         try{
             window.android.hideLoading();
@@ -12,20 +26,38 @@
     //得到预警描述及等级
     var REG = /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})\d{2}-(\d{2})(\d{2})\.html/;
     
-    var currentCityId = '101010100';//'101280902';
+    var currentCityId = getParam('id','101010100');//'101280902';
     // var currentCityId = '101281108';
+    var startTime = function(){
+        var formatNum = function(str){
+            if(str < 10){
+                str = '0'+str;
+            }
+            return str;
+        }
+        var fn = function(){
+            var date_str = '';
+            var c_date = new Date();
+            date_str = formatNum(c_date.getMonth()+1)+'月'+formatNum(c_date.getDate())+'日<br/>'+formatNum(c_date.getHours())+':'+formatNum(c_date.getMinutes());
+            $('.date').html(date_str);
+            setTimeout(fn,1000);
+        }
+        fn();
+    };
     /*加载实况信息*/
     var ajax_sk = $.getJSON('http://mobile.weather.com.cn/data/sk/'+currentCityId+'.html',function(sk_data){
         if(sk_data && sk_data.sk_info){
             var data = sk_data.sk_info;
-            var date_str = '';
-            var date = data.date;
-            var m = /\d{4}(\d{2})(\d{2})/.exec(date);
-            if(m){
-                date_str += m[1]+'月'+m[2]+'日<br/>'; 
-            }
-            date_str += data.time;
-            $('.date').html(date_str);
+            
+            // var date = data.date;
+            // var m = /\d{4}(\d{2})(\d{2})/.exec(date);
+            // if(m){
+            //     date_str += m[1]+'月'+m[2]+'日<br/>'; 
+            // }
+            // date_str += data.time;
+
+            startTime();
+            $('.name').text(data.cityName);
             var temp = data.temp;
             $('.value b').text(temp);
             $('.value span:first').text('体感温度：'+temp);

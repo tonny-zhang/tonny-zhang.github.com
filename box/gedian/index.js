@@ -333,6 +333,9 @@
         map && map.clearOverlays();
         var numArr = {};
         $.each(data,function(i,v){
+            v.temp = parseInt(v.temp);
+            v.hnmidity = parseInt(v.hnmidity);
+            v.stationheight = parseInt(v.stationheight);
             var name = (''+v.ptime).substr(0,10);
             if(!numArr[name]){
                 numArr[name] = 0;
@@ -361,6 +364,15 @@
         //     $('#data_time').hide();
         // }
         var typeArr = ['temp','pressure','hnmidity','windspeed','winddirection','precipitationb1h','visibility'];
+        var typeName = {
+            'temp': '温度',
+            'pressure': '气压',
+            'hnmidity': '相对湿度',
+            'windspeed': '风速',
+            'winddirection': '风向',
+            'precipitationb1h': '降水量',
+            'visibility': '能见度'
+        };
         var currentType = 0,
         	numType = typeArr.length;
         var weatherOverlays = map.getOverlays(),
@@ -378,9 +390,12 @@
         $('#info_list').fadeIn().find('ul').replaceWith(toShowDataOverlay.getDataHTML());
         var delay = 4000;
         var tt;
+        var $c_type = $('#c_type');
         var fn = function(){
         	var nextType = currentType + 1 <= numType-1?currentType+1:0;
         	showDataKey = typeArr[nextType];
+            var showTypeName = typeName[showDataKey];
+            $c_type.text('('+showTypeName+')');
         	currentType = nextType;
         	$.each(weatherOverlays,function(i,v){
 	            v.resetData();

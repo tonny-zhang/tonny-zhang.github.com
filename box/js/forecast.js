@@ -164,7 +164,7 @@ function weatherdata() {
 					break;
 			}
 			newsArr = result.f.f1;
-			$("#cityname").html(cityname + "<span>" + citynameen + "</span>");
+			$("#cityname").html(cityname );//+ "<span>" + citynameen + "</span>"
 			$("#riqi").html("<span>今天是" + timesmonth + "月" + d0 + "日</span><span>" + weekArr[0] + "</span>");
 			$("#update").html(update);
 			$.each(newsArr, function(i, v) {

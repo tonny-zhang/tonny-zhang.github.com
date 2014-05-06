@@ -59,11 +59,19 @@ body{
 	padding: 10px;
 	background-color: #414141;
 }
+.top_left>div{
+	height: 66px;
+}
 .top_right{
 	min-width: 772px;
 }
 .name{
 	padding: 5px 0;
+	width: 150px;
+	text-align: center;
+	font-weight: bold;
+	color: white;
+	font-size: 42px;
 }
 .date{
 	background-color: #494949;

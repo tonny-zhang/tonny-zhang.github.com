@@ -39,6 +39,7 @@ a:hover
 .main
 {
 	/*background:url(../images/2.jpg) repeat-x;*/
+	position: relative;
 	margin:0 auto;
 	width:1270px; 
 	overflow:hidden;
@@ -155,11 +156,12 @@ clear:both;}
 
 #alarm
 {
-position:relative;
-top:30px;
+position:absolute;
+bottom: 0;
 background:#000;
 opacity:0.8;
 height:56px;
+width: 100%;
 line-height:56px;
 display: none;
 clear:both;}

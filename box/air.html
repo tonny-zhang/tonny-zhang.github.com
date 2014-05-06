@@ -6,31 +6,28 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript">
-function getUrlParam(name) {
-	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-	var r = window.location.search.substr(1).match(reg); //匹配目标参数
-	if (r != null) return unescape(r[2]);
-	return null; //返回参数值 
-}
+var getParam = function(){
+    var searchArr = decodeURIComponent(location.search).substr(1).split('&');
+    var params = {};
+    for(var i = 0,j=searchArr.length;i<j;i++){
+        var v = searchArr[i].split('=');
+        if(v.length == 2){
+            params[v[0]] = v[1];
+        }
+    }
+    return function (name,defaultVal){
+        return params[name] || defaultVal;
+    }
+}();
 var _hideLoading = function(){
     try{
         window.android.hideLoading();
     }catch(e){}
 }
 function AQIData() {
-	var areaid = getUrlParam("id");
-
-	if (areaid == null) {
-		areaid = "101010100";
-	} else {
-		areaid = getUrlParam("id");
-	}
-	var cityname = getUrlParam("name");
-	if (cityname == null) {
-		cityname = "北京";
-	} else {
-		cityname = getUrlParam("name");
-	}
+	var areaid = getParam("id","101010100");
+	var cityname = getParam("name","北京");
+	
 	$("#cityname").html(cityname + "空气质量指数(AQI)实时查询");
 	$.ajax({
 		type: "GET",

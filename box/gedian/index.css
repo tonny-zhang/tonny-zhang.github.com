@@ -67,7 +67,8 @@ ul{
 	position: absolute;
 	z-index: 2;
 	left: 50%;
-	width: 260px;
+	width: 300px;
+    text-align: center;
 	margin-left: -170px;
 	font-family: "微软雅黑";
 }
