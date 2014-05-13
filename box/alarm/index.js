@@ -109,7 +109,8 @@
                 cache[lon+'_'+lat] = true;
                 map.addOverlay(new AlarmOverlay(lon, lat,data.img,v));
                 if(toShowNum-- >=0){
-                    html += '<li><img src="'+data.img.replace('alarm_s','alarm_m')+'"/><span>'+data.text+'<br/>'+data.time+'</span></li>';
+                    // html += '<li><img src="'+data.img.replace('alarm_s','alarm_m')+'"/><div><span class="info">'+data.text+'</span><span>'+data.time+'</span></div></li>';
+                    html += '<li><img src="'+data.img.replace('alarm_s','alarm_m')+'"/><span><span class="info">'+data.text+'</span>'+data.time+'</span></li>';
                 }
             });
             $alarm_list.find('div span').text('目前正在生效预警'+alarminfo.count+'个');
