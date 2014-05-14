@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>实景天气</title>
+<style>
+*
+   {
+	margin: 0;
+	padding: 0;
+	list-style:none;
+	font-weight:normal;
+    }
+a img
+    {
+	border:1px solid #dcdddd;
+	}
+body 
+    {
+	font-family: 微软雅黑;
+	background:#fff;
+	color:#fff;
+	font-size:12px;
+font-style:normal;
+	}
+i 
+    {
+font-style:normal;
+}
+a 
+    {
+	color:#36B;
+	text-decoration:none;
+         font-size:12px;
+         outline: medium none;
+	}
+a:hover
+    {
+	color:#F60;
+	text-decoration:underline;
+	}
+	
+.box
+{
+	width:388px;
+	margin:0 auto;
+	position:relative;
+	height:800px;}
+.left
+{
+	background:url(images/sweeyes03_24H.jpg) no-repeat;
+	width:389px;
+	float:left;
+	height:800px;}
+.right{
+	width:1031px;
+	float:right;}
+.left ul li
+{
+	text-align:right;
+	padding-right:15px;
+	margin-bottom:10px;
+	font-size:36px;
+	}
+.left ul.xiam
+{
+	position:absolute;
+	left:70px;
+	bottom:10px;}
+.left ul.xiam li
+{
+	font-size:30px;
+}
+
+
+
+/*2014.1.8 by liqiang*/
+.box{width:1280px;height:720px; overflow:hidden;}
+.right{width:891px;}
+</style>
+<link href="http://dptq.weather.com.cn/css/video-js.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<!--<script type="text/javascript" src="js/video.min.js"></script>
+<script>
+    //_V_.options.flash.swf = "js/video-js.swf";
+</script>-->
+<script type="text/javascript">
+function getUrlParam(name)
+{
+	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+	var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+	if (r!=null) return unescape(r[2]); return null; //返回参数值 
+}
+var getParam = function(){
+        var searchArr = decodeURIComponent(location.search).substr(1).split('&');
+        var params = {};
+        for(var i = 0,j=searchArr.length;i<j;i++){
+            var v = searchArr[i].split('=');
+            if(v.length == 2){
+                params[v[0]] = v[1];
+            }
+        }
+        return function (name,defaultVal){
+            return params[name] || defaultVal;
+        }
+    }();
+function weatherdata(){
+	
+    //获取城市ID
+   	var areaid=getParam("id","101010100");
+	var cityname=getParam("name","北京");
+	
+	$GwData=[];
+	$DwData=[];
+	$riqi=[];
+	var weatherArr={"00":"晴","01":"多云","02":"阴","03":"阵雨","04":"雷阵雨","05":"雷阵雨伴有冰雹","06":"雨夹雪","07":"小雨","08":"中雨","09":"大雨","10":"暴雨","11":"大暴雨","12":"特大暴雨","13":"阵雪","14":"小雪","15":"中雪","16":"大雪","17":"暴雪","18":"雾","19":"冻雨","20":"沙尘暴","21":"小到中雨","22":"中到大雨","23":"大到暴雨","24":"暴雨到大暴雨","25":"大暴雨到特大暴雨","26":"小到中雪","27":"中到大雪","28":"大到暴雪","29":"浮尘","30":"扬沙","31":"强沙尘暴","53":"霾","99":""};
+	//定义风向数组
+	var fxArr={"0":"无持续风向","1":"东北风","2":"东风","3":"东南风","4":"南风","5":"西南风","6":"西风","7":"西北风","8":"北风","9":"旋转风"};
+	//定义风力数组
+	var flArr={"0":"微风","1":"3-4级","2":"4-5级","3":"5-6级","4":"6-7级","5":"7-8级","6":"8-9级","7":"9-10级","8":"10-11级","9":"11-12级"};
+	$.ajax({
+		type:"GET",
+        url:"../data/observe/"+areaid+".html",
+		cache:false,
+		async:false,
+		data:{},
+		dataType:"json",
+		success:function(result){	
+			$.each(result,function(i,v){
+				var wd=v["l1"];
+				var sd=v["l2"];
+				var fl=v["l3"];
+				var fxNum=v["l4"];
+				var rain=Number(v["l6"]);
+				if(isNaN(rain) || rain <= 0)
+				{
+					rain="暂无";
+				}
+				else
+				{
+					rain=v["l6"]+"mm";
+				}
+				var time=v["l7"];
+				var timeArr=time.split(":");
+
+				$(".bia").html("<li>"+cityname+"实况天气  "+timeArr[0]+"时</li><li style='font-size:130px; font-weight:bold;'>"+wd+"℃</li><li style='font-size:60px;'>"+fxArr[fxNum]+fl+"级</li><li style='font-size:60px;'>湿度："+sd+"%</li><li style='font-size:60px;'>降水量："+rain+"</li>");
+
+			})
+		}
+	})		
+	
+}
+$(function(){
+	weatherdata();
+})
+
+</script>
+</head>
+
+<body>
+<div class="box" >
+	<div class="left">
+		<ul style="margin-top:10px;" class="bia">
+			
+		</ul>
+		<ul class="xiam">
+			<li>过去24小时实景天气</li>
+			<li>地点：中国气象局</li>
+			<li>内容：办公楼部分景区</li>
+			
+
+		</ul>
+	</div>
+	<div class="right"></div>
+	<!--http://61.4.185.122/webcam/v/SWEEYESBJ01_24H_201311261735.mp4-->
+	
+	
+</div>
+<script type="text/javascript">
+    function autoplay() {
+        var video = document.getElementById("example_video_1");
+        video.play();
+    }
+  
+</script>
+</body>
+</html>
