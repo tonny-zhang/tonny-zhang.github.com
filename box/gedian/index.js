@@ -441,7 +441,7 @@
         var bssw = bs.getSouthWest();   //可视区域左下角
         var bsne = bs.getNorthEast();   //可视区域右上角
                    // http://10.16.45.145:9526/weather/gridData?slon=115.148258&slat=40.315695&elon=117.581301&elat=39.581143&maplevel=10
-        var url = 'http://10.16.58.115:9526/weather/gridData?slon='+bssw.lng + "&slat=" + bsne.lat+'&elon='+bsne.lng + "&elat=" + bssw.lat+'&maplevel='+map.getZoom();
+        var url = 'http://61.4.184.31/weather/gridData?slon='+bssw.lng + "&slat=" + bsne.lat+'&elon='+bsne.lng + "&elat=" + bssw.lat+'&maplevel='+map.getZoom();
         // url = 'http://10.16.45.145:9526/weather/gridData?slon='+bssw.lng + "&slat=" + bsne.lat+'&elon='+bsne.lng + "&elat=" + bssw.lat+'&maplevel='+map.getZoom();
         loadData(url,initData);
     }

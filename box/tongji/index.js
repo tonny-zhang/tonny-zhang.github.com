@@ -21,7 +21,7 @@
     var cityid = '54511'
 	// $.getJSON('./data/all.json',function(data){
 	$.ajax({
-         url: 'http://10.16.58.115:9526/weather/history?s_time='+s_time+'&e_time='+e_time+'&cityid='+cityid,
+         url: 'http://61.4.184.31/weather/history?s_time='+s_time+'&e_time='+e_time+'&cityid='+cityid,
          dataType: "jsonp",
          jsonp: "cb",
          success: renderData,
