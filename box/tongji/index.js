@@ -4,19 +4,16 @@
             window.android.hideLoading();
         }catch(e){}
     }
+    var _formateNum = function(num){
+    	return (num < 10?'0':'')+num;
+    }
 	var style = {
         fontSize: '22px'
     };
     var s_time = '20140401';
     var e_time = new Date();
-    var month = e_time.getMonth()+1;
-    if(month < 10){
-    	month = '0'+month;
-    }
-    var date = e_time.getDate();
-    if(date < 10){
-    	date = '0'+date;
-    }
+    var month = _formateNum(e_time.getMonth()+1);
+    var date = _formateNum(e_time.getDate());
     e_time = [e_time.getFullYear(), month, date].join('');
     var cityid = '54511'
 	// $.getJSON('./data/all.json',function(data){
@@ -43,6 +40,7 @@
 	function renderData(data){
 		data.s_time = formateDate(data.s_time);
 		data.e_time = formateDate(data.e_time);
+		var startMonth = parseInt(data.s_time.split('-')[1]);
 		var xArr = [],
 			yArr = [];
 		var piepArr = [];
@@ -113,7 +111,18 @@
 	            }
 	        }
 	    });
-
+		
+		/*对X轴的日期进行处理*/
+		var currentDate = 0;
+		var currenMonth = startMonth;
+		$.each(data.tq.value,function(i,v){
+			var date = parseInt(v.x);
+			if(date < currentDate){
+				currenMonth++;
+			}
+			currentDate = date;
+			v.x = currenMonth+'-'+_formateNum(currentDate);
+		});
 		var temp_x = [],
 			temp_max_y = [],
 			temp_min_y = [],
@@ -163,7 +172,10 @@
 	            // lineWidth:2,
 	            labels: {
 	                y: 30,
-	                style: style
+	                style: style,
+	                rotation: -90,
+	                y: 40,
+	                x: 8
 	            }
 	        },
 	        yAxis: [{ // Primary yAxis
@@ -200,22 +212,22 @@
 	            color: '#2468A2',
 	            type: 'column',
 	            dataLabels: {
-	                enabled: true,
-	                rotation: -90,
-	                color: '#FFFFFF',
-	                align: 'right',
-	                x: 4,
-	                y: 10,
-	                style: {
-	                    fontSize: '13px',
-	                    fontFamily: 'Verdana, sans-serif',
-	                    textShadow: '0 0 3px black'
-	                },
-	                formatter: function(){
-	                	if(this.y > 0){
-	                		return this.y;
-	                	}
-	                }
+	                // enabled: true,
+	                // rotation: -90,
+	                // color: '#FFFFFF',
+	                // align: 'right',
+	                // x: 4,
+	                // y: -10,
+	                // style: {
+	                //     fontSize: '13px',
+	                //     fontFamily: 'Verdana, sans-serif',
+	                //     textShadow: '0 0 3px black'
+	                // },
+	                // formatter: function(){
+	                // 	if(this.y > 0){
+	                // 		return this.y;
+	                // 	}
+	                // }
 	            }
 	        },{
 	        	name: data.tq.name[0],

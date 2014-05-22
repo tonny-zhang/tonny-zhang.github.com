@@ -61,7 +61,7 @@
             var temp = data.temp;
             $('.value b').text(temp);
             $('.value span:first').text('体感温度：'+temp);
-            $('.value span:eq(1)').text('相对温度：'+data.sd);
+            $('.value span:eq(1)').text('相对湿度：'+data.sd);
             $('.value span:eq(2)').text('舒适度：'+'较舒适');
             $('.wind .text').text(data.wd);
             $('.wind .text_inner').text(data.ws);
