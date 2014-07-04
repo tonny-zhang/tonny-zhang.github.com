@@ -84,7 +84,7 @@ ul{
 #info_list{
 	position: absolute;
 	right: 10px;
-	top: 10px;
+	top: 150px;
 	width: 440px;
 	padding: 10px;
 	height: auto;
@@ -325,12 +325,17 @@ ul{
 #toolbar{
     position: absolute;
     z-index: 901;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 90px;
-    background-color: rgba(255,255,255,.8);
+    right: 10px;
+    top: 10px;
+    width: 440px;
+    padding: 10px;
+    height: 110px;
+    background-color: rgba(255,255,255,0.8);
+    box-shadow: 4px 4px 5px rgba(0,0,0,.2);
+    background-color: white \9;
+    border: 1px solid rgb(139, 164, 220);
     font-size: 16px;
+    border-radius: 5px;
 }
 
 #toolbar .tr{
@@ -342,7 +347,45 @@ ul{
 #toolbar .first{
     border-bottom: 1px solid #B5D6EA;
 }
+#toolbar .second{
+    height: 90px;
+}
+.tuli{
+    clear: both;
+    margin-left: 85px;
+}
+.color_1{
+    background-color: rgb(249,242,187);
+}
+.color_2{
+    background-color: rgb(249,222,69);
+}
+.color_3{
+    background-color: rgb(255,168,0);
+}
+.color_4{
+     background-color: rgb(255,109,0);
+}
+.color_5{
+    background-color: rgb(230,0,0);
+}
+.color_6{
+    background-color: rgb(158,0,1);
+}
+#tuli_2{
+    display: none;
+}
+#tuli_2 ul{
+    margin: 5px 3px 0 3px;
+}
+#tuli_2 li{
+    float: left;
+    width: 40px;
+    height: 20px;
+    line-height: 20px;
+}
 .mask{
+    /*display: none;*/
     background-color: rgba(0,0,0,.2);
     position: fixed;
     left: 0;

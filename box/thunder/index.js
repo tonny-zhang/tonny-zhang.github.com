@@ -75,9 +75,9 @@
                 var text = '●';
                 var color = '';
                 intensity = Math.abs(intensity);
-                if(intensity >=0 && intensity < 50){
+                if(intensity >=0 && intensity < 100){
                     color = 'rgb(249,242,187)';
-                }else if(intensity >=50 && intensity < 100){
+                }else if(intensity >=100 && intensity < 150){
                     color = 'rgb(249,222,69)';
                 }else if(intensity >= 150 && intensity < 200){
                     color = 'rgb(255,168,0)';
@@ -88,7 +88,7 @@
                 }else{
                     color = 'rgb(158,0,1)';
                 }
-                var fontSize = 20;
+                var fontSize = 10;
             }
             addTextMarker(v.lon,v.lat,text,color,fontSize);
         });
@@ -101,9 +101,11 @@
             current_type = type;
             clearTimeout(typeTT);
             Mask.show();
+            $('.tuli>div').hide();
+            $('#tuli_'+type).show()
             typeTT = setTimeout(function(){
                  renderMap(data_cache.l);
-            },100);
+            },300);
         }
     });
 
