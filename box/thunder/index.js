@@ -67,11 +67,9 @@
             var intensity = v.intensity;
             var isZheng = intensity > 0;
             if(current_type == TYPE_ALL){
-                var text = isZheng?'+':'—';
-                var color = isZheng?'red':'blue';
-                if(!isZheng){
-                    fontSize = 14;
-                }
+                var text = '●';//isZheng?'+':'—';
+                var color = isZheng?'#29f800':'blue';
+                var fontSize = 15;
             }else{
                 var text = '●';
                 var color = '';

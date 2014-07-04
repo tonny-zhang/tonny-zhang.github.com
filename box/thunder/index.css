@@ -377,6 +377,9 @@ ul{
 .color_6{
     background-color: rgb(158,0,1);
 }
+#tuli_1{
+    font-weight: bold;
+}
 #tuli_2{
     display: none;
 }
