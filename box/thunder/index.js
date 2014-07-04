@@ -33,7 +33,7 @@
     window.leidian = function(data){
         data_cache = data;
         var time = data.time;
-        var list = data.l;
+        var list = data.l[data.l.length-1];
         $num_total.text(data.count);
         var m = REG_TIME.exec(time);
         if(m){
@@ -55,6 +55,7 @@
             $mask.show();
         },hide: function(){
             $mask.hide();
+            console.log($('body').html());
         }
     };
     var TYPE_ALL = 1,
@@ -76,11 +77,11 @@
                 var color = '';
                 intensity = Math.abs(intensity);
                 if(intensity >=0 && intensity < 100){
-                    color = 'rgb(249,242,187)';
+                    color = '#50f82f';
                 }else if(intensity >=100 && intensity < 150){
-                    color = 'rgb(249,222,69)';
+                    color = '#34a51e';
                 }else if(intensity >= 150 && intensity < 200){
-                    color = 'rgb(255,168,0)';
+                    color = '#1c5b10';
                 }else if(intensity >= 200 && intensity < 250){
                     color = 'rgb(255,109,0)';
                 }else if(intensity >= 250 && intensity < 300){
@@ -88,7 +89,7 @@
                 }else{
                     color = 'rgb(158,0,1)';
                 }
-                var fontSize = 10;
+                var fontSize = 15;
             }
             addTextMarker(v.lon,v.lat,text,color,fontSize);
         });
@@ -104,7 +105,8 @@
             $('.tuli>div').hide();
             $('#tuli_'+type).show()
             typeTT = setTimeout(function(){
-                 renderMap(data_cache.l);
+
+                renderMap(data_cache.l[data_cache.l.length-1]);
             },300);
         }
     });
