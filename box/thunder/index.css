@@ -1,0 +1,364 @@
+.anchorBL{
+	display: none;
+}
+body{
+	/*background-color: #0091d0;*/
+	/*font-family: "微软雅黑";*/
+	padding: 0;
+	margin: 0;
+}
+ul{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.fl{
+	display: inline;
+	float: left;
+}
+.fr{
+	display: inline;
+	float: right;
+}
+.clear{
+	overflow: hidden;
+}
+.layer_div {
+	position: absolute;
+	left: 50%;
+	top: 10px;
+	margin-left: -75px;
+	border: 1px solid rgb(139, 164, 220);
+	border-radius: 5px;
+	background: white;
+	color: #000;
+	text-align: center;
+	z-index: 101;
+	cursor: pointer;
+	box-shadow: 2px 2px 2px #ccc;
+	font-size: 14px;
+	line-height: 20px;
+	padding: 2px;
+}
+#map{
+	width: 100%;
+	height: 100%;
+}
+.no_alarm{
+	top: 50%;
+	margin-top: -15px;
+	padding: 10px;
+}
+#loading{
+	position: absolute;
+	width: 120px;
+	top: 50%;
+	margin-top: -15px;
+	left: 50%;
+	margin-left: -60px;
+}
+#main{
+	/*width: 1280px;
+	height: 720px;*/
+	margin: 0 auto;
+	position: relative;
+}
+#main h1{
+	position: absolute;
+	z-index: 901;
+	left: 50%;
+	width: 300px;
+    text-align: center;
+	margin-left: -170px;
+	font-family: "微软雅黑";
+}
+#main h1 span{
+    font-size: 18px;
+    position: absolute;
+    bottom: -26px;
+    width: 380px;
+    left: -38px;
+}
+
+
+#info_list{
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 400px;
+	padding: 10px;
+	height: auto;
+	max-height: 620px;
+	background-color: rgba(255,255,255,0.8);
+	box-shadow: 4px 4px 5px rgba(0,0,0,.2);
+	background-color: white \9;
+	border: 1px solid rgb(139, 164, 220);
+	border-radius: 5px;
+	font-size: 18px;
+	overflow: hidden;
+	line-height: 30px;
+    display: none;
+    z-index: 901;
+    overflow-y: auto; 
+}
+#info_list ul{
+}
+#info_list div{
+	font-size: 18px;
+	font-weight: bold;
+	padding: 5px;
+}
+#info_list div span{
+	color: #666;
+}
+#info_list li{
+	padding: 2px 5px;
+	margin: 3px 0;
+	border-bottom: 1px dotted #ccc;
+    background: url(./thunder.png) no-repeat left center;
+    text-indent: 25px;
+}
+#info_list li img{
+	vertical-align: -7px;
+	margin-right: 5px;
+}
+#info_list li span{
+	color: #666;
+}
+
+#logo{
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	z-index: 2;
+}
+#logo img{
+	vertical-align: -10px;
+	margin-right: 10px;
+}
+
+
+
+.weatherOverlay{
+    position: absolute;
+}
+.weatherOverlay div{
+    position: absolute;
+    top: -34px;
+	left: -38px;
+    font-size: 12px;
+    color: white;
+    font-weight: blod;
+    padding: 2px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,.8);
+    background: rgba(0,0,0,.6);
+    background: #666 \9;
+    border-radius: 3px;
+    padding: 3px 5px;
+    white-space:nowrap;
+    text-indent: 28px;
+}
+.weatherOverlay div.no_img{
+    text-indent: 0;
+}
+.weatherOverlay ul{
+    display: none;
+    line-height: 20px;
+}
+.weatherOverlay.on{
+    z-index: 999999;
+}
+.weatherOverlay.on ul{
+    display: block;
+}
+.weatherOverlay.on span b{
+    display: none;
+}
+.weatherOverlay img{
+    position: absolute;
+    left: -33px;
+    top: -3px;
+    height: 22px;
+}
+.weatherOverlay span{
+    position: relative;
+}
+.weatherOverlay span i{
+    font-style: normal;
+}
+.weatherOverlay span b{
+    position: absolute;
+    bottom: -13px;
+    bottom: -10px \9;
+    _bottom: -18px;
+    left: 6px;
+    border-width: 10px 10px 0px 0px;
+    border-color: transparent;
+    _border-color:tomato;
+    _filter:chroma(color=tomato);
+    border-style: solid;
+    border-top-color: rgba(0,0,0,.6);
+    border-top-color: #666 \9;
+}
+.weatherOverlay span a{
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background: #DD6062;
+    position: absolute;
+    left: 2px;
+    bottom: -19px;
+    z-index: -1;
+    box-shadow: 1px 1px 2px #000;
+}
+.weatherOverlay div.temp_1{
+    background: rgba(255,0,0,.6);
+    background: #f00 \9;
+}
+
+.weatherOverlay div.temp_2{
+    background: rgba(0,0,0,.6);
+    background: #000 \9;
+}
+.weatherOverlay div.temp_3{
+    background: rgba(0,0,255,.6);
+    background: #00f \9;
+}
+.weatherOverlay div.shidu_1{
+    background: rgb(255,96,0);
+    background: rgba(255,96,0,.6);
+}
+.weatherOverlay div.shidu_2{
+    background: rgb(254,165,26);
+    background: rgba(254,165,26,.6);
+}
+.weatherOverlay div.shidu_3{
+    background: rgb(255,252,159);
+    /*background: rgba(255,252,159,.6);*/
+    color: #2EAD06;
+    text-shadow: none;
+}
+.weatherOverlay div.shidu_4{
+    background: rgb(114,130,118);
+    background: rgba(114,130,118);
+}
+.weatherOverlay div.js_1{
+    background: rgb(46,173,6);
+    background: rgba(46,173,6);
+}
+.weatherOverlay div.js_2{
+    background: rgb(0,0,0);
+    background: rgba(0,0,0);
+}
+.weatherOverlay div.js_3{
+    background: rgb(9,1,236);
+    background: rgba(9,1,236);
+}
+.weatherOverlay div.js_4{
+    background: rgb(200,4,200);
+    background: rgba(200,4,200);
+}
+.weatherOverlay div.js_5{
+    background: rgb(197,7,36);
+    background: rgba(197,7,36);
+}
+#sort_nav{
+    width: 150px;
+    padding: 2px;
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    margin-left: -75px;
+    border: 1px solid rgb(139, 164, 220);
+    border-radius: 5px;
+    background: white;
+    color: #000;
+    text-align: center;
+    z-index: 100;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px #ccc;
+    font-size: 14px;
+    line-height: 20px;
+}
+#sort_nav ul{
+    display: none;
+}
+#sort_nav.on ul{
+    display: block;
+    border-top: 1px solid rgb(139, 164, 220);
+}
+#sort_nav ul li.on{
+    font-weight: bold;
+}
+#nav_tool{
+    position: absolute;
+    right: 5px;
+    top: 6px;
+    border-width: 10px 6px 6px 6px;
+    border-color: transparent;
+    _border-color:tomato;
+    _filter:chroma(color=tomato);
+    border-style: solid;
+    border-top-color: #666;
+}
+#sort_nav.on #nav_tool{
+    display: none;
+}
+.layer_div{
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    margin-left: -75px;
+    border: 1px solid rgb(139, 164, 220);
+    border-radius: 5px;
+    background: white;
+    color: #000;
+    text-align: center;
+    z-index: 101;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px #ccc;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 2px;
+}
+
+#toolbar{
+    position: absolute;
+    z-index: 901;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 90px;
+    background-color: rgba(255,255,255,.8);
+    font-size: 16px;
+}
+
+#toolbar .tr{
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    margin: 10px 0;
+}
+#toolbar .first{
+    border-bottom: 1px solid #B5D6EA;
+}
+.mask{
+    background-color: rgba(0,0,0,.2);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 902;
+    text-align: center;
+    line-height: 100%;
+    vertical-align:middle;
+    font-size: 40px;
+}
+.mask div{
+    width: 300px;
+    position: absolute;
+    top: 46%;
+    left: 50%;
+    margin-left: -150px;
+}

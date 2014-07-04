@@ -1,0 +1,36 @@
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <title>闪电地图</title>
+    <link rel="stylesheet" type="text/css" href="./index.css" />
+    <script type="text/javascript" src="http://mobile.weather.com.cn/js/jquery-1.8.2.js"></script>
+</head>
+<body>
+    <div id="main">
+        <h1>全国闪电实时监测<br/><span></span></h1>
+        <div id="loading"></div>
+        <div id="map"></div>
+        <div id="info_list">
+            <div><span>闪电实时信息</span></div>
+            <ul>
+                <li>经度：11.223 纬度：11.223 强度：25.32</li>
+            </ul>
+        </div>
+        <div id="toolbar">
+            <div class="clear first tr">
+                累积时间：<input type="radio" value="1" checked name="time"/> 1h &nbsp;&nbsp;&nbsp;总闪次数<span id="num_total">0</span>次
+            </div>
+            <div class="clear second tr">
+                <div class="fl">显示方式：</div>
+                <div class="fl">
+                    <input type="radio" value="1" name="type" checked id="type_1"/><label for="type_1">闪电综合显示</label>
+                    <input type="radio" value="2" name="type" id="type_2"/><label for="type_2">闪电强度显示</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mask"><div>正在处理。。</div></div>
+    <script language="javascript"  src="http://webapi.amap.com/maps?v=2.0&key=d0e895a4c4b5f0c632f8ed3985f0247f"></script>
+    <script type="text/javascript" src="index.js"></script>
+</body>
+</html>
