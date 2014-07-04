@@ -419,4 +419,14 @@ ul{
     height: 50px;
     line-height: 50px;
     text-indent: 60px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 902;
+    width: 100%;
 }
+/*@media screen and (max-width: 480px) {
+    #info_list{
+        display: none;
+    }
+}*/
