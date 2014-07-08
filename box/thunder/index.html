@@ -2,7 +2,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="initial-scale=0.5,maximum-scale=0.5,minimum-scale=0.5" />
-    <title>闪电地图</title>
+    <title>全国闪电实时监测</title>
     <link rel="stylesheet" type="text/css" href="./index.css" />
 </head>
 <body>
@@ -11,36 +11,38 @@
         <h1>全国闪电实时监测<br/><span></span></h1>
         <div id="loading"></div>
         
-        <div id="info_list">
-            <div><span>闪电实时信息</span></div>
-            <ul>
-                <li>经度：11.223 纬度：11.223 强度：25.32</li>
-            </ul>
-        </div>
-        <div id="toolbar">
-            <div class="clear first tr">
-                累积时间：<input type="radio" value="1" checked name="time"/> 5分钟 &nbsp;&nbsp;&nbsp;总闪次数<span id="num_total">0</span>次
+        <div class="slide_bar">
+            <div class="btn_switch">打开面板</div>
+            <div id="info_list">
+                <div><span>闪电实时信息</span></div>
+                <ul>
+                </ul>
             </div>
-            <div class="clear second tr">
-                <div class="fl">显示方式：</div>
-                <div class="fl">
-                    <input type="radio" value="1" name="type" checked id="type_1"/><label for="type_1">闪电综合显示</label>
-                    <input type="radio" value="2" name="type" id="type_2"/><label for="type_2">闪电强度显示</label>
+            <div id="toolbar">
+                <div class="clear first tr">
+                    累积时间：<input type="radio" value="1" checked name="time"/> 5分钟 &nbsp;&nbsp;&nbsp;总闪次数<span id="num_total">0</span>次
                 </div>
+                <div class="clear second tr">
+                    <div class="fl">显示方式：</div>
+                    <div class="fl">
+                        <input type="radio" value="1" name="type" checked id="type_1"/><label for="type_1">闪电综合显示</label>
+                        <input type="radio" value="2" name="type" id="type_2"/><label for="type_2">闪电强度显示</label>
+                    </div>
 
-                <div class="tuli">
-                    <div id="tuli_1"><font color='#29f800'>+正闪</font>&nbsp;&nbsp;&nbsp;&nbsp;<font color=blue>-负闪</font></div>
-                    <div id="tuli_2" class="clear">
-                        <span class="fl">0</span>
-                        <ul class="fl">
-                            <li class="color_1">&lt;100</li>
-                            <li class="color_2">&lt;150</li>
-                            <li class="color_3">&lt;200</li>
-                            <li class="color_4">&lt;250</li>
-                            <li class="color_5">&lt;300</li>
-                            <li class="color_6"></li>
-                        </ul>
-                        <span class="fl">&gt;=300</span>
+                    <div class="tuli">
+                        <div id="tuli_1"><font color='#29f800'>+正闪</font>&nbsp;&nbsp;&nbsp;&nbsp;<font color=blue>-负闪</font></div>
+                        <div id="tuli_2" class="clear">
+                            <span class="fl">0</span>
+                            <ul class="fl">
+                                <li class="color_1">&lt;100</li>
+                                <li class="color_2">&lt;150</li>
+                                <li class="color_3">&lt;200</li>
+                                <li class="color_4">&lt;250</li>
+                                <li class="color_5">&lt;300</li>
+                                <li class="color_6"></li>
+                            </ul>
+                            <span class="fl">&gt;=300</span>
+                        </div>
                     </div>
                 </div>
             </div>

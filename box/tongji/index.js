@@ -7,6 +7,19 @@
     var _formateNum = function(num){
     	return (num < 10?'0':'')+num;
     }
+    var getParam = function(){
+        var searchArr = decodeURIComponent(location.search).substr(1).split('&');
+        var params = {};
+        for(var i = 0,j=searchArr.length;i<j;i++){
+            var v = searchArr[i].split('=');
+            if(v.length == 2){
+                params[v[0]] = v[1];
+            }
+        }
+        return function (name,defaultVal){
+            return params[name] || defaultVal;
+        }
+    }();
 	var style = {
         fontSize: '22px'
     };
@@ -15,10 +28,10 @@
     var month = _formateNum(e_time.getMonth()+1);
     var date = _formateNum(e_time.getDate());
     e_time = [e_time.getFullYear(), month, date].join('');
-    var cityid = '54511'
+    var cityid = getParam('areaid','101010100');
 	// $.getJSON('./data/all.json',function(data){
 	$.ajax({
-         url: 'http://61.4.184.31/weather/history?s_time='+s_time+'&e_time='+e_time+'&cityid='+cityid,
+         url: 'http://61.4.184.31/weather/history?s_time='+s_time+'&e_time='+e_time+'&areaid='+cityid,
          dataType: "jsonp",
          jsonp: "cb",
          success: renderData,
@@ -115,6 +128,8 @@
 		/*对X轴的日期进行处理*/
 		var currentDate = 0;
 		var currenMonth = startMonth;
+		var len = data.tq.value.length;
+		
 		$.each(data.tq.value,function(i,v){
 			var date = parseInt(v.x);
 			if(date < currentDate){
@@ -123,6 +138,10 @@
 			currentDate = date;
 			v.x = currenMonth+'-'+_formateNum(currentDate);
 		});
+		
+		if(len > 50){
+			data.tq.value = data.tq.value.slice(len-30,len);
+		}
 		var temp_x = [],
 			temp_max_y = [],
 			temp_min_y = [],
