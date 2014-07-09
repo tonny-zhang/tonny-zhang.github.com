@@ -139,7 +139,11 @@
             zoom: 5
         })  //2D地图显示视口  
     });
-
+    //在地图中添加ToolBar插件
+    mapObj.plugin(["AMap.ToolBar"],function(){     
+        toolBar = new AMap.ToolBar();
+        mapObj.addControl(toolBar);    
+    });
     //添加带文本的点标记覆盖物
     function addTextMarker(lon,lat,text,color,fontSize){
         //点标记中的文本
