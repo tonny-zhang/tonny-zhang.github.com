@@ -3,72 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="refresh" content="7200">
-<script type="text/javascript" src="js/jquery.min.js"></script>
 <title>尾号限行</title>
-<script type="text/javascript">
-$(function(){
-	//计算星期
-	var mydate=new Date();
-	var week="日一二三四五六".charAt(mydate.getDay());
-	var weekArr=new Array();
-	if(week=="一")
-	{
-		$week1="今天(周一)";
-		$week2="明天(周二)";
-		$hao1="<h3><span>5</span>和<span>0</span></h3>";
-		$hao2="<h3><span>1</span>和<span>6</span></h3>";
-	}
-	else if(week=="二")
-	{
-		$week1="今天(周二)";
-		$week2="明天(周三)";
-		$hao1="<h3><span>1</span>和<span>6</span></h3>";
-		$hao2="<h3><span>2</span>和<span>7</span></h3>";
-	}
-	else if(week=="三")
-	{
-		$week1="今天(周三)";
-		$week2="明天(周四)";
-		$hao1="<h3><span>2</span>和<span>7</span></h3>";
-		$hao2="<h3><span>3</span>和<span>8</span></h3>";
-	}
-	else if(week=="四")
-	{
-		$week1="今天(周四)";
-		$week2="明天(周五)";
-		$hao1="<h3><span>3</span>和<span>8</span></h3>";
-		$hao2="<h3><span>4</span>和<span>9</span></h3>";
-	}
-	else if(week=="五")
-	{
-		$week1="今天(周五)";
-		$week2="明天(周六)";
-		$hao1="<h3><span>4</span>和<span>9</span></h3>";
-		$hao2="<h3>不限行</h3>";
-	}
-	else if(week=="六")
-	{
-		$week1="今天(周六)";
-		$week2="明天(周日)";
-		$hao1="<h3>不限行</h3>";
-		$hao2="<h3>不限行</h3>";
-	}
-	else
-	{
-		$week1="今天(周日)";
-		$week2="明天(周一)";
-		$hao1="<h3>不限行</h3>";
-		$hao2="<h3><span>5</span>和<span>0</span></h3>";
-	}
-	
-	$(".ba").html("<h1>北京市五环内机动车尾号限行</h1><div class='left'><h2>"+$week1+"</h2>"+$hao1+"</div><div class='right'><h2>"+$week2+"</h2>"+$hao2+"</div>");
-	window.onload = function(){
-		try{
-            window.android.hideLoading();
-        }catch(e){}
-	}
-})
-</script>
 <style>
 
 *
@@ -108,7 +43,7 @@ a:hover
 	}
 .boxc
 {
-	background:url(images/xxbg.jpg) no-repeat; 
+	background:url(http://mobile.weather.com.cn/dptq/images/xxbg.jpg) no-repeat; 
 	width:1480px;
 	margin:0 auto;
 	height:800px;}
@@ -247,7 +182,7 @@ line-height:60px;}
 	
 	</div>
 	<div class="bottom">
-		<h1>2014年4月14日-7月12日  限行规则</h1>
+		<h1>2014年限行规则</h1>
 		<ul class="shang">
 			<li>周一</li>
 			<li>周二</li>
@@ -266,5 +201,52 @@ line-height:60px;}
 		</ul>
 	</div>
 </div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<script type="text/javascript" src="./js/limitLine.js"></script>
+<script type="text/javascript">
+	var getParam = function(){
+        var searchArr = decodeURIComponent(location.search).substr(1).split('&');
+        var params = {};
+        for(var i = 0,j=searchArr.length;i<j;i++){
+            var v = searchArr[i].split('=');
+            if(v.length == 2){
+                params[v[0]] = v[1];
+            }
+        }
+        return function (name,defaultVal){
+            return params[name] || defaultVal;
+        }
+    }();
+    var cityid = getParam('areaid','101010100');
+    var today = new Date();
+    var week = today.getDay();
+    var weekStr = "日一二三四五六";
+    var result = getLimitLine(today,cityid,true);
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate()+1);
+    var tomorrowLimitline = getLimitLine(tomorrow,cityid);
+    var todayLimitline = result[0];
+    if(todayLimitline == ''){
+    	todayLimitline = '不限行';
+    }else{
+    	todayLimitline = todayLimitline.split(',');
+    	todayLimitline = '<h3><span>'+todayLimitline[0]+'</span>和<span>'+todayLimitline[1]+'</span></h3>'
+    }
+    if(tomorrowLimitline == ''){
+    	tomorrowLimitline = '不限行';
+    }else{
+    	tomorrowLimitline = tomorrowLimitline.split(',');
+    	tomorrowLimitline = '<h3><span>'+tomorrowLimitline[0]+'</span>和<span>'+tomorrowLimitline[1]+'</span></h3>'
+    }
+    $(".ba").html("<h1>北京市五环内机动车尾号限行</h1><div class='left'><h2>今天(周"+weekStr.charAt(week)+")</h2>"+todayLimitline+"</div><div class='right'><h2>明天(周"+weekStr.charAt(tomorrow.getDay())+")</h2>"+tomorrowLimitline+"</div>");
+    var html = '';
+    $.each(result[1],function(i,v){
+    	var arr = v.split(',');
+    	html += '<li><span>'+arr[0]+'</span>和<span>'+arr[1]+'</span></li>';
+    });
+    html += '<li>不限行</li>';
+    $('.xia').html(html);
+</script>
 </body>
 </html>
