@@ -1,4 +1,10 @@
 !function () {
+	var _hideLoading = function(){
+        try{
+            window.android.hideLoading();
+        }catch(e){}
+    }
+    _hideLoading();
 	var holiday = [
 		"20130919","20130920","20130921","20131001","20131002","20131003","20131004","20131005","20131006","20131007",
 		"20140101",//元旦
@@ -49,7 +55,7 @@
 		}
 	}
 	function isHoliday(date){
-		return holiday.indexOf(getDateStr(date)) > -1;
+		return $.inArray(getDateStr(date),holiday) > -1;
 	}
 	var fn = {
 		/*
