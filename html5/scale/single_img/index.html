@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta content="yes" name="apple-mobile-web-app-capable"/>
+	<meta content="yes" name="apple-touch-fullscreen"/>
+	<meta content="telephone=no" name="format-detection"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<title>单个图片的绽放</title>
+	<meta name="revisit-after"  content="1 days" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<style>
+	.test_img{
+		width: 100%;
+	}
+	.img{
+		width: 300px;
+		height: 300px;
+		margin: 0 auto;
+	}
+	.img_move_mask{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,.8);
+		z-index: 901;
+		display: none;
+	}
+	.img_move_mask .img_move{
+		position: absolute;
+		width: 100%;
+		height: auto;
+		left: 50%;
+		z-index: 902;
+	}
+	</style>
+</head>
+<body>
+	<img class="test_img" style="position:absolute;left:-100px;top:0;" src="http://i.weather.com.cn/i/product/pic/m/sevp_nmc_gisp_s99_ee0_achn_lno_p9_20140917060000000.jpg"/>
+	<div class="img">
+		<img class="test_img " src="http://i.weather.com.cn/i/product/pic/m/sevp_nmc_gisp_s99_ee0_achn_lno_p9_20140917060000000.jpg"/>
+	</div>
+	<div class="img_move_mask"></div>
+	<script type="text/javascript" src="http://10.14.85.116:8080/target/target-script-min.js#anonymous"></script>
+	<script type="text/javascript" src="./zepto.js"></script>
+	<script type="text/javascript" src="./scale_single_img.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$('img').click(function(){
+			Scale.init($(this));
+		});
+	})
+	</script>
+</body>
+</html>

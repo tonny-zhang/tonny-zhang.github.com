@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--禁止浏览器缩放-->
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+<title>IPAD拖动缩放</title>
+<!--
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"   href="assets/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"                 href="assets/ico/apple-touch-icon-57-precomposed.png">
+-->
+<!--IPAD添加到主屏的图标-->
+<link rel="apple-touch-icon-precomposed" href="images/icon.png">
+<link rel="shortcut icon"                href="images/icon.png">
+
+<style type="text/css">
+body, html{margin:0; padding:0; overflow:hidden;}
+#img1 {position:absolute; width:400px; height:280px; top:100px; left:100px;}
+</style>
+
+<script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+
+<script type="text/javascript">
+var userAgent = navigator.userAgent.toLowerCase();
+// var isIpad = userAgent.match(/ipad/i) == "ipad";
+
+// if (!isIpad) alert('不是IPAD！');
+
+var oldX, oldY, startX, startY, startWidth, startHeight;
+var moveD;
+var isMove = false;
+var isZoom = false;
+var lastClickTime = 0;
+
+// 获取两点之间的距离
+function get_distance(x1, y1, x2, y2)
+{
+	return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2), 2);
+}
+
+function img_mousedown(e)
+{
+	if (e.target.id != 'img1') return;
+
+	if (e.touches.length == 1)
+	{
+		var nowTime = Math.round(new Date().getTime() / 1000);
+		x = $('#img1').position().left;
+		y = $('#img1').position().top;
+		if (nowTime - lastClickTime < 1 && Math.abs(x - startX) < 20 && Math.abs(y - startY) < 20)
+		{
+			// 在1秒内连续点击同一地方。
+			alert('双击事件');
+		}
+		lastClickTime = nowTime;
+	}
+	else if (e.touches.length >= 2)
+	{
+		isMove = false;
+		isZoom = true;
+		x1 = e.touches[0].pageX;
+		y1 = e.touches[0].pageY;
+		x2 = e.touches[1].pageX;
+		y2 = e.touches[1].pageY;
+
+		startX = $('#img1').position().left;
+		startY = $('#img1').position().top;
+		startWidth = $('#img1').width();
+		startHeight = $('#img1').height();
+
+		moveD = get_distance(x1, y1, x2, y2);
+
+		return;
+	}
+
+	isMove = true;
+	oldX = e.touches[0].pageX;
+	oldY = e.touches[0].pageY;
+	startX = $('#img1').position().left;
+	startY = $('#img1').position().top; 
+	e.preventDefault();
+	e.stopPropagation();
+	return false;
+}
+
+function img_mouseup(e)
+{
+	if (e.target.id != 'img1') return;
+
+	isZoom = false;
+	isMove = false;
+}
+
+function img_mousemove(e)
+{
+	if (isZoom)
+	{
+		//targetTouches changedTouches touches
+		if (e.touches.length >= 2)
+		{
+			var x1, y1, x2, y2, d1;
+			x1 = e.touches[0].pageX;
+			y1 = e.touches[0].pageY;
+			x2 = e.touches[1].pageX;
+			y2 = e.touches[1].pageY;
+			d1 = get_distance(x1, y1, x2, y2);
+			var rate = d1 / moveD;
+			var w = startWidth * rate;
+			var h = startHeight * rate;
+
+			$('#img1').width(w);
+			$('#img1').height(h);
+			$('#img1').css('left', (startWidth - w) / 2 + startX + 'px');
+			$('#img1').css('top', (startHeight - h) / 2 + startY + 'px');
+		}
+
+		return;
+	}
+
+	if (!isMove) return;
+	x = e.changedTouches[0].pageX - oldX;
+	y = e.changedTouches[0].pageY - oldY;
+
+	$('#img1').css('top', y + startY + 'px');
+	$('#img1').css('left', x + startX + 'px');
+}
+
+$(function(){
+	document.onmousemove = function (e)
+	{
+		var e = e || event;
+		e.cancelBubble = true;
+		e.returnValue = false;
+	}
+
+	// 防止触发浏览器的整体拖动
+	document.body.addEventListener('touchmove', function (e)
+	{
+		e.preventDefault();
+	}, false); 
+
+	document.addEventListener('touchstart', img_mousedown, false);
+	document.addEventListener('touchend', img_mouseup, false);
+	document.addEventListener('touchmove', img_mousemove, false);
+});
+
+</script>
+</head>
+<body unselectable="on" onselectstart="return false;">
+
+<img id="img1" src="img.jpg" />
+
+</body>
+</html>
