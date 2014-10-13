@@ -1,7 +1,7 @@
 !function(){
 		var play_delay = 60000;
 		var $win = $(window);
-		$('body').css({'width': screen.width,'height': screen.height});
+		// $('body').css({'width': $win.width(),'height': $win.height()});
 
 		var video_info = [];
 		video_info.push({'poster':'11.jpg','video':'http://61.4.185.122/webcam/v/SWEEYESCZ02_24H_201405131014.mp4','text': '渤海新区海洋观测点'});
@@ -13,18 +13,12 @@
 
 
 		var $selected_border = $('<em>');
-		var $video_list = $('.video-list');
-		var video_list_width = $video_list.width(),
-			video_list_height = $video_list.height();
-		var startX = 0,
-			startY = 0,
-			marginLeft = marginTop = 0,
-			imgWidth = video_list_width * 0.5,
-			imgHeight = video_list_height / 3;
+		var $video_list = $('.video-list').html('');
+		
 		var list_item = [];
-		video_info.forEach(function(v,i){
+		$.each(video_info,function(i,v){
 			var $item = $('<div class="fl"><img src="'+v.poster+'"/><span>'+v.text+'</span></div>')
-							.css({'left': startX,'top': startY,'width': imgWidth,'height': imgHeight})
+							// .css({'left': startX,'top': startY,'width': imgWidth,'height': imgHeight})
 							.data('v',v.video)
 							.data('i',i)
 							.appendTo($video_list)
@@ -37,16 +31,50 @@
 								}
 							})
 			list_item.push($item);
-			var tempX = startX + imgWidth + marginLeft;
-			if(video_list_width - tempX < imgWidth){
-				startX = 0;
-				startY += imgHeight + marginTop;
-			}else{
-				startX += imgWidth + marginLeft;
+			
+		});
+		var currentIndex = 0;
+		var resetTT;
+		function reset(){
+			clearTimeout(resetTT);
+			resetTT = setTimeout(function(){
+				$.each(list_item,function(i,v){
+					$(v).css({
+						'position': 'relative',
+						left: 'auto',
+						top: 'auto'
+					});
+				});
+				var _w = list_item[0].width(),
+					_h = list_item[0].height();
+				$selected_border.css({
+					width: _w - 10,
+					height: _h - 10
+				});
+				// 倒序处理，防止前面元素CSS改变对后续元素影响
+				for(var i = list_item.length-1;i>=0;i--){
+					var $item = list_item[i];
+					var offset = $item.position();
+					$item.css({
+						'position': 'absolute',
+						left: offset.left,
+						top: offset.top
+					})
+				}
+			},20);
+		}
+		reset();
+		$win.on('reset',reset);
+		var _orientation_old = window.orientation;
+		$win.on('orientationchange',function(){
+			var _orientation_new = window.orientation
+			if(_orientation_new != _orientation_old){
+				_orientation_old = _orientation_new;
+				reset();
 			}
-		})
+		});
 		var isPlayEnd = true;
-		var $video = $('#vodeo-dom').on('ended',function(){
+		$video = $('#vodeo-dom').on('ended',function(){
 			isPlayEnd = true;
 		}).on('play',function(){
 			isPlayEnd = false;
@@ -59,19 +87,13 @@
 			if(isPlayEnd || isFromClick){
 				var _video = $video.get(0);
 				$video_source.attr('src',video_info[currentIndex]['video']);
+				$video.attr('poster',video_info[currentIndex]['poster']);
 				_video.load();
 				_video.play();
-				// _video.pause();
-				// $video.stop(true,true).animate({'width': 0,'height': 0},function(){
-				// 	$video_source.attr('src',video_info[currentIndex]['video']);
-				// 	$video.animate({'width': video_width,'height': video_height},function(){
-				// 		_video.load();
-				// 		_video.play();
-				// 	});
-				// })
 			}
 		}
-		var currentIndex = 0;
+		
+		
 		var changingNum = 0;
 		var play_tt;
 		$selected_border.appendTo(list_item[currentIndex]);
@@ -80,13 +102,12 @@
 			if(changingNum != 0){
 				return;
 			}
-
-			var toPosArr = [];
 			
+			var toPosArr = [];
 			var imgNum = list_item.length;
 			changingNum = imgNum;
 			var changeIndex = -1;
-			list_item.forEach(function(v,i){
+			$.each(list_item,function(i,v){
 				var toIndex = i + 1;
 				if(toIndex > imgNum - 1){
 					toIndex = 0;
@@ -94,7 +115,7 @@
 				var toPos = list_item[toIndex].position();
 				toPosArr.push(toPos);
 
-				if(toPos.left < imgWidth && toPos.top < imgHeight && currentIndex != toIndex){
+				if(toPos.left == 0 && toPos.top == 0 && currentIndex != toIndex){
 					changeIndex = i;
 				}
 			});
@@ -104,15 +125,16 @@
 				toPosArr[changeIndex] = temp;
 			}
 			
-			list_item.forEach(function(v,i){
+			$.each(list_item,function(i,v){
 				var toPos = toPosArr[i];
-				if(toPos.left < imgWidth && toPos.top < imgHeight){
+				if(toPos.left  == 0 && toPos.top == 0){
 					currentIndex = i;
 				}
 				v.stop(true,true).animate(toPos,function(){
 					changingNum--;
 					if(changingNum == 0){
 						$selected_border.appendTo(list_item[currentIndex]);
+						
 						showVideo(isFromClick);
 						clearTimeout(play_tt);
 						play_tt = setTimeout(changePos,play_delay);
