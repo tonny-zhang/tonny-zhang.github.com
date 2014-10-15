@@ -1,4 +1,54 @@
 $(function(){
+	// 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    	var appid = '';
+    	var shareTitle = '环球旅行家发布会';
+    	var imgUrl = './img/logo.png';
+        share = function(){
+        	lineLink = location.href;
+        	descContent = '豪华精选酒店及度假村品牌“环球旅行家”发布会暨杭州尊蓝线江豪华精选酒店开业典礼';
+        }
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function(argv){
+        	share();
+            WeixinJSBridge.invoke('sendAppMessage',{
+                "appid": appid,
+                "img_url": imgUrl,
+                "img_width": "200",
+                "img_height": "200",
+                "link": lineLink,
+                "desc": descContent,
+                "title": shareTitle
+            }, function(res) {
+                //_report('send_msg', res.err_msg);
+            })
+        });
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function(argv){
+        	share();
+            WeixinJSBridge.invoke('shareTimeline',{
+                "img_url": imgUrl,
+                "img_width": "200",
+                "img_height": "200",
+                "link": lineLink,
+                "desc": descContent,
+                "title": descContent
+            }, function(res) {
+                
+            });
+        });
+        // 分享到微博
+        WeixinJSBridge.on('menu:share:weibo', function(argv){
+        	share();
+            WeixinJSBridge.invoke('shareWeibo',{
+                "content": descContent,
+                "url": lineLink,
+            }, function(res) {
+                //_report('weibo', res.err_msg);
+            });
+        });
+        share();
+    }, false);
 	// var $win = $(window).load(function(){
 		var $audio = $('audio');
 		var audio = $audio.get(0);
@@ -16,6 +66,12 @@ $(function(){
 			},2000);
 			callback();
 		});
+		var check_tt = setTimeout(function(){
+			alert('点击屏幕播放背景音乐');
+			isCanPlay = true;
+			callback();
+		},4000);
+		$('#audio_source').attr('src','./bg_music.mp3');
 		function preload(img,callback){
 			var image = new Image();
 			image.onload = image.onerror = callback;
@@ -31,6 +87,8 @@ $(function(){
 		}
 		function callback(){
 			if(isCanPlay && loadingNum == 0){
+				clearTimeout(check_tt);
+				loadingNum = -1;
 				$('.bg_img').addClass('enlarge');
 				run_con_tt = setTimeout(run_con,5000);
 			}
