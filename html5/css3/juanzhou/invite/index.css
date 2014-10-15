@@ -106,7 +106,7 @@ input, button, select{
 	top: 50%;
 	margin-top: -625px;
 	width: 600px;
-	height: 60px;
+	height: 100px;
 	background: url(./img/bg.png) no-repeat -71px -48px;
 	display: none;
 }
@@ -223,7 +223,7 @@ input, button, select{
 	bottom: 0;
 	left: -3px;
 	width: 612px;
-	height: 60px;
+	height: 100px;
 	z-index: 201;
 	background: url(./img/corner.png) no-repeat;
 	background-size: 100% 100%;

@@ -3,6 +3,7 @@ var $win = $(window).load(function(){
 	$('body').click(function(){
 		audio.play();
 	});
+	$('.bg_img').addClass('enlarge');
 	setTimeout(function(){
 		var $content = $('.content');
 		$content.fadeIn(function(){
