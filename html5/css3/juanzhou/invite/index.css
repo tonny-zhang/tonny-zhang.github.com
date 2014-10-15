@@ -48,6 +48,16 @@ input, button, select{
 }
 .preload{
 	display: none;
+	/*position: absolute;
+	width: 100%;
+	height: 200px;
+	left: 50px;
+	top: 50px;
+	z-index: 900;*/
+}
+.audio{
+	width: 100px;
+	height: 100px;
 }
 #main{
 	width: 100%;
@@ -230,6 +240,18 @@ input, button, select{
 	z-index: 201;
 	background: url(./img/corner.png) no-repeat;
 	background-size: 100% 100%;
+}
+.notice{
+	position: absolute;
+	z-index: 901;
+	left: 0;
+	top: 0;
+	background-color: rgba(0,0,0,.5);
+	color: white;
+	height: 0;
+	width: 100%;
+	text-align: center;
+	line-height: 30px;
 }
 @media screen and (max-height: 1250px){
 	#main{
