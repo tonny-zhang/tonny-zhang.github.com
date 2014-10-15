@@ -46,6 +46,9 @@ input, button, select{
 	float: right;
 	display: inline;
 }
+audio{
+	display: none;
+}
 #main{
 	width: 100%;
 	margin: 0 auto;
