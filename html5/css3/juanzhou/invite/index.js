@@ -3,9 +3,10 @@ var $win = $(window).load(function(){
 	$('body').click(function(){
 		audio.play();
 	});
-	$('.bg_img').addClass('enlarge');
-	setTimeout(function(){
-		var $content = $('.content');
+	$('.bg_img').animate({
+		'transform': 'scale(2.5,2.5)'
+	},5000,function(){
+		var $content = $('.content');alert(1);
 		$content.fadeIn(function(){
 			setTimeout(function(){
 				var toHeight = 1250;
@@ -32,5 +33,5 @@ var $win = $(window).load(function(){
 				});
 			},300);
 		});
-	},5200);
+	});
 });
