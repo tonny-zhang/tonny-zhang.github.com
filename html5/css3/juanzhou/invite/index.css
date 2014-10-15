@@ -120,6 +120,7 @@ input, button, select{
 	margin-top: -625px;
 	width: 600px;
 	height: 130px;
+	/*height: 1000px;*/
 	background: url(./img/bg.png) no-repeat -71px -48px;
 	display: none;
 }
@@ -144,83 +145,97 @@ input, button, select{
 	height: 30px;
 	display: none;
 	z-index: 101;
+	/*opacity: 0.5;
+	background-color: #ccc;*/
 }
-
 .item:nth-child(1){
 	background-position: -71px -10px;
 	top: -38px;
-	width: 100%;
+	width: 250px;
 	height: 100%;
 	max-height: 242px;
 	left: 0;
 	display: block;
 }
 .item:nth-child(2){
+	background-position: -371px -80px;
+	top: 32px;
+	width: 270px;
+	height: 30px;
+	left: 300px;
+}
+.item:nth-child(3){
+	background-position: -371px -112px;
+	top: 64px;
+	width: 270px;
+	height: 30px;
+	left: 300px;
+}
+.item:nth-child(4){left: 295px;
+	top: 544px;
+	width: 292px;
+	height: 460px;
+	background-position: -730px -697px;
+}
+.item:nth-child(5){
 	left: 280px;
 	top: 202px;
 	width: 292px;
 	height: 60px;
 	background-position: -351px -250px;
 }
-.item:nth-child(3){
-	left: 295px;
-	top: 544px;
-	width: 292px;
-	height: 460px;
-	background-position: -730px -697px;
-}
-.item:nth-child(4){
+.item:nth-child(6){
 	background-position: -71px -320px;
 	top: 272px;
 }
-.item:nth-child(5){
+.item:nth-child(7){
 	background-position: -71px -356px;
 	top: 308px;
 }
-.item:nth-child(6){
+.item:nth-child(8){
 	background-position: -71px -456px;
 	top: 408px;
 }
-.item:nth-child(7){
+.item:nth-child(9){
 	background-position: -71px -492px;
 	top: 444px;
 }
-.item:nth-child(8){
+.item:nth-child(10){
 	background-position: -71px -529px;
 	top: 481px;
 }
-.item:nth-child(9){
+.item:nth-child(11){
 	background-position: -71px -963px;
 	top: 915px;
 }
-.item:nth-child(10){
+.item:nth-child(12){
 	background-position: -71px -992px;
 	top: 944px;
 }
-.item:nth-child(11){
+.item:nth-child(13){
 	background-position: -71px -1133px;
 	top: 1085px;
 	width: 470px;
 }
-.item:nth-child(12){
+.item:nth-child(14){
 	background-position: -71px -1171px;
 	top: 1123px;
 	width: 470px;
 }
-.item:nth-child(13){
+.item:nth-child(15){
 	background-position: -71px -1205px;
 	top: 1157px;
 	width: 470px;
 	height: 32px;
 }
-.item:nth-child(14){
+.item:nth-child(16){
 	background-position: -541px -1075px;
 	top: 1027px;
 	width: 100px;
 	height: 200px;
 	left: 470px;
 }
-.item:nth-child(14) span{
+.item:nth-child(16) span{
 	position: absolute;
 	width: 592px;
 	height: 1px;
@@ -230,6 +245,14 @@ input, button, select{
 	left: 0;
 	top: -23px;
 	left: -466px;
+}
+.content_2 .item:nth-child(13){
+	background-position: -71px -803px;
+	top: 1095px;
+}
+.content_2 .item:nth-child(14){
+	background-position: -71px -866px;
+	top: 1156px;
 }
 .corner{
 	position: absolute;
