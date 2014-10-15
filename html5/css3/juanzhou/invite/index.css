@@ -46,7 +46,7 @@ input, button, select{
 	float: right;
 	display: inline;
 }
-audio{
+.preload{
 	display: none;
 }
 #main{

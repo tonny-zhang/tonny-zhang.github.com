@@ -1,4 +1,4 @@
-$(function(){
+$(window).load(function(){
 	var audio = $('audio').get(0);
 	$('body').click(function(){
 		audio.play();
@@ -25,7 +25,6 @@ $(function(){
 							$item.eq(index++).fadeIn(1500,run);
 						}
 						run();
-						console.log('down');
 					});
 				});
 			},300);
