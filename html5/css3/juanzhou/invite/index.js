@@ -3,7 +3,7 @@ $(function(){
     document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
     	var appid = '';
     	var shareTitle = '环球旅行家发布会';
-    	var imgUrl = './img/logo.png';
+    	var imgUrl = 'http://tonny-zhang.github.io/html5/css3/juanzhou/invite/img/logo.png';
         share = function(){
         	lineLink = location.href;
         	descContent = '豪华精选酒店及度假村品牌“环球旅行家”发布会暨杭州尊蓝线江豪华精选酒店开业典礼';
