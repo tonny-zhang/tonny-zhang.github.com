@@ -70,17 +70,17 @@ input, button, select{
 }
 .enlarge{
 	-webkit-animation-name: enlarge;
-	-webkit-animation-duration: 2s;
+	-webkit-animation-duration: 5s;
 	-webkit-animation-fill-mode: both;
 	-webkit-animation-timing-function: linear;
 
 	-moz-animation-name: enlarge;
-	-moz-animation-duration: 2s;
+	-moz-animation-duration: 5s;
 	-moz-animation-fill-mode: both;
 	-moz-animation-timing-function: linear;
 
 	animation-name: enlarge;
-	animation-duration: 2s;
+	animation-duration: 5s;
 	animation-fill-mode: both;
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
@@ -103,12 +103,14 @@ input, button, select{
 	position: absolute;
 	right: 30px;
 	top: 10px;
+	top: 50%;
+	margin-top: -625px;
 	width: 600px;
 	height: 60px;
-	/*height: 1355px;*/
 	background: url(./img/bg.png) no-repeat -71px -48px;
 	display: none;
 }
+
 .mask{
 	position: absolute;
 	z-index: 0;
@@ -227,4 +229,13 @@ input, button, select{
 }
 .show_corner{
 
+}
+@media screen and (max-height: 1250px){
+	#main{
+		overflow: auto;
+	}
+	.content{
+		top: 0;
+		margin-top: 0;
+	}
 }

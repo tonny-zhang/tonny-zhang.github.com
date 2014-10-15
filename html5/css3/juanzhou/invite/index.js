@@ -1,4 +1,4 @@
-$(window).load(function(){
+var $win = $(window).load(function(){
 	var audio = $('audio').get(0);
 	$('body').click(function(){
 		audio.play();
@@ -24,12 +24,12 @@ $(window).load(function(){
 						var $item = $('.item.hide');
 						var index = 0;
 						function run(){
-							$item.eq(index++).fadeIn(1500,run);
+							$item.eq(index++).fadeIn(2500,run);
 						}
 						run();
 					});
 				});
 			},300);
 		});
-	},2500);
+	},5200);
 });
