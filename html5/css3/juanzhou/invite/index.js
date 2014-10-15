@@ -9,16 +9,18 @@ $(window).load(function(){
 			setTimeout(function(){
 				var toHeight = 1250;
 				var $corner = $('.corner');
+				var delay_slide = 3000,
+					delay_hide = 200;
 				var height_corner = $corner.height();
 				$content.animate({
 					height: toHeight - height_corner
-				},900,function(){
+				},delay_slide,function(){
 					$corner.animate({
 						height: 0
-					},100);
+					},delay_hide);
 					$content.animate({
 						height: toHeight
-					},100,function(){
+					},delay_hide,function(){
 						var $item = $('.item.hide');
 						var index = 0;
 						function run(){
