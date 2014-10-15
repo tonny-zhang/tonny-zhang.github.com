@@ -54,6 +54,7 @@ body{
 	height: 100%;
 }
 .main{
+	background-color: #666;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
@@ -63,12 +64,10 @@ body{
 .video-player{
 	width: 60%;
 	height: 100%;
-	background: #ccc;
 }
 .video-list{
 	width: 40%;
 	height: 100%;
-	background-color: #ccc;
 	position: relative;
 }
 .video-list-c{
@@ -81,13 +80,30 @@ body{
 	/*margin: 2%;*/
 	position: relative;
 }
-.video-list em{
+.video-list div:after{
+	content: '';
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 50px;
+	height: 50px;
+	margin-left: -25px;
+	margin-top: -25px;
+	background-image: url(./icon_play.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+.video-list div.on:after{
+	background-image: url(./icon_pause.png);
+}
+/*.video-list em{
 	border: 5px solid #F45E5F;
 	position: absolute;
 	left: 0;
 	top: 0;
 	z-index: 100;
-}
+}*/
 .video-list div img{
 	width: 100%;
 	height: 100%;
@@ -95,14 +111,17 @@ body{
 .video-list div span{
 	position: absolute;
 	display: inline;
-	bottom: 3px;
-	left: 3px;
-	background: rgba(48,48,48,.5);
+	bottom: 0px;
+	left: 0px;
+	background: url(./icon.png) no-repeat center left rgba(0,0,0,.5);
+	
+	height: 40px;
+	line-height: 40px;
+	overflow: hidden;
+	width: 100%;
+	text-indent: 35px;
 	color: #eee;
 	font-weight: bold;
-	text-align: center;
-	padding: 5px;
-	border-radius: 5px;
 }
 /*横屏*/
 @media all and (orientation : landscape) {
@@ -115,8 +134,9 @@ body{
 		display: inline;
 	}
 	.video-list div{
-		width: 50%;
-		height: 33.33%;
+		margin: 1%;
+		width: 48%;
+		height: 31.33%;
 	}
 }
 /*竖屏*/
@@ -128,9 +148,11 @@ body{
 	.video-list{
 		width: 100%;
 		height: 40%;
+
 	}
 	.video-list div{
-		height: 50%;
-		width: 33.33%;
+		margin: 1%;
+		height: 47%;
+		width: 31.33%;
 	}
 }

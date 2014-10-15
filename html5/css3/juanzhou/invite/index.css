@@ -1,0 +1,227 @@
+/* 这里定义浏览器重复样式 */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,p,blockquote,th,td,
+article, aside, summary, details, figcaption, figure, footer, header, hgroup, menu, nav, section{ 
+	margin: 0; 
+	padding: 0;
+}
+article, aside, summary, details, figcaption, figure, footer, header, hgroup, menu, nav, section{
+  display: block;
+}
+table{ 
+	border-collapse:collapse; 
+	border-spacing:0;
+}
+fieldset,img { 
+	border: 0; 
+	vertical-align: middle;
+}
+address,caption,cite,code,dfn,em,strong,th,var { 
+	font-style: normal; 
+	font-weight: normal;
+}
+ul,ol{
+	/*
+	IE6 IE7 IE8(Q) 中如果列表元素设置 'list-style-type:none' 时 'list-style-position:inside' 设置产生的标记框不消失，依然占据布局位置。
+	http://www.w3help.org/zh-cn/causes/RG1002
+	*/
+	list-style:outside none none;
+}
+q:before,q:after { 
+	content: '';
+}
+abbr,acronym { 
+	border: 0;
+}
+input, button, select{ 
+	vertical-align: middle;
+}
+/*常用样式及整体风格*/
+
+/*常用样式*/
+.fl{
+	float: left;
+	display: inline;
+}
+.fr{
+	float: right;
+	display: inline;
+}
+#main{
+	width: 100%;
+	margin: 0 auto;
+	position: relative;
+	height: 100%;
+	overflow: hidden;
+}
+@-webkit-keyframes enlarge{
+	0%{-webkit-transform:scale(1,1);}
+	100%{-webkit-transform:scale(2.5,2.5);}
+}
+@-moz-keyframes enlarge{
+	0%{-moz-transform:scale(1,1);}
+	100%{-moz-transform:scale(2.5,2.5);}
+}
+@keyframes enlarge{
+	0%{-webkit-transform:scale(1,1);}
+	100%{-webkit-transform:scale(2.5,2.5);}
+}
+.enlarge{
+	-webkit-animation-name: enlarge;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-fill-mode: both;
+	-webkit-animation-timing-function: linear;
+
+	-moz-animation-name: enlarge;
+	-moz-animation-duration: 2s;
+	-moz-animation-fill-mode: both;
+	-moz-animation-timing-function: linear;
+
+	animation-name: enlarge;
+	animation-duration: 2s;
+	animation-fill-mode: both;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+
+	transform-origin: 95% 80%;
+	-webkit-transform-origin: 95% 80%;
+	-moz-transform-origin: 95% 80%;
+}
+.bg_img{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 0;
+	left: 0;
+	top: 0;
+	background: url(./img/wxb.jpg) no-repeat;
+	background-size: cover;
+}
+.content{
+	position: absolute;
+	right: 30px;
+	top: 10px;
+	width: 600px;
+	height: 60px;
+	/*height: 1355px;*/
+	background: url(./img/bg.png) no-repeat -71px -48px;
+	display: none;
+}
+.mask{
+	position: absolute;
+	z-index: 0;
+	left: 5px;
+	top: 0;
+	background: white;
+	width: 590px;
+	height: 100%;
+	/*display: none;*/
+}
+.item{
+	position: absolute;
+	background-image: url(./img/bg.png);
+	background-repeat: no-repeat;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 30px;
+	display: none;
+	z-index: 101;
+}
+
+.item:nth-child(1){
+	background-position: -71px -10px;
+	top: -38px;
+	width: 100%;
+	height: 100%;
+	max-height: 242px;
+	left: 0;
+	display: block;
+}
+.item:nth-child(2){
+	left: 280px;
+	top: 202px;
+	width: 292px;
+	height: 60px;
+	background-position: -351px -250px;
+}
+.item:nth-child(3){
+	left: 295px;
+	top: 544px;
+	width: 292px;
+	height: 460px;
+	background-position: -730px -697px;
+}
+.item:nth-child(4){
+	background-position: -71px -320px;
+	top: 272px;
+}
+.item:nth-child(5){
+	background-position: -71px -356px;
+	top: 308px;
+}
+.item:nth-child(6){
+	background-position: -71px -456px;
+	top: 408px;
+}
+.item:nth-child(7){
+	background-position: -71px -492px;
+	top: 444px;
+}
+.item:nth-child(8){
+	background-position: -71px -529px;
+	top: 481px;
+}
+.item:nth-child(9){
+	background-position: -71px -963px;
+	top: 915px;
+}
+.item:nth-child(10){
+	background-position: -71px -992px;
+	top: 944px;
+}
+.item:nth-child(11){
+	background-position: -71px -1133px;
+	top: 1085px;
+	width: 470px;
+}
+.item:nth-child(12){
+	background-position: -71px -1171px;
+	top: 1123px;
+	width: 470px;
+}
+.item:nth-child(13){
+	background-position: -71px -1205px;
+	top: 1157px;
+	width: 470px;
+}
+.item:nth-child(14){
+	background-position: -541px -1075px;
+	top: 1027px;
+	width: 100px;
+	height: 200px;
+	left: 470px;
+}
+.item:nth-child(14) span{
+	position: absolute;
+	width: 592px;
+	height: 1px;
+	background-image: url(./img/bg.png);
+	background-repeat: no-repeat;
+	background-position: -75px -1057px;
+	left: 0;
+	top: -23px;
+	left: -466px;
+}
+.corner{
+	position: absolute;
+	bottom: 0;
+	left: -3px;
+	width: 612px;
+	height: 60px;
+	z-index: 201;
+	background: url(./img/corner.png) no-repeat;
+	background-size: 100% 100%;
+}
+.show_corner{
+
+}

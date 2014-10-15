@@ -1,0 +1,51 @@
+<html>
+	<style type="text/css">
+	.book{
+		width: 100px;
+		height: 400px;
+		background-color: #ccc;
+		position: relative;
+	}
+	.corner1{
+		background:-webkit-linear-gradient(45deg, #2e2e2e 24%, #5F5F5F 40%,#6f6f6f 43%,#5F5F5F 46%,#2F2F2F 50%,#fff 50%,#fff);
+		background:-moz-linear-gradient(45deg, #2e2e2e 24%, #5F5F5F 40%,#6f6f6f 43%,#5F5F5F 46%,#2F2F2F 50%,#fff 50%,#fff);height:90px;
+		background:-o-linear-gradient(45deg, #2e2e2e 24%, #5F5F5F 40%,#6f6f6f 43%,#5F5F5F 46%,#2F2F2F 50%,#fff 50%,#fff);height:90px;
+		background:-ms-linear-gradient(45deg, #2e2e2e 24%, #5F5F5F 40%,#6f6f6f 43%,#5F5F5F 46%,#2F2F2F 50%,#fff 50%,#fff);height:90px;
+		background:linear-gradient(45deg, #2e2e2e 24%, #5F5F5F 40%,#6f6f6f 43%,#5F5F5F 46%,#2F2F2F 50%,#fff 50%,#fff);height:90px;
+		width:90px;
+		height:90px;
+		border-radius:0 0 0px 90px / 0 0 0 30px;
+		-webkit-transform:rotate(-90deg);
+		-moz-transform:rotate(-90deg);
+		-o-transform:rotate(-90deg);
+		-ms-transform:rotate(-90deg);
+		transform:rotate(-90deg);
+		position:absolute;
+		/*left:-4px;
+		top:-4px;*/
+		/*box-shadow:5px 2px 8px black; */
+		overflow:hidden;
+		-webkit-transition:all 0.3s linear 0s;
+		-moz-transition:all 0.3s linear 0s;
+		-o-transition:all 0.3s linear 0s;
+		-ms-transition:all 0.3s linear 0s;
+		transition:all 0.3s linear 0s;
+		-webkit-transform-style: preserve-3d;
+	}
+	.corner{
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		border-radius:0 0 0px 90px / 0 0 0 30px;
+		/*-webkit-transform: rotateX(10deg) translateZ(0px);*/
+		width:90px;
+		height:90px;
+		background-color: #333;
+	}
+	</style>
+	<body>
+		<div class="book">
+			<div class="corner"></div>
+		</div>
+	</body>
+</html>
