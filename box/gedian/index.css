@@ -310,3 +310,37 @@ ul{
     line-height: 20px;
     padding: 2px;
 }
+@-webkit-keyframes beat{
+    0%{-webkit-transform:translateY(0px)}
+    50%{-webkit-transform:translateY(-10px)}
+    100%{-webkit-transform:translateY(0px)}
+}
+@-moz-keyframes beat{
+    0%{-moz-transform: translateY(0px)}
+    50%{-moz-transform: translateY(-10px)}
+    100%{-moz-transform: translateY(0px)}
+}
+@keyframes beat{
+    0%{-webkit-transform: translateY(0px)}
+    50%{-webkit-transform: translateY(-10px)}
+    100%{-webkit-transform: translateY(0px)}
+}
+.beat{
+    -webkit-animation-name: beat;
+    -webkit-animation-duration: .5s;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+    -moz-animation-name: beat;
+    -moz-animation-duration: .5s;
+    -moz-animation-fill-mode: both;
+    -moz-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+    animation-name: beat;
+    animation-duration: .5s;
+    animation-fill-mode: both;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}

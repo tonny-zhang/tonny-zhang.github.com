@@ -124,7 +124,7 @@ $(function(){
 							var $item = $('.item.hide');
 							var index = 0;
 							function run(){
-								$item.eq(index++).fadeIn(2500,run);
+								$item.eq(index++).fadeIn(2000,run);
 							}
 							run();
 						});
@@ -133,7 +133,7 @@ $(function(){
 			});
 		}
 		
-		$('#main').click(function(){
+		$(document).on('touchstart',function(){
 			audio.play();
 		});
 	// });

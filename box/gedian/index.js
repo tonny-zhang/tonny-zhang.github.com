@@ -220,11 +220,11 @@
             var $span = $('<span></span>');
             if(data.isStation){
                 $span.append('<a></a>');
-            } 
+            }
             $span.append('<i></i>').append('<b></b>');
             var $_div = $('<div></div>').append($span);
             
-            var $div = $('<div></div>').addClass('weatherOverlay').append($_div.append(info));
+            var $div = $('<div></div>').addClass('weatherOverlay ').append($_div.append(info));
             // if(isCanSeeAllData){
             //     $div.on('mouseenter',function(){
             //         $div.addClass('on');
@@ -286,6 +286,14 @@
         }
         WeatherOverlay.prototype.getDataHTML = function(){
             return $(this._div).find('ul').clone();
+        }
+        WeatherOverlay.prototype.beat = function(isBeat){
+            var $div = $(this._div);
+            if(isBeat){
+                $div.addClass('beat');
+            }else{
+                $div.removeClass('beat');
+            }
         }
         global.WeatherOverlay = WeatherOverlay;
     })(this);
@@ -379,12 +387,18 @@
         	numOverlays = weatherOverlays.length;
 
         var filter = function(){
+            var showIndex = Math.floor(Math.random()*numOverlays);
             for(var i = 0;i<numOverlays;i++){
-                var overlay = weatherOverlays[i];
-                if(overlay.data.stationid == 54511){
-                    return overlay;
-                }
+                var _overlay = weatherOverlays[i];
+                _overlay.beat(i == showIndex);
             }
+            return weatherOverlays[showIndex];
+            // for(var i = 0;i<numOverlays;i++){
+            //     var overlay = weatherOverlays[i];
+            //     if(overlay.data.stationid == 54511){
+            //         return overlay;
+            //     }
+            // }
         }
         var toShowDataOverlay = filter();
         $('#info_list').fadeIn().find('ul').replaceWith(toShowDataOverlay.getDataHTML());
@@ -400,9 +414,9 @@
         	$.each(weatherOverlays,function(i,v){
 	            v.resetData();
 	        });
-        	// var showIndex = Math.floor(Math.random()*numOverlays);
-        	// var $html = toShowDataOverlay.getDataHTML();
-        	// $('#info_list ul').show().replaceWith($html);
+        	toShowDataOverlay = filter();
+        	var $html = toShowDataOverlay.getDataHTML();
+        	$('#info_list ul').show().replaceWith($html);
         	clearTimeout(tt);
         	tt = setTimeout(fn,delay);
         }
