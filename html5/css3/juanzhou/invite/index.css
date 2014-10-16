@@ -276,6 +276,47 @@ input, button, select{
 	text-align: center;
 	line-height: 30px;
 }
+@-webkit-keyframes beat{
+    0%{-webkit-transform:translateY(0px)}
+    50%{-webkit-transform:translateY(-30px)}
+    100%{-webkit-transform:translateY(0px)}
+}
+@-moz-keyframes beat{
+    0%{-moz-transform: translateY(0px)}
+    50%{-moz-transform: translateY(-30px)}
+    100%{-moz-transform: translateY(0px)}
+}
+@keyframes beat{
+    0%{-webkit-transform: translateY(0px)}
+    50%{-webkit-transform: translateY(-30px)}
+    100%{-webkit-transform: translateY(0px)}
+}
+.arrow{
+	position: absolute;
+	width: 172px;
+	height: 107px;
+	left: 50%;
+	margin-left: -86px;
+	bottom: 100px;
+	background: url(./img/arrow.png) no-repeat center center;
+	-webkit-animation-name: beat;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+    -moz-animation-name: beat;
+    -moz-animation-duration: 1s;
+    -moz-animation-fill-mode: both;
+    -moz-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+    animation-name: beat;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
 @media screen and (max-height: 1250px){
 	#main{
 		overflow: auto;

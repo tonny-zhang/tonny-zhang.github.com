@@ -59,18 +59,7 @@ $(function(){
 		});
 		$audio.on('canplay',function(){
 			isCanPlay = true;
-			setTimeout(function(){
-				if(!isPlaying){
-					alert('点击屏幕播放背景音乐');
-				}
-			},2000);
-			callback();
 		});
-		var check_tt = setTimeout(function(){
-			alert('点击屏幕播放背景音乐');
-			isCanPlay = true;
-			callback();
-		},4000);
 		$('#audio_source').attr('src','./bg_music.mp3');
 		function preload(img,callback){
 			var image = new Image();
@@ -81,16 +70,15 @@ $(function(){
 		var loadingNum = preload_url.length;
 		function preloadCallback(){
 			loadingNum--;
-			if(loadingNum == 0){
-				callback();
-			}
 		}
 		function callback(){
 			if(isCanPlay && loadingNum == 0){
-				clearTimeout(check_tt);
+				
 				loadingNum = -1;
 				$('.bg_img').addClass('enlarge');
 				run_con_tt = setTimeout(run_con,5000);
+			}else{
+				setTimeout(callback,100);
 			}
 		}
 		for(var i = 0;i<loadingNum;i++){
@@ -133,8 +121,18 @@ $(function(){
 			});
 		}
 		
-		$(document).on('touchstart',function(){
+		$(document).on('ontouchstart' in document?'touchstart':'click',function(){
 			audio.play();
+			var $arrow = $('.arrow');
+			var top = $arrow.position().top;
+			$arrow.css({
+				top: top
+			}).animate({
+				top: -100
+			},function(){
+				isCanPlay = true;
+				callback();
+			});
 		});
 	// });
 });
