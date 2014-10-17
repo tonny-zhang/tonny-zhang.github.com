@@ -66,7 +66,7 @@ $(function(){
 			image.onload = image.onerror = callback;
 			image.src = img;
 		}
-		var preload_url = ['./img/bg.png','./img/corner.png','./img/wxb.jpg'];
+		var preload_url = ['./img/bg3.png','./img/corner.png','./img/wxb.jpg'];
 		var loadingNum = preload_url.length;
 		function preloadCallback(){
 			loadingNum--;

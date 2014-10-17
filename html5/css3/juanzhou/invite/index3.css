@@ -121,7 +121,7 @@ input, button, select{
 	width: 600px;
 	height: 130px;
 	/*height: 1000px;*/
-	background: url(./img/bg.png) no-repeat -71px -48px;
+	background: url(./img/bg2.png) no-repeat -71px -48px;
 	display: none;
 }
 
@@ -137,7 +137,7 @@ input, button, select{
 }
 .item{
 	position: absolute;
-	background-image: url(./img/bg.png);
+	background-image: url(./img/bg2.png);
 	background-repeat: no-repeat;
 	left: 0;
 	top: 0;
