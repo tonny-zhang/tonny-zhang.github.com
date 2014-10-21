@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="./index.css">
+</head>
+<body>
+	<div class="sub_nav">
+		<div class="on"></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+	<div class="container">
+		<div class="item item_1">
+			<div class="content">
+				<div class="logo bg"></div>
+				<div class="title_1 bg"></div>
+				<div class="title_2 bg"></div>
+				<div class="graph_1 bg">
+					<a class="btn_1_1 btn" href="javascript:;">我想定制气象数据</a>
+					<a class="btn_1_2 btn" href="javascript:;">案例</a>
+					
+				</div>
+				<div class="animate">
+					<div class="arrow_1_1"></div>
+					<div class="arrow_1_2"></div>
+					<div class="arrow_1_3"></div>
+					<div class="arrow_1_4"></div>
+					<div class="arrow_1_5"></div>
+					<ul>
+						<li class="img_1_1"></li>
+						<li class="img_1_2"></li>
+						<li class="img_1_3"></li>
+						<li class="img_1_4"></li>
+						<li class="img_1_5"></li>
+					</ul>
+				</div>
+				<a class="btn_next" href="javascript:;">next</a>
+			</div>
+		</div>
+		<div class="item item_2">
+			<div class="content bg">
+				<a class="btn btn_welife" href="www.welife100.com">www.welife100.com</a>
+				<a class="btn_2_1 btn" href="javascript:;">了解详情</a>
+				<a class="btn_next" href="javascript:;">next</a>
+			</div>
+		</div>
+		<div class="item item_3">
+			<div class="content bg">
+				<a class="btn_3_1 btn" href="javascript:;">免费下载</a>
+				<a class="btn_3_2 btn" href="javascript:;">了解详情</a>
+				<a class="btn_next" href="javascript:;">next</a>
+			</div>
+		</div>
+		<div class="item item_4">
+			<div class="content bg">
+				<a class="btn_4_1 btn" href="javascript:;">免费下载</a>
+				<a class="btn_4_2 btn" href="javascript:;">了解详情</a>
+				<a class="btn_next" href="javascript:;">next</a>
+			</div>
+		</div>
+		<div class="item item_5">
+			<div class="content bg">
+				<a class="btn_5_1 btn" href="javascript:;">了解详情</a>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="http://i.tq121.com.cn/j/jquery-1.8.2.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		var $sub_nav = $('.sub_nav div');
+		var $items = $('.item');
+		var currentItemIndex = 0,
+			maxItemIndex = $items.length-1;
+		function showItem(){
+			isAnimating = true;
+			$body.animate({
+				scrollTop: $items.eq(currentItemIndex).offset().top
+			},function(){
+				isAnimating = false;
+			});
+		}
+		var wheelTT;
+		var isAnimating = false;
+		var $body = $('body,html').on('mousewheel',function(e){
+			var wheelDelta = window.event.detail?-(window.event.detail||0)/3:window.event.wheelDelta/120;
+			clearTimeout(wheelTT);
+			wheelTT = setTimeout(function(){
+				wheelDelta<0? currentItemIndex++:currentItemIndex--;
+				currentItemIndex < 0 && (currentItemIndex = 0);
+				currentItemIndex > maxItemIndex && (currentItemIndex = maxItemIndex);
+				showItem();
+			},300);
+			e.preventDefault();
+		});
+		$('.btn_next').click(function(){
+			currentItemIndex++;
+			showItem();
+		});
+		var scrollTT,resizeTT;
+		var $win = $(window);
+		var height_win = $win.height();
+		$win.on('resize',function(){
+			clearTimeout(resizeTT);
+			resizeTT = setTimeout(function(){
+				height_win = $win.height();
+			},100);
+		}).on('scroll',function(){
+			clearTimeout(scrollTT);
+			scrollTT = setTimeout(function(){
+				var scrollTop = $win.scrollTop();
+				var select_index = Math.floor(scrollTop/height_win);
+				$sub_nav.removeClass('on').eq(select_index).addClass('on');
+				currentItemIndex = select_index;
+			},200);
+		});
+		$win.resize();
+		!function(){
+			var $arrows = $('.item_1 .animate div');
+			var $img_1 = $('.item_1 li');
+			var index = 0,
+				num = $img_1.length;
+			var delay = 1510;
+			function run(){
+				index = Math.floor(Math.random()*num);
+				$img_1.removeClass('rotate').eq(index).addClass('rotate');
+				
+				setTimeout(run,delay);
+			}
+			var show_index = 0;
+			function show(){
+				$arrows.eq(show_index).fadeIn();
+				var $img = $img_1.eq(show_index).fadeIn().addClass('rotate');
+				setTimeout(function(){
+					$img.removeClass('rotate');
+				},delay);
+				if(show_index++ < num){
+					setTimeout(show,800);
+				}else{
+					run();
+				}
+			}
+			show();
+		}();
+	});
+	</script>
+</body>
+</html>
