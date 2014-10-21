@@ -68,8 +68,9 @@ ul{
 	background-repeat: no-repeat;
 }
 .content{
-	max-width: 1100px;
-	min-width: 980px;
+	/*max-width: 1100px;
+	min-width: 980px;*/
+	padding: 0 10px;
 	margin: 0 auto;
 	height: 100%;
 }
@@ -81,13 +82,17 @@ ul{
 	height: 60px;
 	background-position: 0px 0;
 	margin: 20px 0;
+	position: absolute;
+	left: 50%;
+	margin-left: -504px;
+	top: 10px;
 }
 .item_1 .animate{
 	position: absolute;
 	z-index: 0;
 	left: 50%;
 	width: 770px;
-	margin-left: -296px;
+	margin-left: -246px;
 	top: 50%;
 	margin-top: 174px;
 }
@@ -176,11 +181,15 @@ ul{
 	height: 60px;
 	margin: 0 auto;
 	background-position: -176px -101px;
+	margin-top: 91px;
 }
 .title_2{
 	width: 656px;
 	height: 60px;
 	background-position: 1px -162px;
+	position: absolute;
+	left: 50%;
+	margin-left: -504px;
 }
 .graph_1{
 	width: 910px;
@@ -189,7 +198,7 @@ ul{
 	position: absolute;
 	z-index: 1;
 	left: 50%;
-	margin-left: -554px;
+	margin-left: -504px;
 	top: 50%;
 	margin-top: -230px;
 }
