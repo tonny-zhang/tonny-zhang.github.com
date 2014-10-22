@@ -55,12 +55,12 @@ ul{
 	width: 10px;
 	height: 10px;
 	border-radius: 10px;
-	background: white;
+	background: #333;
 	margin: 5px;
-	border: 1px solid white;
+	border: 1px solid #333;
 }
 .sub_nav div.on{
-	border: 1px solid white;
+	border: 1px solid #333;
 	background: none;
 }
 .bg{
@@ -321,14 +321,14 @@ ul{
 	height: 70px;
 }
 .item_5 .content{
-	background: url(./img/bg5.png) no-repeat center center;
+	background: url(./img/bg5.jpg) no-repeat center 30px;
 	position: relative;
 }
 .btn_5_1{
 	left: 50%;
 	margin-left: -498px;
 	top: 50%;
-	margin-top: -120px;
+	margin-top: -172px;
 	width: 220px;
 	height: 70px;
 }
@@ -345,4 +345,34 @@ ul{
 	animation: beat_next 0.7s infinite;
 	-moz-animation: beat_next 0.7s infinite; /*Firefox*/
 	-webkit-animation: beat_next 0.7s infinite; /*Safari and Chrome*/
+}
+.footer{
+	border-top: 4px solid #31c6f6;
+	padding-top: 20px;
+	height: 80px;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+}
+.footer div{
+	width: 450px;
+	margin: 0 auto;
+	text-align: center;
+	color: #070002;
+	font-size: 14px;
+}
+
+.footer a{
+	color: #070002;
+	text-decoration: none;
+	display: inline-block;
+	border-right: 1px solid #070002;
+	padding: 0 10px;
+}
+.footer a.last{
+	border-right: none;
+}
+.copyright{
+	margin-top: 10px;
 }
