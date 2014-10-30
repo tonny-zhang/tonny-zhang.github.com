@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="./rain.css">
+</head>
+<body>
+	<div class="sub_nav">
+		<div class="on"></div>
+		<div></div>
+		<div></div>
+	</div>
+	<div class="container">
+		<div class="item item_1">
+			<div class="content">
+				<div class="logo bg"></div>
+				<div class="bd_1">
+					<div></div>
+				</div>
+			</div>
+		</div>
+		<div class="item item_2">
+			<div class="content">
+				<div class="bd_2">
+					<a class="animate btn_left" href="javascript:;"></a>
+					<div>
+						<ul>
+							<li class="animate on"><img src="./img/rain_2_1.png"/></li>
+							<li class="animate"><img src="./img/rain_2_2.png"/></li>
+							<li class="animate"><img src="./img/rain_2_3.png"/></li>
+						</ul>
+					</div>
+					<a class="animate btn_right" href="javascript:;"></a>
+				</div>
+			</div>
+		</div>
+		<div class="item item_3">
+			<div class="content">
+				<div class="bd_3">
+					<div class="cloud bg_3"></div>
+					<div class="car bg_3"></div>
+					<div class="bg_3 n_1"></div>
+					<div class="bg_3 n_2"></div>
+					<div class="bg_3 n_3"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="http://i.tq121.com.cn/j/jquery-1.8.2.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		var $sub_nav = $('.sub_nav div');
+		var $items = $('.item');
+		var currentItemIndex = 0,
+			maxItemIndex = $items.length-1;
+		function showItem(){
+			isAnimating = true;
+			$body.animate({
+				scrollTop: $items.eq(currentItemIndex).offset().top
+			},function(){
+				isAnimating = false;
+			});
+		}
+		var wheelTT;
+		var isAnimating = false;
+		var $body = $('body,html').on('mousewheel',function(e){
+			var wheelDelta = window.event.detail?-(window.event.detail||0)/3:window.event.wheelDelta/120;
+			clearTimeout(wheelTT);
+			wheelTT = setTimeout(function(){
+				wheelDelta<0? currentItemIndex++:currentItemIndex--;
+				currentItemIndex < 0 && (currentItemIndex = 0);
+				currentItemIndex > maxItemIndex && (currentItemIndex = maxItemIndex);
+				showItem();
+			},300);
+			e.preventDefault();
+		});
+		$('.btn_next').click(function(){
+			currentItemIndex++;
+			showItem();
+		});
+		var scrollTT,resizeTT;
+		var $win = $(window);
+		var height_win = $win.height();
+		$win.on('resize',function(){
+			clearTimeout(resizeTT);
+			resizeTT = setTimeout(function(){
+				height_win = $win.height();
+			},100);
+		}).on('scroll',function(){
+			clearTimeout(scrollTT);
+			scrollTT = setTimeout(function(){
+				var scrollTop = $win.scrollTop();
+				var index = scrollTop/height_win;
+				var select_index = index%1 > 0?Math.ceil(index):Math.floor(index);
+				$sub_nav.removeClass('on').eq(select_index).addClass('on');
+				currentItemIndex = select_index;
+			},200);
+		}).on('keydown',function(e){
+			var code = e.which;
+            if (code == 40) {
+            	if(currentItemIndex+1 > maxItemIndex){
+            		return;
+            	}
+                currentItemIndex++;
+                showItem();
+            } else if (code == 38) {
+            	if(currentItemIndex == 0){
+            		return;
+            	}
+                currentItemIndex--;
+                showItem();
+            }
+		});
+		$win.resize();
+		!function(){
+			var $mobile_item = $('.bd_2 ul');
+			var c_index = 0,
+				t_index = $mobile_item.find('li').length-1;
+			var showTT;
+			function show(){
+				clearTimeout(runTT);
+				runTT = setTimeout(function(){
+					$btn_right.click();
+				},delay);
+				$mobile_item.animate({
+					'margin-left': '-'+100*c_index+'%'
+				});
+			}
+			var $btn_left = $('.btn_left').click(function(){
+				c_index = c_index-1 < 0?t_index:c_index-1;
+				show();
+			});
+			var $btn_right = $('.btn_right').click(function(){
+				c_index = c_index+1 > t_index?0:c_index+1;
+				show();
+			});
+			var delay = 3000;
+			var runTT;
+			$btn_right.click();
+		}();
+	});
+	</script>
+</body>
+</html>
