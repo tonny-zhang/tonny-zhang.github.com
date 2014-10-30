@@ -57,12 +57,19 @@
 	function isHoliday(date){
 		return $.inArray(getDateStr(date),holiday) > -1;
 	}
+	function getAPEC(date){
+		var date_str = getDateStr(date);
+		if(date_str >=20141103 &&  date_str <=20141112){
+			return date_str%2 == 1?'双号':'单号';
+		}		
+	}
 	var fn = {
 		/*
 			获取北京汽车限尾号限行
 			公休/节假日不限行
 		*/
 		getLimitLine_BJ: function(date,isReturnWeek){
+			var date_str = getDateStr(date);
 			if(isHoliday(date)){
 				if(isReturnWeek){
 					while(true){
@@ -110,12 +117,27 @@
 			if(arrkey > 4){
 				arrkey = arrkey % 5;
 			}
-			var startArr = array.splice(5 - week + 1 + arrkey);
-			array = startArr.concat(array);
+			var a = array.splice(arrkey - week + 1);
+			array = a.concat(array);
+			var firstDate = new Date(currentTime.getTime());
+			firstDate.setDate(firstDate.getDate()-(currentTime.getDay()-1));
+			for(var i = 0;i<7;i++){
+				if(i > 0){
+					firstDate.setDate(firstDate.getDate()+1);
+				}
+				
+				var apec = getAPEC(firstDate);
+				if(apec){
+					array[i] = apec;
+				}
+			}
+			// var startArr = array.splice(5 - week + 1 + arrkey);
+			// array = startArr.concat(array);
 			if(isReturnWeek){
 				return [array[week-1],array];
 			}
-			return array[week-1]
+			var apec = getAPEC(currentTime);
+			return array[week-1];
 		}
 		/*
 			获取南昌和贵阳汽车限尾号限行

@@ -173,6 +173,10 @@ width:620px;}
 {
 height:60px;
 line-height:60px;}
+.bottom.APEC ul.shang li,
+.bottom.APEC ul.xia li{
+	margin-right: 5px;
+}
 </style>
 </head>
 
@@ -223,29 +227,34 @@ line-height:60px;}
     var week = today.getDay();
     var weekStr = "日一二三四五六";
     var result = getLimitLine(today,cityid,true);
-    var tomorrow = new Date();
+    var tomorrow = new Date(today.getTime());
     tomorrow.setDate(today.getDate()+1);
     var tomorrowLimitline = getLimitLine(tomorrow,cityid);
     var todayLimitline = result[0];
-    if(todayLimitline == ''){
-    	todayLimitline = '不限行';
-    }else{
-    	todayLimitline = todayLimitline.split(',');
-    	todayLimitline = '<h3><span>'+todayLimitline[0]+'</span>和<span>'+todayLimitline[1]+'</span></h3>'
+    function getValhtml(val){
+    	if(val == ''){
+    		return '不限行';
+    	}
+    	var arr = val.split(',');
+    	return '<span>'+arr[0]+'</span>'+(arr.length == 2?'和<span>'+arr[1]+'</span>':'');
     }
-    if(tomorrowLimitline == ''){
-    	tomorrowLimitline = '不限行';
-    }else{
-    	tomorrowLimitline = tomorrowLimitline.split(',');
-    	tomorrowLimitline = '<h3><span>'+tomorrowLimitline[0]+'</span>和<span>'+tomorrowLimitline[1]+'</span></h3>'
-    }
+    todayLimitline = '<h3>'+getValhtml(todayLimitline)+'</h3>'
+    tomorrowLimitline = '<h3>'+getValhtml(tomorrowLimitline)+'</h3>'
     $(".ba").html("<h1>北京市五环内机动车尾号限行</h1><div class='left'><h2>今天(周"+weekStr.charAt(week)+")</h2>"+todayLimitline+"</div><div class='right'><h2>明天(周"+weekStr.charAt(tomorrow.getDay())+")</h2>"+tomorrowLimitline+"</div>");
     var html = '';
     $.each(result[1],function(i,v){
     	var arr = v.split(',');
-    	html += '<li><span>'+arr[0]+'</span>和<span>'+arr[1]+'</span></li>';
+    	html += '<li><span>'+arr[0]+'</span>'+(arr.length == 2?'和<span>'+arr[1]+'</span>':'')+'</li>';
     });
-    html += '<li>不限行</li>';
+    var isAPEC = result[1].length == 7;
+    if(isAPEC){
+    	$('.bottom').addClass('APEC');
+    	var $shang = $('.shang');
+    	$shang.children().last().remove();
+    	$shang.append($('<li>周六</li><li>周日</li>'));
+    }else{
+    	html += '<li>不限行</li>';
+    }
     $('.xia').html(html);
 </script>
 </body>
