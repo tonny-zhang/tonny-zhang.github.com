@@ -1,37 +1,3 @@
-html,body{height: 100%;margin: 0;padding: 0;}
-ul{
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-.fl{
-	float: left;
-	display: inline;
-}
-.fr{
-	float: right;
-	display: inline;
-}
-.relatve{
-	position: relative;
-	zoom: 1;
-}
-.clear{
-	clear: both;
-	overflow: hidden;
-}
-.container{height: 100%;}
-.item{
-	height: 100%;
-	position: relative;
-	overflow: hidden;
-	width: 100%;
-	zoom: 1;
-	background-repeat: no-repeat;
-	background-position: 50% 0;
-	background-size: cover;
-	-ms-background-size: cover;
-}
 .item_1{
 	background-color: #ceeff8;
 }
@@ -41,50 +7,14 @@ ul{
 .item_3{
 	background-color: #def1fc;
 }
-
-.sub_nav{
-	position: fixed;
-	z-index: 101;
-	right: 100px;
-	top: 50%;
-	margin-top: 40px;
-}
-.sub_nav div{
-	width: 10px;
-	height: 10px;
-	border-radius: 10px;
-	background: #333;
-	margin: 5px;
-	border: 1px solid #333;
-}
-.sub_nav div.on{
-	border: 1px solid #333;
-	background: none;
-}
 .bg{
-	background-image: url(./img/bg.png);
+	background-image: url(../img/bg.png);
 	background-repeat: no-repeat;
 }
-.content{
-	/*max-width: 1100px;
-	min-width: 980px;*/
-	padding: 0 10px;
-	margin: 0 auto;
-	height: 100%;
-	position: relative;
-}
-.logo{
-	width: 520px;
-	height: 60px;
-	background-position: 0px 0;
-	margin: 20px 0;
-	position: absolute;
-	left: 50%;
-	margin-left: -504px;
-	top: 10px;
-}
+
+
 .bd_1{
-	background: url(./img/rain_1.png) no-repeat center center;
+	background: url(../img/rain_1.png) no-repeat center center;
 	width: 1026px;
 	height: 100%;
 	position: absolute;
@@ -120,7 +50,7 @@ ul{
 	-o-transition: all 0.1s; /* Opera */
 }
 .bd_1 div{
-	background: url(./img/wenhao.png) no-repeat center center;
+	background: url(../img/wenhao.png) no-repeat center center;
 	width: 89px;
 	height: 96px;
 	position: absolute;
@@ -132,7 +62,7 @@ ul{
 	-webkit-animation: shake 1s infinite; /*Safari and Chrome*/
 }
 .bd_2{
-	background: url(./img/rain_2.png) no-repeat center center;
+	background: url(../img/rain_2.png) no-repeat center center;
 	width: 851px;
 	height: 872px;
 	position: absolute;
@@ -167,7 +97,7 @@ ul{
 }
 .btn_left,
 .btn_right{
-	background-image: url(img/btn_left_right.png);
+	background-image: url(../img/btn_left_right.png);
 	background-repeat: no-repeat;
 	width: 80px;
 	height: 80px;
@@ -191,7 +121,7 @@ ul{
 }
 
 .bd_3{
-	background: url(./img/rain_3.png) no-repeat center center;
+	background: url(../img/rain_3.png) no-repeat center center;
 	width: 1068px;
 	height: 750px;
 	position: absolute;
@@ -200,7 +130,7 @@ ul{
 	margin-left: -534px;
 }
 .bg_3{
-	background-image: url(./img/rain_3_1.png);
+	background-image: url(../img/rain_3_1.png);
 	background-repeat: no-repeat;
 	position: absolute;
 }

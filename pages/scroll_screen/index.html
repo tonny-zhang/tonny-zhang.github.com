@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <title></title>
-<link rel="stylesheet" type="text/css" href="./index.css">
+<link rel="stylesheet" type="text/css" href="./css/global.css">
+<link rel="stylesheet" type="text/css" href="./css/index.css">
 </head>
 <body>
 	<div class="sub_nav">
@@ -52,6 +53,7 @@
 			<div class="content bg">
 				<a class="btn_3_1 btn" href="javascript:;">免费下载</a>
 				<a class="btn_3_2 btn" href="./rain.html">了解详情</a>
+				<a class="btn_3_3 btn" href="./radar.html">雷达外推</a>
 				<a class="btn_next" href="javascript:;">next</a>
 			</div>
 		</div>
@@ -78,98 +80,34 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="http://i.tq121.com.cn/j/jquery-1.8.2.js"></script>
+	<script type="text/javascript" src="./js/global.js"></script>
 	<script type="text/javascript">
 	$(function(){
-		var $sub_nav = $('.sub_nav div');
-		var $items = $('.item');
-		var currentItemIndex = 0,
-			maxItemIndex = $items.length-1;
-		function showItem(){
-			isAnimating = true;
-			$body.animate({
-				scrollTop: $items.eq(currentItemIndex).offset().top
-			},function(){
-				isAnimating = false;
-			});
+		var $arrows = $('.item_1 .animate div');
+		var $img_1 = $('.item_1 li');
+		var index = 0,
+			num = $img_1.length;
+		var delay = 1510;
+		function run(){
+			index = Math.floor(Math.random()*num);
+			$img_1.removeClass('rotate').eq(index).addClass('rotate');
+			
+			setTimeout(run,delay);
 		}
-		var wheelTT;
-		var isAnimating = false;
-		var $body = $('body,html').on('mousewheel',function(e){
-			var wheelDelta = window.event.detail?-(window.event.detail||0)/3:window.event.wheelDelta/120;
-			clearTimeout(wheelTT);
-			wheelTT = setTimeout(function(){
-				wheelDelta<0? currentItemIndex++:currentItemIndex--;
-				currentItemIndex < 0 && (currentItemIndex = 0);
-				currentItemIndex > maxItemIndex && (currentItemIndex = maxItemIndex);
-				showItem();
-			},300);
-			e.preventDefault();
-		});
-		$('.btn_next').click(function(){
-			currentItemIndex++;
-			showItem();
-		});
-		var scrollTT,resizeTT;
-		var $win = $(window);
-		var height_win = $win.height();
-		$win.on('resize',function(){
-			clearTimeout(resizeTT);
-			resizeTT = setTimeout(function(){
-				height_win = $win.height();
-			},100);
-		}).on('scroll',function(){
-			clearTimeout(scrollTT);
-			scrollTT = setTimeout(function(){
-				var scrollTop = $win.scrollTop();
-				var index = scrollTop/height_win;
-				var select_index = index%1 > 0?Math.ceil(index):Math.floor(index);
-				$sub_nav.removeClass('on').eq(select_index).addClass('on');
-				currentItemIndex = select_index;
-			},200);
-		}).on('keydown',function(e){
-			var code = e.which;
-            if (code == 40) {
-            	if(currentItemIndex+1 > maxItemIndex){
-            		return;
-            	}
-                currentItemIndex++;
-                showItem();
-            } else if (code == 38) {
-            	if(currentItemIndex == 0){
-            		return;
-            	}
-                currentItemIndex--;
-                showItem();
-            }
-		});
-		$win.resize();
-		!function(){
-			var $arrows = $('.item_1 .animate div');
-			var $img_1 = $('.item_1 li');
-			var index = 0,
-				num = $img_1.length;
-			var delay = 1510;
-			function run(){
-				index = Math.floor(Math.random()*num);
-				$img_1.removeClass('rotate').eq(index).addClass('rotate');
-				
-				setTimeout(run,delay);
+		var show_index = 0;
+		function show(){
+			$arrows.eq(show_index).fadeIn();
+			var $img = $img_1.eq(show_index).fadeIn().addClass('rotate');
+			setTimeout(function(){
+				$img.removeClass('rotate');
+			},delay);
+			if(show_index++ < num){
+				setTimeout(show,800);
+			}else{
+				run();
 			}
-			var show_index = 0;
-			function show(){
-				$arrows.eq(show_index).fadeIn();
-				var $img = $img_1.eq(show_index).fadeIn().addClass('rotate');
-				setTimeout(function(){
-					$img.removeClass('rotate');
-				},delay);
-				if(show_index++ < num){
-					setTimeout(show,800);
-				}else{
-					run();
-				}
-			}
-			show();
-		}();
+		}
+		show();
 	});
 	</script>
 </body>
