@@ -94,14 +94,18 @@
 .bd_3{
 	width: 100%;
 	height: 100%;
-	background: url(../img/radar_3.png) center center no-repeat;
+	background: url(../img/radar_3_1.png) center 50px no-repeat;
 }
-object{
+.bd_3 object,
+.bd_3 a{
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin-top: -205px;
-	margin-left: -296px;
-	width: 500px;
-	height: 250px;
+	width: 1280px;
+	height: 640px;
+	margin-top: -300px;
+	margin-left: -640px;
+}
+.bd_3 a{
+	z-index: 1;
 }

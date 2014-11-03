@@ -3,6 +3,66 @@ $(function(){
 		var $items = $('.item');
 		var currentItemIndex = 0,
 			maxItemIndex = $items.length-1;
+		$.get('./aboutUs.html',function(html){
+			var $html = $(html).appendTo($('.container'));
+			$items = $('.item');
+			maxItemIndex = $items.length-1;
+			var $username = $html.find('[name=username]'),
+				$tel = $html.find('[name=tel]'),
+				$email = $html.find('[name=email]'),
+				$content = $html.find('[name=content]');
+			var REG_TEL = /^(\+86-)?1[3|5|7|8|][0-9]{9}$|^(\d{3,4}-)?\d{7,8}$/,
+				REG_EMAIL = /^[a-z0-9]([a-z0-9\.]*[-_]?[a-z0-9\.]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i;
+			function checkTel(tel){
+				return REG_TEL.test(tel);
+			}
+			function checkEmail(email){
+				return REG_EMAIL.test(email);
+			}
+			var $form_feedback = $('#form_feedback').on('submit',function(e){
+				var isHaveError = false;
+				var username = $username.removeClass('error').val();
+				if(!username){
+					$username.addClass('error');
+					isHaveError = true;
+				}
+				var tel = $tel.removeClass('error').val();
+				if(!tel || !checkTel(tel)){
+					$tel.addClass('error');
+					isHaveError = true;
+				}
+				var email = $email.removeClass('error').val();
+				if(!email || !checkEmail(email)){
+					$email.addClass('error');
+					isHaveError = true;
+				}
+				var content = $content.removeClass('error').val();
+				if(!content){
+					$content.addClass('error');
+					isHaveError = true;
+				}
+				if(isHaveError){
+					alert('请确保您填写的信息正确！');
+				}else{
+					$.post('./feedback/save.php',{
+						username: username,
+						tel: tel,
+						email: email,
+						content: content
+					},function(result){
+						if(result){
+							alert('您的留言我们已经收到！');
+						}else{
+							alert('出现异常');
+							return location.reload();
+						}
+						$form_feedback.get(0).reset();
+					});
+				}
+				e.preventDefault();
+				return false;
+			});
+		})
 		function showItem(){
 			isAnimating = true;
 			$body.animate({

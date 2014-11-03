@@ -141,7 +141,7 @@
 	top: 50%;
 	width: 220px;
 	height: 70px;
-	background-color: rgba(0,0,0,.4);
+	/*background-color: rgba(0,0,0,.4);*/
 	text-indent: -2000px;
 }
 .btn:hover{
@@ -268,7 +268,7 @@
 .btn_5_1{
 	left: 50%;
 	margin-left: -498px;
-	top: 329px;
+	top: 295px;
 	width: 217px;
 	height: 64px;
 }
