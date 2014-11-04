@@ -1,7 +1,7 @@
 继承是OO语言（如java/php)的一个最为人人津津乐道的概念。许多OO语言都支持两种继承方式：接口继承和实现继承。接口继承只继承方法签名，而实现继承则继承实际方法。由于ＪＳ里函数没有签名，在ECMAScript中无法实现接口继承，只支持实现继承，而且实现继承主要是依靠原型链来实现的.
 
 ## 1.原型链
-```
+```javascript
 !function(){
 	function SuperClass(){
 		this.color = ["red","black"];
