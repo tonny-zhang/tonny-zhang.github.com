@@ -458,9 +458,9 @@
         // var url = 'http://61.4.184.31/weather/gridData?slon='+bssw.lng + "&slat=" + bsne.lat+'&elon='+bsne.lng + "&elat=" + bssw.lat+'&maplevel='+map.getZoom();
         // console.log(url);
         // url = 'http://10.16.45.145:9526/weather/gridData?slon='+bssw.lng + "&slat=" + bsne.lat+'&elon='+bsne.lng + "&elat=" + bssw.lat+'&maplevel='+map.getZoom();
-        // var prex = 'http://10.14.85.116/php/gedian/';
-        var prex = 'http://radar.tianqi.cn/';
-        var url = prex + 'gridData.php?param='+encodeURIComponent('slon='+bssw.lng + "&slat=" + bsne.lat+'&elon='+bsne.lng + "&elat=" + bssw.lat+'&maplevel='+map.getZoom());
+        // var prex = 'http://10.14.85.116/php/dptq/';
+        var prex = 'http://radar.tianqi.cn/dptq/';
+        var url = prex + 'data.php?type=gridData&param='+encodeURIComponent('slon='+bssw.lng + "&slat=" + bsne.lat+'&elon='+bsne.lng + "&elat=" + bssw.lat+'&maplevel='+map.getZoom());
         // console.log(url);
         loadData(url,initData);
     }
