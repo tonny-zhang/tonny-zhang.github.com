@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="./css/global.css">
+<link rel="stylesheet" type="text/css" href="./css/case.css">
+</head>
+<body>
+	<div class="sub_nav">
+		<div class="on"></div>
+		<div></div>
+		<div></div>
+	</div>
+	<div class="container">
+		<div class="item item_1">
+			<div class="content">
+				<div class="logo bg"></div>
+				<div class="bd_1">
+					<a class="btn btn_1_1" href="javascript:;">交通预警监测</a>
+					<a class="btn btn_1_2" href="javascript:;">旅游行业服务</a>
+				</div>
+			</div>
+		</div>
+		<div class="item item_2" id="case_1">
+			<div class="content">
+				<div class="bd_2 move_c">
+					<a class="animate btn_left" href="javascript:;"></a>
+					<h3></h3>
+					<div>
+						<ul>
+							<li class="animate on"><img src="./img/case_1_1.png"/></li>
+							<li class="animate"><img src="./img/case_1_2.png"/></li>
+							<li class="animate"><img src="./img/case_1_3.png"/></li>
+						</ul>
+					</div>
+					<a class="animate btn_right" href="javascript:;"></a>
+				</div>
+			</div>
+		</div>
+		<div class="item item_3" id="case_2">
+			<div class="content">
+				<div class="bd_3 move_c">
+					<a class="animate btn_left" href="javascript:;"></a>
+					<h3></h3>
+					<div>
+						<ul>
+							<li class="animate on"><img src="./img/case_2_1.png"/></li>
+							<li class="animate"><img src="./img/case_2_2.png"/></li>
+							<li class="animate"><img src="./img/case_2_3.png"/></li>
+							<li class="animate"><img src="./img/case_2_4.png"/></li>
+						</ul>
+					</div>
+					<a class="animate btn_right" href="javascript:;"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="http://i.tq121.com.cn/j/jquery-1.8.2.js"></script>
+	<script type="text/javascript" src="./js/global.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		var $scroll_body = $('html,body');
+		var case_1_top = $('#case_1').offset().top,
+			case_2_top = $('#case_2').offset().top;
+		$('.btn_1_1').click(function(){
+			$scroll_body.animate({
+				'scrollTop': case_1_top
+			});
+		});
+		$('.btn_1_2').click(function(){
+			$scroll_body.animate({
+				'scrollTop': case_2_top
+			});
+		});
+		function bindMove($container){
+			var $mobile_item = $container.find('ul');
+			var c_index = 0,
+				t_index = $mobile_item.find('li').length-1;
+			var showTT;
+			function show(){
+				clearTimeout(runTT);
+				runTT = setTimeout(function(){
+					$btn_right.click();
+				},delay);
+				$mobile_item.animate({
+					'margin-left': '-'+100*c_index+'%'
+				});
+			}
+			var $btn_left = $container.find('.btn_left').click(function(){
+				c_index = c_index-1 < 0?t_index:c_index-1;
+				show();
+			});
+			var $btn_right = $container.find('.btn_right').click(function(){
+				c_index = c_index+1 > t_index?0:c_index+1;
+				show();
+			});
+			var delay = 3000;
+			var runTT;
+			$btn_right.click();
+		}
+		bindMove($('.bd_2'));
+		bindMove($('.bd_3'));
+	});
+	</script>
+</body>
+</html>
