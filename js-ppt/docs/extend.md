@@ -1,7 +1,7 @@
 继承是OO语言（如java/php)的一个最为人人津津乐道的概念。许多OO语言都支持两种继承方式：接口继承和实现继承。接口继承只继承方法签名，而实现继承则继承实际方法。由于ＪＳ里函数没有签名，在ECMAScript中无法实现接口继承，只支持实现继承，而且实现继承主要是依靠原型链来实现的.
 
 ## 1.原型链
-```
+```javascript
 !function(){
 	function SuperClass(){
 		this.color = ["red","black"];
@@ -22,7 +22,7 @@
 ！！这是原型链的问题所在，很多时候我们不会单独用原型链去继承
 
 ## 2.借用构造函数
-```
+```javascript
 !function(){
 	function SuperClass(){
 		this.color = ["red","black"];
@@ -42,7 +42,7 @@
 ```
 
 ## 3.组合继承
-```
+```javascript
 !function(){
 	function SuperClass(name){
 		this.name = name;
@@ -75,7 +75,7 @@
 }()
 ```
 ## 4.原型式继承
-```
+```javascript
 !function(){
 	function object(o){
 		function F(){}
@@ -102,7 +102,7 @@
 !!但这形式包含引用类型值的属性始终都会共享相应的值，就和使用原型模式一样。
 
 ## 5.寄生式继承
-```
+```javascript
 !function(){
 	function object(o){
 		function F(){}
@@ -132,7 +132,7 @@
 ## 6.寄生组合继承
 前面说过，组合继承是javascript最常用的继承模式，但它也有自己的不足（在什么情况下，都会调用再次超类型构造函数：一次是在创建子类型原型的时候，另一次是在子类型构造函数内部）
 
-```
+```javascript
 !function(){
 	function object(o){
 		function F(){}
@@ -180,7 +180,7 @@
 ******
 现用到的继承封闭`global.js`
 
-```
+```javascript
 !function(){
 	var inherits = function (Parent,properties){
             var Child = function(){
