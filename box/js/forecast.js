@@ -28,8 +28,6 @@ function weatherdata() {
 
 	if (areaid == null) {
 		areaid = "101010100";
-	} else {
-		areaid = getUrlParam("id");
 	}
 	//获取数据更新时间
 	var localtime = new Date();
@@ -41,12 +39,19 @@ function weatherdata() {
 	timesshours = timeshours.length == 1 ? "0" + timeshours : timeshours;
 	timesminutes = timesminutes.length == 1 ? "0" + timesminutes : timesminutes;
 	var update = timesmonth + "/" + timesday + " " + timeshours + ":" + timesminutes + "更新";
+	var sunrise="";
+	var sunset="";
+
+	var wind_Index="";
+
+
 	//获取城市ID
 
 	//alert(areaid);
 	$GwData = [];
 	$DwData = [];
 	$riqi = [];
+
 	var weatherArr = {
 		"00": "晴",
 		"01": "多云",
@@ -114,10 +119,15 @@ function weatherdata() {
 		type: "GET",
 		url: baseUrl+"../data/forecast/" + areaid + ".html",
 		dataType: "json",
-		success: function(result) {
+		success: function(result) {console.log(result);
 			var publish_date = result.f.f0;
 			var cityname = result.c.c3;
 			var citynameen = result.c.c2;
+			var sun_Time=result.f.f1[0].fi;
+			var sun_Times=new Array();
+			sun_Times=sun_Time.split("|");
+			sunrise=sun_Times[0];
+			sunset=sun_Times[1];					
 
 			//年
 			var timeyear = publish_date.substr(0, 4);
@@ -172,6 +182,7 @@ function weatherdata() {
 				var img2 = v["fb"];
 				var weather1 = weatherArr[img1];
 				var weather2 = weatherArr[img2];
+
 				if (weather1 == weather2) {
 					weather = weather1;
 				} else {
@@ -224,29 +235,98 @@ function weatherdata() {
 				var rain = Number(v["l6"]);
 				var time = v["l7"];
 				var bg = "";
+				var day_Night_Index="";
+				var temp_Index="";
+				var Weather_Phe_Index=v["l5"];
+				// alert(Weather_Phe_Index);
+				if (Weather_Phe_Index=="00") //晴
+					{
+						Weather_Phe_Index="00";
+					} 
+				else if (Weather_Phe_Index=="01"||Weather_Phe_Index=="02") //阴
+					{
+						Weather_Phe_Index="01";
+					} 
+				else if ((Number(Weather_Phe_Index)>3&&Number(Weather_Phe_Index)<14)|| (Number(Weather_Phe_Index)>20&&Number(Weather_Phe_Index)<26)||Number(Weather_Phe_Index)==19)//雨
+					{
+						Weather_Phe_Index="03";
+					} 
+				else if (Weather_Phe_Index=="53"||Weather_Phe_Index=="18") 
+				{
+						Weather_Phe_Index="53";
+				} else{
+					Weather_Phe_Index="00";
+				};
+				
+						
+				var sunrise_Hours=sunrise.substr(0,2);
+				var sunrise_Minutes=sunrise.substr(3,2);
+				var sunset_Hours=sunset.substr(0,2);
+				var sunset_Minutes=sunset.substr(3,2);
+				var mdate=new Date();
+
+				// if (mdate.getHours>=sunrise_Hours&&mdate.getMinutes>=sunrise_Minutes&&mdate.getHours<sunset_Hours&&mdate.getMinutes<sunset_Minutes) {
+				// 	day_Night_Index="0";
+				// }else{
+				// 	day_Night_Index="1";
+				// };
+
+				if (wd>=32) {
+					temp_Index="1";
+				}else if (wd>=27&&wd<32) {
+					temp_Index="1";
+				}else if (wd>=22&&wd<27) {
+					temp_Index="1";
+				}else if (wd>=16&&wd<22) {
+					temp_Index="1";
+				}else if (wd>=5&&wd<16) {
+					temp_Index="5";
+				}else if (wd>=-10&&wd<5) {
+					temp_Index="5";
+				}else {
+					temp_Index="5";
+				};//是暂时的，应该是1、2、3。。。而不是1、1、1。。。
+
+				if (fl<=5) {
+					wind_Index="0";
+				} else{
+					wind_Index="1";
+				};
+
+
+   				
+
+				
+
 				$('.ris').html("<dt><span style='font-size:100px;'>" + wd + "℃</span></dt><dd><span style='font-size:25px;'>湿度：" + sd + "％</span> <br /> <span style='font-size:25px;'>" + fxArr[fxNum] + "     " + fl + "级</span></dd>");
 				//判断背景图
-				if (wd > 0) {
-					if ((isNaN(rain) || rain == 0) && sd <= 60) {
-						bg = "00"; //晴天
-					} else if ((isNaN(rain) || rain == 0) && sd > 60) {
-						bg = "01"; //阴天
-					} else if (rain > 0 && rain < 8) {
-						bg = "02"; //小雨
-					} else {
-						bg = "03"; //大雨
-					}
-				} else {
-					if ((isNaN(rain) || rain == 0) && sd <= 60) {
-						bg = "000"; //晴天
-					} else if ((isNaN(rain) || rain == 0) && sd > 60) {
-						bg = "001"; //阴天
-					} else if (rain > 0 && rain < 8) {
-						bg = "002"; //小雨
-					} else {
-						bg = "003"; //大雨
-					}
-				}
+				bg=temp_Index+Weather_Phe_Index+wind_Index;
+				// bg="00";
+				// alert(bg);
+
+
+				
+				// if (wd > 0) {
+				// 	if ((isNaN(rain) || rain == 0) && sd <= 60) {
+				// 		bg = "00"; //晴天
+				// 	} else if ((isNaN(rain) || rain == 0) && sd > 60) {
+				// 		bg = "01"; //阴天
+				// 	} else if (rain > 0 && rain < 8) {
+				// 		bg = "02"; //小雨
+				// 	} else {
+				// 		bg = "03"; //大雨
+				// 	}
+				// } else {
+				// 	if ((isNaN(rain) || rain == 0) && sd <= 60) {
+				// 		bg = "000"; //晴天
+				// 	} else if ((isNaN(rain) || rain == 0) && sd > 60) {
+				// 		bg = "001"; //阴天
+				// 	} else if (rain > 0 && rain < 8) {
+				// 		bg = "002"; //小雨
+				// 	} else {
+				// 		bg = "003"; //大雨
+				// 	}
+				// }
 				//判断温度内容
 				if (wd < -10) {
 					wd = 0;
@@ -365,7 +445,7 @@ function myrefresh()
 }*/
 $(document).ready(function() {
 	weatherdata();
-	setInterval('myrefresh()', 600000); //指定10分钟刷新一次 
+	setInterval('myrefresh()', 30000*6); //指定10分钟刷新一次 
 	function getNow() {
 		var now = new Date();
 
