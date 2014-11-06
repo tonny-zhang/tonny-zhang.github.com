@@ -278,7 +278,7 @@ function weatherdata() {
 				}else if (wd>=22&&wd<27) {
 					temp_Index="1";
 				}else if (wd>=16&&wd<22) {
-					temp_Index="1";
+					temp_Index="5";
 				}else if (wd>=5&&wd<16) {
 					temp_Index="5";
 				}else if (wd>=-10&&wd<5) {
