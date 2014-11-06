@@ -200,7 +200,7 @@ function weatherdata() {
 					}
 				}
 				if (i > 0 && i < 4) {
-					$("<ul><li style='font-size:18px;'>" + timedayArr[i] + "日  " + weekArr[i] + "</li><li style='font-size:20px;'>" + temp1 + "℃/" + temp2 + "℃</li><li><img src='"+baseUrl+"images/day/d" + img1 + ".png' width='40px' height='40px'/><img src='"+baseUrl+"images/night/n" + img2 + ".png' width='40px' height='40px'/></li><li style='font-size:18px; clear:both;'>" + weather + "</li></ul>").appendTo(".ri");
+					$("<ul class='mask'><li style='font-size:18px;'>" + timedayArr[i] + "日  " + weekArr[i] + "</li><li style='font-size:20px;'>" + temp1 + "℃/" + temp2 + "℃</li><li><img src='"+baseUrl+"images/day/d" + img1 + ".png' width='40px' height='40px'/><img src='"+baseUrl+"images/night/n" + img2 + ".png' width='40px' height='40px'/></li><li style='font-size:18px; clear:both;'>" + weather + "</li></ul>").appendTo(".ri");
 				}
 			})
 
@@ -365,7 +365,7 @@ function myrefresh()
 }*/
 $(document).ready(function() {
 	weatherdata();
-	setInterval('myrefresh()', 30000); //指定10分钟刷新一次 
+	setInterval('myrefresh()', 600000); //指定10分钟刷新一次 
 	function getNow() {
 		var now = new Date();
 
