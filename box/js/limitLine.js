@@ -100,10 +100,10 @@
 					var toDate = new Date(currentTime.getTime());
 					toDate.setDate(toDate.getDate()+d);
 					var result = fn.getLimitLine_BJ(toDate,true);
-					result[0] = '';
+					result[0] = getAPEC(currentTime)||'';
 					return result;
 				}else{
-					return '';
+					return getAPEC(currentTime)||'';
 				}
 			}
 
