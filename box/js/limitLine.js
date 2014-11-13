@@ -96,7 +96,7 @@
 			var week = currentTime.getDay();
 			if(week == 0 || week == 6){
 				if(isReturnWeek){
-					var d = week == -2?1:week == 6?-1:0;
+					var d = week == 0?-2:week == 6?-1:0;
 					var toDate = new Date(currentTime.getTime());
 					toDate.setDate(toDate.getDate()+d);
 					var result = fn.getLimitLine_BJ(toDate,true);
