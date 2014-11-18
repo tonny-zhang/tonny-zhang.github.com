@@ -113,7 +113,6 @@ $(function(){
 		clearTimeout(scrollTT);
 		scrollTT = setTimeout(function(){
 			var scrollTop = $win.scrollTop();
-			console.log(scrollTop,$btn_top);
 			if(scrollTop >= height_win){
 				$btn_top.fadeIn();
 			}else{
