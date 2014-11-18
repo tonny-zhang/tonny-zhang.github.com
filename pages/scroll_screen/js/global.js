@@ -100,6 +100,10 @@ $(function(){
 	var scrollTT,resizeTT;
 	var $win = $(window);
 	var height_win = $win.height();
+	var $btn_top = $('<div class="btn_top">返回顶部</div>').appendTo($('body')).click(function(){
+		currentItemIndex = 0;
+		showItem();
+	});
 	$win.on('resize',function(){
 		clearTimeout(resizeTT);
 		resizeTT = setTimeout(function(){
@@ -109,8 +113,14 @@ $(function(){
 		clearTimeout(scrollTT);
 		scrollTT = setTimeout(function(){
 			var scrollTop = $win.scrollTop();
+			console.log(scrollTop,$btn_top);
+			if(scrollTop >= height_win){
+				$btn_top.fadeIn();
+			}else{
+				$btn_top.fadeOut();
+			}
 			var index = scrollTop/height_win;
-			var select_index = index%1 > 0?Math.ceil(index):Math.floor(index);
+			var select_index = index%1 > 0?Math.ceil(index):Math.floor(index);                                                         
 			$sub_nav.removeClass('on').eq(select_index).addClass('on');
 			currentItemIndex = select_index;
 		},200);
