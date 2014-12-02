@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html> <head>
+ <meta charset="utf-8">
+ <title>实现的遮罩动画</title>
+</head>
+<body></body><script> 
+var imageCanvas;  
+   var maskCanvas;  
+   var imageContext;  
+   var maskContext;  
+   var frameCount=0;  
+   var nextFrames=0;  
+   var maskX=225;  
+   var maskY=160;  
+   var maskSpeedX=0;  
+   var maskSpeedY=0;  
+   var MASK_R=75;  
+   var CANVAS_WIDTH=500;  
+   var CANVAS_HEIGHT=320;  
+   
+            function pageInit(){  
+                imageCanvas=document.createElement("canvas");  
+                imageCanvas.width=CANVAS_WIDTH;  
+                imageCanvas.height=CANVAS_HEIGHT;  
+                document.body.appendChild(imageCanvas);  
+                imageCanvas.style.position="absolute";  
+                imageContext=imageCanvas.getContext("2d");  
+                var img=new Image();  
+                img.onload=function(){  
+                    imageContext.drawImage(img,0,0);  
+                }  
+                img.src="http://t11.baidu.com/it/u=3611600698,34061596&fm=32&s=0F026C81C4429CEF608931080300E0C2&w=800&h=533&img.JPEG";  
+   
+                maskCanvas=document.createElement("canvas");  
+                maskCanvas.width=CANVAS_WIDTH;  
+                maskCanvas.height=CANVAS_HEIGHT;  
+                document.body.appendChild(maskCanvas);  
+                maskCanvas.style.position="absolute";  
+                maskContext=maskCanvas.getContext("2d");  
+   
+                resetSpeed();  
+                setInterval(moveMask,20);  
+            }  
+   
+            function resetSpeed(){  
+                maskSpeedX=Math.random()*10-5;  
+                maskSpeedY=Math.random()*10-5;  
+   
+                resetNextFrames();  
+            }  
+   
+            function resetNextFrames(){  
+                nextFrames=Math.random()*125+25;  
+            }  
+   
+            function moveMask(){  
+   
+                maskContext.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);  
+                maskContext.globalCompositeOperation="source-over";  
+                maskContext.fillRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);  
+                maskContext.globalCompositeOperation="destination-out";  
+                maskContext.beginPath();  
+				//maskContext.moveTo(20, 50);
+				//maskContext.lineTo(20, 100);
+				//maskContext.lineTo(70, 100);
+                maskContext.arc(maskX,maskY,MASK_R,0,Math.PI*2,true);  
+                maskContext.fill();  
+   
+                maskX+=maskSpeedX;  
+                maskY+=maskSpeedY;  
+   
+                if(maskX>=CANVAS_WIDTH-MASK_R){  
+                    maskSpeedX=-Math.abs(maskSpeedX);  
+                }  
+                if(maskX<=MASK_R){  
+                    maskSpeedX=Math.abs(maskSpeedX);  
+                }  
+                if(maskY>=CANVAS_HEIGHT-MASK_R){  
+                    maskSpeedY=-Math.abs(maskSpeedY);  
+                }  
+                if(maskY<=MASK_R){  
+                    maskSpeedY=Math.abs(maskSpeedY);  
+                }  
+   
+                frameCount++;  
+                if(frameCount>nextFrames){  
+                    frameCount=0;  
+                    resetSpeed();  
+                }  
+            }  
+          pageInit();
+</script> 
+</html>
