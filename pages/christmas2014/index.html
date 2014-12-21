@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<title></title>
+</head>
+<body>
+	<div id="main">
+		<img src="./img/bg_top.png" class="imgs_bg_top"/>
+		<div id="main_index">
+			<img src="./img/bg_top_title.png" class="imgs_top_title"/>
+			<div class="text_index">
+				<img src="./img/text_index.png" class="imgs_text_index"/>
+				<a href="javascript:;" id="btn_didi"></a>
+				<a href="javascript:;" id="btn_yidao"></a>
+				<a href="javascript:;" id="btn_luobo"></a>
+			</div>
+			<a href="weather://christmas2014"><img src="./img/btn_rec.png" class="imgs btn_rec"/></a>
+		</div>
+		<div id="text_main">
+			<img src="./img/btn_back.png" id="btn_back"/>
+
+			<div id="desc_didi">
+				<img src="./img/text_didi.png"/>
+			</div>
+			<div id="desc_luobo">
+				<img src="./img/text_luobo.png"/>
+			</div>
+			<div id="desc_yidao">
+				<img src="./img/text_yidao.png"/>
+			</div>
+		</div>
+	</div>
+	<div id="loading">
+		<div class="spinner">
+			  <div class="spinner-container container1">
+			  	<div class="circle1"></div>
+			  	<div class="circle2"></div>
+			  	<div class="circle3"></div>
+			  	<div class="circle4"></div>
+			  </div>
+			  <div class="spinner-container container2">
+			  	<div class="circle1"></div>
+			  	<div class="circle2"></div>
+			  	<div class="circle3"></div>
+			  	<div class="circle4"></div>
+			  </div>
+			  <div class="spinner-container container3">
+			  	<div class="circle1"></div>
+			  	<div class="circle2"></div>
+			  	<div class="circle3"></div>
+			  	<div class="circle4"></div>
+			  </div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	window.onload = function(){
+		var $ = function(id){
+			return document.getElementById(id);
+		}
+		function show($body){
+			$body.style.display = 'block';
+		}
+		function hide($body){
+			$body.style.display = 'none';
+		}
+		hide($('loading'));
+		var $text_main = $('text_main'),
+			$main_index = $('main_index'),
+			$desc_didi = $('desc_didi'),
+			$desc_luobo = $('desc_luobo'),
+			$desc_yidao = $('desc_yidao');
+
+		var current_desc;
+		$('btn_back').onclick = function(){
+			hide($text_main);
+			hide(current_desc);
+			show($main_index);
+		}
+		function show_desc($body){
+			current_desc = $body;
+			show(current_desc);
+			hide($main_index);
+		}
+		$('btn_didi').onclick = function(){
+			show($text_main);
+			show_desc($desc_didi);
+		}
+		$('btn_yidao').onclick = function(){
+			show_desc($desc_yidao);
+			show($text_main);
+		}
+		$('btn_luobo').onclick = function(){
+			show_desc($desc_luobo);
+			show($text_main);
+		}
+	}
+	</script>
+</body>
+</html>

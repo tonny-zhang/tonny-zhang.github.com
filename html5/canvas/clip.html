@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<style>
+		body{
+			background-color: red;
+		}
+		</style>
+	</head>
+	<body>
+		<canvas id="test_clip" width=400 height=400></canvas>
+		
+		<script type="text/javascript">
+		var canvas = document.getElementById('test_clip');
+		var canvas_pattern = document.getElementById('test_pattern');
+		canvas_pattern = document.createElement('canvas');
+		document.body.appendChild(canvas_pattern);
+		canvas_pattern.setAttribute('width',10);
+		canvas_pattern.setAttribute('height',10);
+		var ctx_pattern = canvas_pattern.getContext('2d');
+		ctx_pattern.beginPath(); // 开始路径绘制
+		ctx_pattern.moveTo(0, 5); // 设置路径起点，坐标为(20,20)
+		ctx_pattern.lineTo(5, 0); // 绘制一条到(200,20)的直线
+		ctx_pattern.moveTo(5, 10); // 设置路径起点，坐标为(20,20)
+		ctx_pattern.lineTo(10, 5); // 绘制一条到(200,20)的直线
+		ctx_pattern.lineWidth = 1; // 设置线宽
+		ctx_pattern.lineCap = 'butt'
+		ctx_pattern.strokeStyle = "green"; // 设置线的颜色
+		ctx_pattern.stroke(); // 进行线的着色，这时整条线才变得可见
+		ctx_pattern.closePath();
+
+		var ctx = canvas.getContext('2d');
+		// ctx.arc(100,100,50,0,Math.PI*2);
+		// ctx.clip();
+		// ctx.beginPath();
+		// ctx.rect(100,100,100,100);
+		// ctx.fill();
+
+		// 扣除一部分
+		ctx.fillStyle = 'white';
+		ctx.fillRect(0,0,400,400);
+		ctx.save();
+		ctx.beginPath();
+		ctx.arc(30,30,20,0,Math.PI*2);
+		ctx.rect(100,100,100,100);
+		ctx.moveTo(300,100);
+		ctx.lineTo(300,150);
+		ctx.lineTo(320,150);
+		ctx.lineTo(300,100);
+		
+		ctx.moveTo(300,100);
+		ctx.lineTo(300,250);
+		ctx.lineTo(320,250);
+		ctx.lineTo(300,200);
+		ctx.clip();
+		// ctx.clearRect(0,0,400,400);
+		// console.log(ctx);
+
+		// ctx.beginPath();
+		// ctx.arc(30,30,20,0,Math.PI*2);
+		// ctx.rect(100,100,400,500);
+		// ctx.closePath();
+		// ctx.clip();
+
+		ctx.beginPath();
+		// var pat = ctx.createPattern(canvas_pattern,"repeat");
+		// ctx.fillStyle = pat;
+		
+		ctx.moveTo(310, 120);
+		ctx.lineTo(360, 120);
+		ctx.lineTo(348, 230);
+		ctx.lineTo(250, 340);
+		ctx.lineTo(146, 200);
+		ctx.closePath();
+
+		ctx.fill();
+
+		ctx.fillRect(10,10,20,20);
+		</script>
+	</body>
+</html>
