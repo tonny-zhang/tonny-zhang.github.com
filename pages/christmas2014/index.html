@@ -18,7 +18,15 @@
 				<a href="javascript:;" id="btn_yidao"></a>
 				<a href="javascript:;" id="btn_luobo"></a>
 			</div>
-			<a href="weather://christmas2014"><img src="./img/btn_rec.png" class="imgs btn_rec"/></a>
+			<script type="text/javascript">
+			var btn_html = '';
+			if(location.hash == '#download'){
+				btn_html = '<a href="http://m.weathercn.com/app/index.jsp"><img src="./img/btn_download.png" class="imgs btn_rec"/></a>';
+			}else{
+				btn_html = '<a href="weather://christmas2014"><img src="./img/btn_rec.png" class="imgs btn_rec"/></a>';
+			}
+			document.write(btn_html);
+			</script>
 		</div>
 		<div id="text_main">
 			<img src="./img/btn_back.png" id="btn_back"/>
