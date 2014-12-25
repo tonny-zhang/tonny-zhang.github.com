@@ -8,6 +8,8 @@
 	</head>
 	<body>
 		<canvas id="test_clip" width=400 height=400></canvas>
+		<canvas id="test_clip_1" width=400 height=400 style="border: 1px solid #ccc;"></canvas>
+		<canvas id="test_clip_2" width=400 height=400></canvas>
 		
 		<script type="text/javascript">
 		var canvas = document.getElementById('test_clip');
@@ -75,6 +77,169 @@
 		ctx.fill();
 
 		ctx.fillRect(10,10,20,20);
+
+
+		!function(){
+			// var img = new Image();
+			// img.onload = function(){
+			// 	var canvas = document.getElementById('test_clip_1');
+			// 	var ctx = canvas.getContext('2d');
+			// 	draw_img_dir(ctx,300,30,{
+			// 		color: 'green',
+			// 		angle: 30
+			// 	});
+			// 	// ctx.fillRect(100,100,10,10);
+			// 	draw_img_dir(ctx,30,30,{
+			// 		color: 'blue',
+			// 		angle: 30
+			// 	});
+			// }
+			// img.src = 'http://h.hiphotos.baidu.com/super/whfpf%3D425%2C260%2C50/sign=96e8a388223fb80e0c84329750ec1b1c/503d269759ee3d6dc2fa287240166d224f4ade4f.jpg';
+			// var width = 30,
+			// 	height = 30; 
+			// var draw_img_dir = (function(){
+			// 	var scale = 2;
+			// 	var width = 6*scale,
+			// 		height = 4*scale;
+			// 	var canvas_pattern = document.createElement('canvas');
+			// 	canvas_pattern.setAttribute('width',width);
+			// 	canvas_pattern.setAttribute('height',height);
+			// 	var ctx_pattern = canvas_pattern.getContext('2d');
+
+			// 	// ctx_pattern.rotate(Math.PI / 4);
+			// 	ctx_pattern.beginPath(); // 开始路径绘制
+			// 	ctx_pattern.moveTo(0, 1*scale);
+			// 	ctx_pattern.lineTo(0, 3*scale);
+			// 	ctx_pattern.lineTo(4*scale, 3*scale);
+			// 	ctx_pattern.lineTo(4*scale, 4*scale);
+			// 	ctx_pattern.lineTo(6*scale, 2*scale);
+			// 	ctx_pattern.lineTo(4*scale, 0);
+			// 	ctx_pattern.lineTo(4*scale, 1*scale);
+			// 	ctx_pattern.closePath();
+
+			// 	ctx_pattern.fill();
+			// 	ctx_pattern.save();
+			// 	var TO_RADIANS = Math.PI/180; 
+			// 	document.body.appendChild(canvas_pattern);
+			// 	return function(ctx,x,y,option){
+			// 		var angle = -(option.angle) * TO_RADIANS;
+			// 		// x = x - width/2;
+			// 		// y = y - height/2;
+			// 		// ctx.save();
+			// 		// ctx.translate( width/2, height/2 );
+			// 		// ctx.rotate( angle );
+			// 		// ctx.translate( -width/2, -height/2 );
+			// 		// ctx.drawImage( canvas_pattern, 0, 0 );
+			// 		// ctx.restore();
+
+			// 		ctx.translate(x + width / 2,y + height / 2);
+			// 		ctx.rotate(angle);
+			// 		ctx_pattern.fillStyle = option.color || 'rgba(0,255,255,1)';
+			// 		ctx_pattern.fill();
+			// 		ctx.drawImage(canvas_pattern, width / 2 * (-1),height / 2 * (-1),width, height);
+			// 		ctx.rotate(-angle);
+			// 		ctx.translate((x + width / 2) * (-1),(y + height / 2) * (-1));
+
+			// 		// ctx.save();
+			// 		// x = x - width/2;
+			// 		// y = y - height/2;
+			// 		// ctx.translate(x,y);
+			// 		// ctx.rotate(angle);
+			// 		// ctx.drawImage(canvas_pattern, 0,0);
+			// 		// ctx.restore();
+
+			// 		// ctx.save();
+			// 		// x = x - width/2;
+			// 		// y = y - height/2;
+			// 		// ctx.translate(x,y);
+			// 		// ctx.rotate();
+
+			// 		// ctx_pattern.fillStyle = option.color || 'rgba(0,255,255,1)';
+			// 		// ctx_pattern.fill();
+			// 		// ctx.drawImage(canvas_pattern,0,0);
+			// 		// ctx.restore();
+			// 	}
+			// })();
+
+			var drawArrow = (function(){
+				function trans(s_x,s_y,p_x,p_y,angle){
+					var r = Math.sqrt(Math.pow(s_x-p_x,2)+Math.pow(s_y-p_y,2));
+					var angle_old = 0;
+					if(s_y == p_y){
+						angle_old = (s_x > p_x?-1: 1)*Math.PI;
+					}else if(s_x == p_x){
+						angle_old = (s_y > p_y?-1: 1)*Math.PI/2;
+					}else{
+						angle_old = Math.atan((p_y-s_y)/(p_x-s_x));
+					}
+					angle = angle_old + angle;
+					var x = s_x + r* Math.sin(angle);
+					var y = s_y + r* Math.cos(angle);
+					return [x,y]
+				}
+				trans(10,10,10,10,Math.PI/2);
+				var scale = 1;
+				function _drawArrow(ctx,x,y,option){
+					ctx.save();
+					var angle = option.angle;
+					ctx.moveTo.apply(ctx,trans(x,y,x-4*scale,y+1*scale,angle));
+					ctx.lineTo.apply(ctx,trans(x,y,x-4*scale,y-1*scale,angle));
+					ctx.lineTo.apply(ctx,trans(x,y,x,y+1*scale,angle));
+					ctx.lineTo.apply(ctx,trans(x,y,x,y+3*scale,angle));
+					ctx.lineTo.apply(ctx,trans(x,y,x+4*scale,y,angle));
+					ctx.lineTo.apply(ctx,trans(x,y,x,y-3*scale,angle));
+					ctx.lineTo.apply(ctx,trans(x,y,x,y-1*scale,angle));
+					ctx.closePath();
+					ctx.fillStyle = option.color;
+					ctx.fill();
+					ctx.restore();
+				}
+				return function(ctx,x,y,option){
+					_drawArrow(ctx,x,y,option);
+				}
+			})();
+			
+
+			var canvas = document.getElementById('test_clip_1');
+			var ctx = canvas.getContext('2d');
+			drawArrow(ctx,100,100,{
+				angle: -Math.PI/2,
+				color: 'green'
+			});
+			var angle = 0;
+			// function loop(){
+			// 	ctx.clearRect(0,0,400,400);
+			// 	draw_img_dir(ctx,100,30,{
+			// 		color: 'green',
+			// 		angle: angle += 5
+			// 	});
+			// 	setTimeout(loop,10);
+			// }
+			// loop();
+			// function many(){
+			// 	for(var i = 0;i<10;i++){
+			// 		draw_img_dir(ctx,i*40,30,{
+			// 			color: 'green',
+			// 			angle: 2*i
+			// 		});
+			// 	}
+			// }
+			// many();
+
+			// // ctx.fillRect(100,100,10,10);
+			// draw_img_dir(ctx,30,30,{
+			// 	color: 'blue',
+			// 	angle: 30
+			// });
+			// draw_img_dir(ctx,30,10,{
+			// 	color: 'black',
+			// 	angle: 20
+			// });
+			// draw_img_dir(ctx,100,10,{
+			// 	color: 'blue',
+			// 	angle: 90
+			// });
+		}()
 		</script>
 	</body>
 </html>
