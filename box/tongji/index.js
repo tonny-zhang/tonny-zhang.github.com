@@ -1,7 +1,7 @@
 !function(){
 	var _hideLoading = function(){
         try{
-            window.android.hideLoading();
+            $('#loading').hide();
         }catch(e){}
     }
     var _formateNum = function(num){
@@ -20,8 +20,9 @@
             return params[name] || defaultVal;
         }
     }();
+    var is_small_set = $(window).width() < 500;
 	var style = {
-        fontSize: '22px'
+        fontSize: is_small_set? '14px': '22px'
     };
     var s_time = '20140401';
     var e_time = new Date();
@@ -72,7 +73,6 @@
 		});
 		$('#chart').highcharts({
 	        chart: {
-	            zoomType: 'xy',
 	            style: style
 	        },
 	        xAxis: {
@@ -113,7 +113,7 @@
 	        }],
 	        plotOptions: {
 	            pie: {
-	            	size: 150,
+	            	size: 100,
 	                allowPointSelect: true,
 	                cursor: 'pointer',
 	                dataLabels: {
@@ -127,6 +127,9 @@
 	            }
 	        }
 	    });
+		
+		var chart = $('#chart').highcharts();
+		chart.xAxis[0].setExtremes('9-09', '9-21');
 		
 		/*对X轴的日期进行处理*/
 		var currentDate = 0;
@@ -162,7 +165,7 @@
 					y: v,
 					marker: {
 						// fillColor: 'red',
-						radius: 10,
+						radius: is_small_set? 5: 10,
 						symbol: 'triangle'
 					}
 				}
@@ -175,7 +178,7 @@
 					y: v,
 					marker: {
 						// fillColor: 'blue',
-						radius: 10,
+						radius: is_small_set? 5: 10,
 						symbol: 'triangle-down'
 					}
 				}
@@ -185,15 +188,17 @@
 		// var title = formateDate(data.s_time)+'至'+formateDate(data.e_time)+'数据';
 		$('#chart_temp').highcharts({
 	        chart: {
-	            zoomType: 'xy',
+	            zoomType: 'x',
 	            style: style
 	        },
 	        xAxis: {
 	            categories: temp_x,
 	            // lineColor:"#115aaa",
 	            // lineWidth:2,
+	            floor: 0,
+            	ceiling: 100,
 	            labels: {
-	                y: 30,
+	                y: 00,
 	                style: style,
 	                rotation: -90,
 	                y: 40,
@@ -266,9 +271,9 @@
 	        }],
 	        plotOptions: {
 	            series: {
-	                lineWidth: 4,
+	                lineWidth: is_small_set? 2: 4,
 	                marker: {
-	                    radius: 6
+	                    radius: is_small_set? 3: 6,
 	                }
 	            },
 	            column: {
@@ -277,7 +282,7 @@
 	        }
 	    });
 		$('article .time').text('('+data.s_time+'至'+data.e_time+')');
-		var desc = '自'+data.s_time+'至'+data.e_time+'：<br/>日最高气温<span>'+max_temp+'</span>°C,日最低气温<span>'+min_temp+'</span>°C,日最大降水量<span>'+max_js+'</span>mm,降水日数<span>'+data.num_js+'</span>天，连续无降水日数<span>'+data.num_no_js+'</span>天，霾日数<span>'+data.num_mai+'</span>天，连续霾日数<span>'+data.num_mai_lx+'</span>天。<br/><p>本数据来源于<span>SmartCloud</span>云存储与计算平台,更多信息可访问<a href="http://smart.weather.com.cn/">http://smart.weather.com.cn/</a></p>';
+		var desc = '<b>自'+data.s_time+'至'+data.e_time+'：</b><br/>日最高气温<span>'+max_temp+'</span>°C,日最低气温<span>'+min_temp+'</span>°C,日最大降水量<span>'+max_js+'</span>mm,降水日数<span>'+data.num_js+'</span>天，连续无降水日数<span>'+data.num_no_js+'</span>天，霾日数<span>'+data.num_mai+'</span>天，连续霾日数<span>'+data.num_mai_lx+'</span>天。<br/><p>本数据来源于<span>SmartCloud</span>云存储与计算平台,更多信息可访问<a href="http://smart.weather.com.cn/">http://smart.weather.com.cn/</a></p>';
 		$('#desc').html(desc);
 		_hideLoading();
 	}

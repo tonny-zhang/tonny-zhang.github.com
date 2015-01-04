@@ -37,7 +37,8 @@ body{
 	margin-left: -170px;
 	top: 50%;
 	margin-top: -30px;
-	display: none;
+	z-index: 1000;
+	text-align: center;
 }
 #main{
 	width: 100%;
@@ -74,16 +75,19 @@ section p{
 	padding: 3px 10px;
 }
 
-#chart{
+.chart{
 	width: 40%;
 	height: 280px;
 	margin-left: 50px;
 }
-#chart_temp{
+.chart_temp{
 	height: 350px;;
 	clear: both;
 }
-#desc{
+#chart_temp{
+	height: 100%;
+}
+.desc{
 	color: #383838;
 	width: 49%;
 	min-height: 220px;
@@ -97,24 +101,86 @@ section p{
 	margin-top: 10px;
 	margin-right: 10px;
 }
-#desc span{
+.desc span{
 	font-size: 26px;
 	color: #be0c00;
 }
-#desc p{
+.desc p{
 	font-size: 20px;
 	color: #333;
 	margin: 30px 0 0;
 	padding: 0;
 	font-weight: normal;
 }
-#desc p span{
+.desc p span{
 	font-weight: bold;
 	font-size: 16px;
 	color: #F05133;
 
 }
-#desc p a{
+.desc p a{
 	color: #0062CA;
 	text-decoration: none;
+}
+
+@media (max-width: 400px),
+(max-device-width: 400px){
+	body{
+		background-color: #D3EBFA;
+	}
+	.container{
+		width: 100%;
+		height: auto;
+		overflow: auto;
+	}
+	section article{
+		font-size: 26px;
+		background-size: auto 100%;
+	}
+	.time{
+		display: block;
+		font-size: 16px;
+	}
+	.from{
+		display: none;
+	}
+	.module{
+		width: 96%;
+		margin: 0 auto;
+		float: none;
+		display: block;
+		margin-bottom: 10px;
+	}
+	.chart{
+		background-color: #fff;
+		border-radius: 5px;
+	}
+	#chart{
+		width: 90%;
+		margin: 0 auto;
+		height: 100%;
+	}
+	.desc{
+		padding: 0;
+		min-height: 80px;
+	}
+	.desc p{
+		font-size: 16px;
+		padding: 15px;
+		margin: 0;
+	}
+	.desc p p{
+		margin-top: 10px;
+		font-size: 14px;
+		padding: 0;
+	}
+	#loading{
+		font-size: 30px;
+		background-color: rgba(0,0,0,0.2);
+		border-radius: 5px;
+		width: 230px;
+		height: 50px;
+		line-height: 50px;
+		margin-left: -115px;
+	}
 }
