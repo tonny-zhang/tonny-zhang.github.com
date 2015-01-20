@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>用transform:scale转化后还原问题</title>
+		<style type="text/css">
+		.container{
+			width: 200px;
+			height: 100px;
+			background: red;
+			margin: 10px auto;
+			position: relative;
+		}
+		.entity{
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100px;
+			height: 50px;
+			background-color: rgba(0, 255, 100, 0.7);
+		}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="entity"></div>
+		</div>
+		<script type="text/javascript" src="http://i.tq121.com.cn/j/jquery-1.8.2.js"></script>
+		<script type="text/javascript">
+		!function(){
+			var $container = $('.container');
+			function scale_transform(scale, origin){
+				return $container.clone().appendTo('body').find('.entity').css({
+					'transform-origin': origin.x+'px '+origin.y+'px',
+					'transform': 'scale('+scale+')'
+				});
+			}
+			function reback($entity){
+				var origin_arr = $entity.css('transform-origin').split(/\s+/);
+				var origin_x = parseFloat(origin_arr[0]),
+					origin_y = parseFloat(origin_arr[1]);
+
+				var matrix = $entity.css('transform');
+				var m = /matrix\((.+)\)/.exec(matrix);
+				if(m){
+					var arr = m[1].split(',');
+					var scale = parseFloat(arr[0]);
+				}
+				if(!scale){
+					var scale = 1;
+				}
+				// var pos = $entity.position();
+				// var width = $entity.width(),
+				// 	height = $entity.height();
+
+				// var toWidth = width * scale,
+				// 	toHeight = height * scale;
+
+				// var per_x = origin_x/width,
+				// 	per_y = origin_y/height;
+
+				// var toLeft = pos.left - (toWidth - width)*per_x,
+				// 	toTop = pos.top - (toHeight - height)*per_y;
+
+				/*
+				css3 transform 是基于像素的数据计算结果再进行渲染，
+				这里的transform:scale(x) 后对元素的position有了影响，
+				对元素进行尺寸及scale及origin进行还原时不用处理left和top
+				*/
+				$container.clone().appendTo('body').find('.entity').css({
+					width: toWidth,
+					height: toHeight,
+					left: pos.left,
+					top: pos.top,
+					'transform-origin': (toWidth/2)+'px '+(toHeight/2)+'px',
+					'transform': 'scale(1)'
+				});
+			}
+			reback(scale_transform(1.5, {
+				x: 30,
+				y: 10
+			}));
+		}();
+		</script>
+	</body>
+</html>

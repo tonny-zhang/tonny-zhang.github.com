@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<style>
+		body{
+			background-color: red;
+		}
+		</style>
+	</head>
+	<body>
+		<canvas id="test_clip" width=400 height=400></canvas>
+		
+		<script type="text/javascript">
+		var canvas = document.getElementById('test_clip');
+		var ctx = canvas.getContext('2d');
+		// ctx.arc(100,100,50,0,Math.PI*2);
+		// ctx.clip();
+		ctx.fillStyle = 'blue';
+		ctx.beginPath();
+		ctx.rect(0,0,400,400);
+		ctx.fill();
+
+		// 扣除一部分
+		// ctx.fillStyle = 'white';
+		// ctx.fillRect(0,0,400,400);
+		ctx.save();
+		ctx.beginPath();
+		ctx.arc(30,30,20,0,Math.PI*2);
+		ctx.rect(100,100,100,100);
+		ctx.moveTo(300,100);
+		ctx.lineTo(300,150);
+		ctx.lineTo(320,150);
+		ctx.lineTo(300,100);
+		
+		ctx.moveTo(300,100);
+		ctx.lineTo(300,250);
+		ctx.lineTo(320,250);
+		ctx.lineTo(300,200);
+		ctx.clip();
+
+		ctx.fillStyle = 'white';
+		ctx.fillRect(0,0,400,400);
+
+		// ctx.restore();
+
+		ctx.fillStyle = 'black';
+		ctx.fillRect(0,0,400,400);
+		</script>
+	</body>
+</html>
