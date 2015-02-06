@@ -1,0 +1,33 @@
+<html>
+	<style type="text/css">
+	input[type=checkbox]{
+		position: relative;
+	}
+	input[type=checkbox]:before{
+		content: '';
+		width: 11px;
+		height: 11px;
+		background-color: white;
+		display: block;
+		border: 1px solid #ccc;
+	}
+	input[type=checkbox]:checked:after{
+		content: '';
+		position: absolute;
+		left: 2px;
+		top: 3px;
+		width: 7px;
+		height: 3px;
+		border: 1px solid #333;
+		border-top: none;
+		border-right: none;
+		-webkit-transform: rotate(-64deg) skewX(-24deg);
+	}
+	</style>
+	<body>
+		<div>
+			<input type="checkbox" />
+		</div>
+		<div class="tick"></div>
+	</body>
+</html>
