@@ -1,0 +1,121 @@
+<html>
+	<head>
+		<style>
+		body{
+		}
+		</style>
+	</head>
+	<body>
+		<canvas id="test_1" width=400 height=400></canvas>
+		<canvas id="test_2" width=400 height=400 style="border: 1px solid #ccc;"></canvas>
+		<canvas id="test_3" width=400 height=400></canvas>
+
+		<script>
+		function build_path(ctx, points){
+			var len = points.length;
+			if(len > 0){
+				ctx.moveTo(points[0][0], points[0][1]);
+				for(var i = 1, j = len; i<j; i++){
+					ctx.lineTo(points[i][0], points[i][1]);
+				}
+			}
+		}
+		function getCtx(id){
+			var can = document.getElementById(id);
+			return can.getContext('2d');
+		}
+
+		var ctx_1 = getCtx('test_1');
+		// translate 移动中心点，操作完后再还原
+		ctx_1.translate(200,200);
+		ctx_1.rotate(Math.PI/6);
+		ctx_1.scale(3, 3);
+		ctx_1.translate(-200,-200);
+		ctx_1.strokeStyle="#FF0000";  //填充的颜色
+		ctx_1.strokeRect(150, 150, 100, 100);
+
+		var ctx_2 = getCtx('test_2');
+		ctx_2.drawImage(document.getElementById('test_1'), 0, 0);
+		// var tempContext = null; // global variable 2d context
+		// window.onload = function() {
+		// 	var canvas = document.getElementById("test_2");
+		// 	canvas.width = 450;
+		// 	canvas.height = 450;
+			
+		// 	if (!canvas.getContext) {
+		// 	    console.log("Canvas not supported. Please install a HTML5 compatible browser.");
+		// 	    return;
+		// 	}
+			
+		// 	// get 2D context of canvas and draw image
+		// 	tempContext = canvas.getContext("2d");
+		// 	// renderText(canvas.width, canvas.height, tempContext);
+		// 	saveAndRestoreContext(tempContext);
+		// 	drawPath(tempContext);
+		// }
+		
+		// // translate is move the start point to centera and back to top left corner
+		// function renderText(width, height, context) {
+		// 	context.translate(width / 2, height / 2);
+		// 	context.font="18px Arial";
+		// 	context.fillStyle="blue";
+		// 	context.fillText("Please Press <Esc> to Exit Game",5,50);
+		// 	context.translate(-width / 2, -height / 2);
+		// 	context.fillText("I'm Back to Top",5,50);
+		// }
+		
+		// // translation the rectangle.
+		// function drawPath(context) {
+		// 	// context.translate(200, 200);
+		// 	context.scale(2,2); // Scale twice size of original shape
+		// 	context.strokeStyle = "green";
+		// 	context.beginPath();
+		// 	context.moveTo(0, 40);
+		// 	context.lineTo(80, 40);
+		// 	context.lineTo(40, 80);
+		// 	context.closePath();
+		// 	context.stroke();
+		// }
+		
+		// // new point.x = x * cos(-angle) - y * sin(-angle), 
+		// // new point.y = y * cos(-angle) + x * sin(-angle)
+		// function renderRotateText(context) {
+		// 	context.font="24px Arial";
+		// 	context.fillStyle="red";
+		// 	context.fillText("i'm here!!!",5,50);
+			
+		// 	// rotate -90 degreee
+		// 	// context.rotate(-Math.PI/2);
+		// 	// context.fillStyle="blue";
+		// 	// context.fillText("i'm here!!!", -400,30);
+			
+		// 	// rotate 90 degreee
+		// 	context.rotate(Math.PI/2);
+		// 	context.fillStyle="blue";
+		// 	context.fillText("i'm here!!!", 350,-420);
+			
+		// 	console.log(Math.sin(Math.PI/2));
+			
+		// 	// rotae 90 degree and draw 10 lines
+		// 	context.fillStyle="green";
+		// 	for(var i=0; i<4; i++) {
+		// 		var x = (i+1)*20;
+		// 		var y = (i+1)*60;
+		// 		var newX = y;
+		// 		var newY = -x;	
+		// 		context.fillRect(newX, newY, 200, 6);
+		// 	}
+		// }
+		
+		// function saveAndRestoreContext(context) {
+		// 	context.save();
+		// 	context.translate(200,200);
+		// 	context.rotate(Math.PI/2);
+		// 	context.fillStyle="black";
+		// 	context.fillText("2D Context Rotate And Translate", 10, 10);
+		// 	context.restore();
+		// 	context.fillText("2D Context Rotate And Translate", 10, 10);
+		// }
+		</script>
+	</body>
+</html>
