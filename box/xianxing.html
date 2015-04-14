@@ -186,7 +186,7 @@ line-height:60px;}
 	
 	</div>
 	<div class="bottom">
-		<h1>2014年限行规则</h1>
+		<h1 id="title"></h1>
 		<ul class="shang">
 			<li>周一</li>
 			<li>周二</li>
@@ -224,6 +224,7 @@ line-height:60px;}
     }();
     var cityid = getParam('areaid','101010100');
     var today = new Date();
+    $('#title').text(today.getFullYear()+'年限行规则');
     var week = today.getDay();
     var weekStr = "日一二三四五六";
     var result = getLimitLine(today,cityid,true);
