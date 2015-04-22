@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<style type="text/css">
+		.wraper {
+			position: relative;
+			border: 1px solid orange;
+		}
+  	</style>
+</head>
+<body>
+	<canvas id="test1" width="700px" height="700px" class="wraper"></canvas>
+	<canvas id="test2" width="700px" height="700px" class="wraper"></canvas>
+
+	<script>
+	function build_path(ctx, points){
+		var len = points.length;
+		if(len > 0){
+			ctx.moveTo(points[0][0], points[0][1]);
+			for(var i = 1, j = len; i<j; i++){
+				ctx.lineTo(points[i][0], points[i][1]);
+			}
+		}
+	}
+	function getCtx(id){
+		var can = document.getElementById(id);
+		return can.getContext('2d');
+	}
+	var ctx1 = getCtx('test1');
+	var ctx2 = getCtx('test2');
+	function add_point(points){
+		var dis = Math.pow(points[0][0] - points[1][0], 2) + Math.pow(points[0][1] - points[1][1], 2);
+		var max_index = 0;
+		for(var i = 1, j = points.length - 1; i<j; i++){
+			var dis_new = Math.pow(points[i][0] - points[i][0], 2) + Math.pow(points[i+1][1] - points[i+1][1], 2);
+			if(dis_new > dis){
+				dis = dis_new;
+				max_index = i;
+			}
+		}
+
+		var newPoint = [points[max_index][0] + (points[max_index+1][0] - points[max_index][0])/2, 
+						points[max_index][1] + (points[max_index+1][1] - points[max_index][1])/2];
+
+		// console.log(max_index, newPoint, points[max_index][0] , (points[max_index+1][0] - points[max_index][0])/2, points);
+		points.splice(max_index+1, 0, newPoint);
+	}
+	function format_points(points_s, points_e){
+		var len_s = points_s.length,
+			len_e = points_e.length;
+		if(len_s != len_e){
+			var p_deal = len_s > len_e? points_e: points_s;
+			for(var i = 0, j = Math.abs(len_s - len_e); i<j; i++){
+				add_point(p_deal);
+			}
+			var p_s = len_s > len_e? points_s: p_deal,
+				p_e = len_s > len_e? p_deal: points_s;
+			console.log(p_s, p_e);
+			return [p_s, p_e];
+		}else{
+			return [points_s, points_e];
+		}
+	}
+	function genFrame(points_s, points_e, time_total, time_space){
+		var num = Math.ceil(time_total/time_space) - 1;
+		if(num > 0){
+			var frames = [points_s];
+			var p_num = points_s.length;
+			for(var i = 0; i<num; i++){
+				var arr = [];
+				var per = (i+1)/num;
+				for(var i_p = 0; i_p < p_num; i_p++){
+					var p = [points_s[i_p][0] + (points_e[i_p][0] - points_s[i_p][0])*per, 
+						points_s[i_p][1] + (points_e[i_p][1] - points_s[i_p][1])*per];
+					arr.push(p);
+				}
+				frames.push(arr);
+			}
+			frames.push(points_e);
+
+			var width = ctx2.canvas.width,
+				height = ctx2.canvas.height;
+			function fn(){
+				var points = frames.shift();
+				if(points){
+					ctx2.clearRect(0, 0, width, height);
+					ctx2.beginPath();
+					build_path(ctx2, points);
+					// ctx2.closePath();
+					ctx2.stroke();
+					setTimeout(fn, time_space);
+				}
+			}
+			fn();
+		}
+	}
+	
+	var points_start = [[0, 50], [30, 10], [100, 30], [100, 50]],
+		points_end = [[110, 160], [130, 180], [150, 160], [180, 150]];
+
+	// var points_start = [[233,302],[231,303],[229,304],[227,304],[225,306],[223,307],[236,311]];
+	// var points_end = [[-373,177],[-372,185],[-372,192],[-372,203],[-373,214],[-375,225],[-358,203]];
+	ctx1.beginPath();
+	build_path(ctx1, points_start);
+	ctx1.stroke();
+	build_path(ctx1, points_end);
+	ctx1.stroke();
+
+	var arr_points = format_points(points_start, points_end);
+	points_start = arr_points[0];
+	points_end = arr_points[1];
+	genFrame(points_start, points_end, 2000, 10);
+	</script>
+</body>
+</html>

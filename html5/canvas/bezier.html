@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  	<style type="text/css">
+		.wraper {
+			position: relative;
+			border: 1px solid orange;
+		}
+  	</style>
+  </head>	
+  
+  <body>
+	
+	<canvas id="test" width="200px" height="200px" class="wraper"></canvas>
+	<canvas id="test1" width="200px" height="200px" class="wraper"></canvas>
+
+	<script type="text/javascript">
+		function draw(){
+			var can = document.getElementById('test');
+			if(can.getContext){
+				var cxt = can.getContext('2d');
+
+				//绘制起始点、控制点、终点
+				cxt.beginPath();
+				cxt.moveTo(30,180);
+				cxt.lineTo(70,30);
+				cxt.lineTo(130,170);
+				cxt.lineTo(180,50);
+				cxt.stroke();
+
+				cxt.strokeStyle = "rgba(200,0,0,1)";
+	
+				//绘制3次贝塞尔曲线
+				cxt.beginPath();
+				cxt.moveTo(30,180);
+				cxt.bezierCurveTo(70,30,130,170,180,50);
+				cxt.stroke();
+			}
+
+		}
+		function draw1(){
+			var can = document.getElementById('test1');
+			if(can.getContext){
+				var cxt = can.getContext('2d');
+
+				//绘制起始点、控制点、终点
+				cxt.beginPath();
+				cxt.moveTo(180,50);
+				cxt.lineTo(130,170);
+				cxt.lineTo(70,30);
+				cxt.lineTo(30,180);
+				cxt.lineTo(100,180);
+				cxt.stroke();
+
+				cxt.strokeStyle = "rgba(200,0,0,1)";
+	
+				//绘制3次贝塞尔曲线
+				cxt.beginPath();
+				cxt.moveTo(180,50);
+				cxt.quadraticCurveTo(130,170,70,30);
+				cxt.quadraticCurveTo(70,30,30,180);  
+				cxt.stroke();
+			}
+
+		}
+		draw();
+		draw1();
+	</script>
+  </body>
+</html>

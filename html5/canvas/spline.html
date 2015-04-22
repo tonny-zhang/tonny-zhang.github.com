@@ -1,0 +1,333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  	<style type="text/css">
+		.wraper {
+			position: relative;
+			border: 1px solid orange;
+		}
+  	</style>
+  </head>	
+  
+  <body>
+	
+	<canvas id="test" width="200px" height="200px" class="wraper"></canvas>
+	<canvas id="test1" width="700px" height="700px" class="wraper"></canvas>
+	<canvas id="test2" width="700px" height="700px" class="wraper"></canvas>
+	<script type="text/javascript">
+		var smoothSpline = (function(){
+			var vector = {
+				distance: function distance(p1, p2){
+					return Math.sqrt(Math.pow(p1[0] - p2[0], 2), Math.pow(p1[1] - p2[1], 2));
+				}
+			};
+			
+			/**
+	         * @inner
+	         */
+	        function interpolate(p0, p1, p2, p3, t, t2, t3) {
+	            var v0 = (p2 - p0) * 0.5;
+	            var v1 = (p3 - p1) * 0.5;
+	            return (2 * (p1 - p2) + v0 + v1) * t3 
+	                    + (-3 * (p1 - p2) - 2 * v0 - v1) * t2
+	                    + v0 * t + p1;
+	        }
+			return function (points, isLoop, gap) {
+	            var len = points.length;
+	            if(len <= 1){
+	            	return points;
+	            }
+	            gap || (gap = 5);
+	            var ret = [];
+
+	            var distance = 0;
+	            for (var i = 1; i < len; i++) {
+	                distance += vector.distance(points[i - 1], points[i]);
+	            }
+	            
+	            var segs = distance / gap;
+	            segs = segs < len ? len : segs;
+	            for (var i = 0; i < segs; i++) {
+	                var pos = i / (segs - 1) * (isLoop ? len : len - 1);
+	                var idx = Math.floor(pos);
+
+	                var w = pos - idx;
+
+	                var p0;
+	                var p1 = points[idx % len];
+	                var p2;
+	                var p3;
+	                if (!isLoop) {
+	                    p0 = points[idx === 0 ? idx : idx - 1];
+	                    p2 = points[idx > len - 2 ? len - 1 : idx + 1];
+	                    p3 = points[idx > len - 3 ? len - 1 : idx + 2];
+	                }
+	                else {
+	                    p0 = points[(idx - 1 + len) % len];
+	                    p2 = points[(idx + 1) % len];
+	                    p3 = points[(idx + 2) % len];
+	                }
+
+	                var w2 = w * w;
+	                var w3 = w * w2;
+
+	                ret.push([
+	                    interpolate(p0[0], p1[0], p2[0], p3[0], w, w2, w3),
+	                    interpolate(p0[1], p1[1], p2[1], p3[1], w, w2, w3)
+	                ]);
+	            }
+	            return ret;
+	        };
+		})();
+		var smoothBSpline = (function(){
+			var BSpline = function(points,degree,copy){
+			    if(copy){
+			        this.points = []
+			        for(var i = 0;i<points.length;i++){
+			            this.points.push(points[i]);
+			        }
+			    }else{
+			        this.points = points;
+			    }
+			    this.degree = degree;
+			    this.dimension = points[0].length;
+			    if(degree == 2){
+			        this.baseFunc = this.basisDeg2;
+			        this.baseFuncRangeInt = 2;
+			    }else if(degree == 3){
+			        this.baseFunc = this.basisDeg3;
+			        this.baseFuncRangeInt = 2;
+			    }else if(degree == 4){
+			        this.baseFunc = this.basisDeg4;
+			        this.baseFuncRangeInt = 3;
+			    }else if(degree == 5){
+			        this.baseFunc = this.basisDeg5;
+			        this.baseFuncRangeInt = 3;
+			    } 
+			};
+
+			BSpline.prototype.seqAt = function(dim){
+			    var points = this.points;
+			    var margin = this.degree + 1;
+			    return function(n){
+			        if(n < margin){
+			            return points[0][dim];
+			        }else if(points.length + margin <= n){
+			            return points[points.length-1][dim];
+			        }else{
+			            return points[n-margin][dim];
+			        }
+			    };
+			};
+
+			BSpline.prototype.basisDeg2 = function(x){
+			    if(-0.5 <= x && x < 0.5){
+			        return 0.75 - x*x;
+			    }else if(0.5 <= x && x <= 1.5){
+			        return 1.125 + (-1.5 + x/2.0)*x;
+			    }else if(-1.5 <= x && x < -0.5){
+			        return 1.125 + (1.5 + x/2.0)*x;
+			    }else{
+			        return 0;
+			    }
+			};
+
+			BSpline.prototype.basisDeg3 = function(x){
+			    if(-1 <= x && x < 0){
+			        return 2.0/3.0 + (-1.0 - x/2.0)*x*x;
+			    }else if(1 <= x && x <= 2){
+			        return 4.0/3.0 + x*(-2.0 + (1.0 - x/6.0)*x);
+			    }else if(-2 <= x && x < -1){
+			        return 4.0/3.0 + x*(2.0 + (1.0 + x/6.0)*x);
+			    }else if(0 <= x && x < 1){
+			        return 2.0/3.0 + (-1.0 + x/2.0)*x*x;
+			    }else{
+			        return 0;
+			    }
+			};
+
+			BSpline.prototype.basisDeg4 = function(x){
+			    if(-1.5 <= x && x < -0.5){
+			        return 55.0/96.0 + x*(-(5.0/24.0) + x*(-(5.0/4.0) + (-(5.0/6.0) - x/6.0)*x));
+			    }else if(0.5 <= x && x < 1.5){
+			        return 55.0/96.0 + x*(5.0/24.0 + x*(-(5.0/4.0) + (5.0/6.0 - x/6.0)*x));
+			    }else if(1.5 <= x && x <= 2.5){
+			        return 625.0/384.0 + x*(-(125.0/48.0) + x*(25.0/16.0 + (-(5.0/12.0) + x/24.0)*x));
+			    }else if(-2.5 <= x && x <= -1.5){
+			        return 625.0/384.0 + x*(125.0/48.0 + x*(25.0/16.0 + (5.0/12.0 + x/24.0)*x));
+			    }else if(-1.5 <= x && x < 1.5){
+			        return 115.0/192.0 + x*x*(-(5.0/8.0) + x*x/4.0);
+			    }else{
+			        return 0;
+			    }
+			};
+
+			BSpline.prototype.basisDeg5 = function(x){
+			    if(-2 <= x && x < -1){
+			        return 17.0/40.0 + x*(-(5.0/8.0) + x*(-(7.0/4.0) + x*(-(5.0/4.0) + (-(3.0/8.0) - x/24.0)*x)));
+			    }else if(0 <= x && x < 1){
+			        return 11.0/20.0 + x*x*(-(1.0/2.0) + (1.0/4.0 - x/12.0)*x*x);
+			    }else if(2 <= x && x <= 3){
+			        return 81.0/40.0 + x*(-(27.0/8.0) + x*(9.0/4.0 + x*(-(3.0/4.0) + (1.0/8.0 - x/120.0)*x)));
+			    }else if(-3 <= x && x < -2){
+			        return 81.0/40.0 + x*(27.0/8.0 + x*(9.0/4.0 + x*(3.0/4.0 + (1.0/8.0 + x/120.0)*x)));
+			    }else if(1 <= x && x < 2){
+			        return 17.0/40.0 + x*(5.0/8.0 + x*(-(7.0/4.0) + x*(5.0/4.0 + (-(3.0/8.0) + x/24.0)*x)));
+			    }else if(-1 <= x && x < 0){
+			        return 11.0/20.0 + x*x*(-(1.0/2.0) + (1.0/4.0 + x/12.0)*x*x);
+			    }else{
+			        return 0;
+			    }
+			};
+
+			BSpline.prototype.getInterpol = function(seq,t){
+			    var f = this.baseFunc;
+			    var rangeInt = this.baseFuncRangeInt;
+			    var tInt = Math.floor(t);
+			    var result = 0;
+			    for(var i = tInt - rangeInt;i <= tInt + rangeInt;i++){
+			        result += seq(i)*f(t-i);
+			    }
+			    return result;
+			};
+
+			BSpline.prototype.calcAt = function(t){
+			    t = t*((this.degree+1)*2+this.points.length);//t must be in [0,1]
+			    if(this.dimension == 2){
+			        return [this.getInterpol(this.seqAt(0),t),this.getInterpol(this.seqAt(1),t)];
+			    }else if(this.dimension == 3){
+			        return [this.getInterpol(this.seqAt(0),t),this.getInterpol(this.seqAt(1),t),this.getInterpol(this.seqAt(2),t)];
+			    }else{
+			        var res = [];
+			        for(var i = 0;i<this.dimension;i++){
+			            res.push(this.getInterpol(this.seqAt(i),t));
+			        }
+			        return res;
+			    }
+			};
+			return function(points, degree, num){
+				degree = degree || 4;
+				num = num || 100;
+				var spline = new BSpline(points, degree, true);
+				var points_return = [];
+				var space = 1/num;
+				for(var t = 0; t <= 1; t += space){
+					var interpol = spline.calcAt(t);
+					points_return.push(interpol);
+				}
+				points_return.unshift(points[0]);
+				return points_return;
+			}
+		})();
+		var points = [[30,180], [70,30], [130,170], [80,190]];
+		var points = [[30,30], [100,30], [100, 100], [30, 100], [30,30]];
+		points.reverse();
+		// var points_new = smoothSpline(points, true, 0.2);
+		var points_new = smoothBSpline(points, 3, 20);
+		console.log(points.length, points);
+		console.log('points_new', points_new.length, points_new);
+
+		function build_path(ctx, points){
+			var len = points.length;
+			if(len > 0){
+				ctx.moveTo(points[0][0], points[0][1]);
+				for(var i = 1, j = len; i<j; i++){
+					ctx.lineTo(points[i][0], points[i][1]);
+				}
+			}
+		}
+		function draw(){
+			var can = document.getElementById('test');
+			if(can.getContext){
+				var ctx = can.getContext('2d');
+				// build_path(ctx, points);
+				// ctx.strokeStyle = "rgba(0,0,0,1)"
+				// ctx.stroke();
+
+				build_path(ctx, points_new);
+				ctx.strokeStyle = "rgba(200,0,0,1)"
+				ctx.stroke();
+			}
+
+		}
+		draw();
+
+		var points_arr = [
+			[[30,180], [70,30], [130,170], [80,190]],
+			[[80, 220], [100, 220]],
+			[[100, 300], [30, 200]]
+		];
+		var points_arr = [
+			[[10,10],[100,100],[50,80],[200,150],[100,200],[300,100],[500,150]],
+			// [[30,180], [70,30], [130,170], [80,190]],
+			// [[80, 220], [100, 220], [120, 250]],
+			// [[100, 300], [30, 200]]
+		];
+		function build_pathByarr(ctx, points_arr){
+			ctx.moveTo(points_arr[0][0][0], points_arr[0][0][1]);
+			for(var i = 0, j = points_arr.length; i<j; i++){
+				var p = points_arr[i];
+				build_path(ctx, p);
+				var p_next = points_arr[i+1];
+				// if(p_next ){
+				// 	p_next = p_next[0];
+				// 	p_next && ctx.lineTo(p_next[0], p_next[1]);
+				// }
+			}
+			// ctx.lineTo(points_arr[0][0][0], points_arr[0][0][1]);
+		}
+		// function draw1(){
+		// 	var can1 = document.getElementById('test1');
+		// 	if(can1.getContext){
+		// 		var ctx = can1.getContext('2d');
+
+		// 		ctx.beginPath();
+		// 		build_pathByarr(ctx, points_arr);
+		// 		ctx.closePath();
+		// 		ctx.stroke();
+		// 		// ctx.fill();
+
+		// 		var points_arr_new = [];
+		// 		for(var i = 0, j = points_arr.length; i<j; i++){
+		// 			points_arr_new.push(smoothSpline(points_arr[i]));
+		// 		}
+		// 		ctx.beginPath();
+		// 		build_pathByarr(ctx, points_arr_new);
+		// 		ctx.closePath();
+		// 		ctx.strokeStyle = "rgba(200,0,0,1)"
+		// 		ctx.stroke();
+		// 	}
+		// }
+		// draw1();
+
+		// function draw2(){
+		// 	var can = document.getElementById('test2');
+		// 	if(can.getContext){
+		// 		var ctx = can.getContext('2d');
+		// 		var points_arr_new = [];
+		// 		for(var i = 0, j = points_arr.length; i<j; i++){
+		// 			points_arr_new = points_arr_new.concat((points_arr[i]));
+		// 		}
+		// 		console.log(points_arr_new);
+		// 		ctx.beginPath();
+		// 		build_pathByarr(ctx, points_arr);
+		// 		ctx.closePath();
+		// 		ctx.stroke();
+		// 		// ctx.fill();
+
+		// 		var points_arr_new = [];
+		// 		for(var i = 0, j = points_arr.length; i<j; i++){
+		// 			points_arr_new = points_arr_new.concat(smoothSpline(points_arr[i]));
+		// 		}
+		// 		console.log(points_arr_new);
+		// 		ctx.beginPath();
+		// 		build_path(ctx, points_arr_new);
+		// 		// ctx.closePath();
+		// 		ctx.strokeStyle = "rgba(200,0,0,1)"
+		// 		ctx.stroke();
+		// 	}
+		// }
+		// draw2();
+	</script>
+  </body>
+</html>
