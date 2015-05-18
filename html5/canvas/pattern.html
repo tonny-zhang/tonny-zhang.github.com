@@ -1,0 +1,24 @@
+<html>
+<body>
+<script>
+var listence = function(options){
+	var w = 100, h = 100;
+	var canvas_pattern = document.createElement('canvas');
+	document.body.appendChild(canvas_pattern);
+	canvas_pattern.setAttribute('width', w);
+	canvas_pattern.setAttribute('height', h);
+
+	var ctx_pattern = canvas_pattern.getContext('2d');
+	ctx_pattern.translate(w/2, h/2);
+	ctx_pattern.rotate(-Math.PI/4);
+	ctx_pattern.translate(-w/2, -h/2);
+	ctx_pattern.font = '16px "Microsoft Yahei"';
+	ctx_pattern.textBaseline = 'middle';
+	ctx_pattern.textAlign = 'center';
+	// ctx_pattern.fillText('蓝蚂蚁', 0, h);
+	ctx_pattern.fillText('蓝蚂蚁', w/2, h/2);
+}
+listence();
+</script>
+</body>
+</html>

@@ -4,12 +4,12 @@
 		// $('body').css({'width': $win.width(),'height': $win.height()});
 
 		var video_info = [];
-		video_info.push({'poster':'1.jpg','video':'http://61.4.185.122/webcam/v/SWEEYESCZ02_24H_201405131014.mp4','text': '渤海新区海洋观测点'});
-		video_info.push({'poster':'2.jpg','video':'http://61.4.185.122/webcam/v/SWEEYESCZ01_24H_201405131017.mp4','text': '沧州市运河区九河西路，颐和庄园北实景观测'});
-		video_info.push({'poster':'3.jpg','video':'http://61.4.185.122/webcam/v/SWEEYESBJ02_24H_201403182258.mp4','text': '北京市朝阳区天鹅湾'});
-		video_info.push({'poster':'4.jpg','video':'http://61.4.185.122/webcam/v/SWEEYESCZ01_24H_201405131017.mp4','text': '沧州市运河区九河西路，颐和庄园北实景观测'});
-		video_info.push({'poster':'5.jpg','video':'http://61.4.185.122/webcam/v/SWEEYESBJ01_24H_201403201259.mp4','text': '中国气象局华风影视大楼建筑区'});
-		video_info.push({'poster':'6.jpg','video':'http://61.4.185.122/webcam/v/SWEEYESCZ02_24H_201405131014.mp4','text': '渤海新区海洋观测点'});
+		video_info.push({'poster':'2_1.jpg','video':'http://eyes.welife100.com/webcam/v/SWEEYESHBSJZ01_24H_201504151626.mp4','text': '石家庄'});
+		video_info.push({'poster':'2_2.jpg','video':'http://eyes.welife100.com/webcam/v/SWEEYESXZLS01_24H_201503131117.mp4','text': '西藏拉萨'});
+		video_info.push({'poster':'2_3.jpg','video':'http://eyes.welife100.com/webcam/v/SWEEYESJSYC01_24H_201501211651.mp4','text': '江苏省盐城市大庆中路33号'});
+		video_info.push({'poster':'2_4.jpg','video':'http://eyes.welife100.com/webcam/v/SWEEYESPD01_24H_201409050825.mp4','text': '上海浦东新区世纪公园'});
+		video_info.push({'poster':'2_5.jpg','video':'http://eyes.welife100.com/webcam/v/SWEEYESCZ02_24H_201405081703.mp4','text': '河北省沧州市渤海新区气象局'});
+		video_info.push({'poster':'2_6.jpg','video':'http://eyes.welife100.com/webcam/v/SWEEYESCZ02_24H_201405081703.mp4','text': '河北省沧州市气象局'});
 
 
 		var $video_list = $('.video-list').html('');

@@ -177,6 +177,14 @@ line-height:60px;}
 .bottom.APEC ul.xia li{
 	margin-right: 5px;
 }
+.left h3 b,
+.right h3 b{
+	vertical-align: bottom;
+	font-size: 125px;
+}
+.xia b{
+	vertical-align: 6px;
+}
 </style>
 </head>
 
@@ -222,7 +230,8 @@ line-height:60px;}
             return params[name] || defaultVal;
         }
     }();
-    var cityid = getParam('areaid','101010100');
+    var cityid = getParam('id','101010100');
+    var cityname = getParam('name', '北京市五环内');
     var today = new Date();
     $('#title').text(today.getFullYear()+'年限行规则');
     var week = today.getDay();
@@ -237,15 +246,15 @@ line-height:60px;}
     		return '不限行';
     	}
     	var arr = val.split(',');
-    	return '<span>'+arr[0]+'</span>'+(arr.length == 2?'和<span>'+arr[1]+'</span>':'');
+    	return '<span>'+arr[0]+'</span>'+(arr.length == 2?'<b>和</b><span>'+arr[1]+'</span>':'');
     }
     todayLimitline = '<h3>'+getValhtml(todayLimitline)+'</h3>'
     tomorrowLimitline = '<h3>'+getValhtml(tomorrowLimitline)+'</h3>'
-    $(".ba").html("<h1>北京市五环内机动车尾号限行</h1><div class='left'><h2>今天(周"+weekStr.charAt(week)+")</h2>"+todayLimitline+"</div><div class='right'><h2>明天(周"+weekStr.charAt(tomorrow.getDay())+")</h2>"+tomorrowLimitline+"</div>");
+    $(".ba").html("<h1>"+cityname+"机动车尾号限行</h1><div class='left'><h2>今天(周"+weekStr.charAt(week)+")</h2>"+todayLimitline+"</div><div class='right'><h2>明天(周"+weekStr.charAt(tomorrow.getDay())+")</h2>"+tomorrowLimitline+"</div>");
     var html = '';
     $.each(result[1],function(i,v){
     	var arr = v.split(',');
-    	html += '<li><span>'+arr[0]+'</span>'+(arr.length == 2?'和<span>'+arr[1]+'</span>':'')+'</li>';
+    	html += '<li><span>'+arr[0]+'</span>'+(arr.length == 2?'<b>和</b><span>'+arr[1]+'</span>':'')+'</li>';
     });
     var isAPEC = result[1].length == 7;
     if(isAPEC){
