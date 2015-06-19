@@ -1,0 +1,124 @@
+<!-- <!DOCTYPE html> -->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,user-scalable=no" />
+    	<meta name="format-detection" content="telephone=no" />
+    	<title>你是什么“小粽仙”变的？快来测测吧！</title>
+    	<style>
+    	*{padding: 0;margin:0;}
+    	body{
+    		background-color: #055648;
+    	}
+    	.main{
+    		min-width: 320px;
+    		width: 100%;
+    		margin: 0 auto;
+    		text-align: center;
+    	}
+    	.top{
+    		background-color: #007e69;
+    		padding-top: 10px;
+    	}
+    	.top img{
+    		width: 80%;
+    		margin: 0 auto;
+    	}
+    	.bottom{
+    		background: url(./img/11.png) center -20px no-repeat;
+    		background-color: #055648;
+    		background-size: 100%;
+    		padding-bottom: 15px;
+    	}
+    	ul{
+    		overflow: hidden;
+    		margin: 0 auto;
+    		width: 90%;
+    	}
+    	li{
+    		width: 20%;
+    		float: left;
+    	}
+    	li img{
+    		width: 100%;
+    	}
+
+    	.main_z{
+    		width: 100%;
+    		min-width: 320px;
+    		width: 100%;
+    		margin: 0 auto;
+    		text-align: center;
+    		display: none;
+    	}
+    	.main_z img{
+    		width: 100%;
+            max-width: 640px;
+    	}
+    	#main_z_1{
+    		background-color: #D37349;
+    	}
+    	#main_z_2{
+    		background-color: #FE6C77;
+    	}
+    	#main_z_3{
+    		background-color: #DB2E42;
+    	}
+    	#main_z_4{
+    		background-color: #9EB742;
+    	}
+    	#main_z_5{
+    		background-color: #27A2E8;
+    	}
+    	</style>
+    </head>
+    <body>
+    	<div class="main" id="main_c">
+    		<div class="top">
+    			<img src="./img/top.png"/>
+    			<img src="./img/bl.png" style="width:100%"/>
+    		</div>
+    		<div class="bottom">
+	    		<ul>
+	    			<li class="btn"><img src="./img/1.png"/></li>
+	    			<li class="btn"><img src="./img/2.png"/></li>
+	    			<li class="btn"><img src="./img/3.png"/></li>
+	    			<li class="btn"><img src="./img/4.png"/></li>
+	    			<li class="btn"><img src="./img/5.png"/></li>
+	    		</ul>
+	    	</div>
+    	</div>
+
+    	<div class="main_z" id="main_z_1">
+    		<img src="./img/c1.jpg"/>
+    	</div>
+    	<div class="main_z" id="main_z_2">
+    		<img src="./img/c2.jpg"/>
+    	</div>
+    	<div class="main_z" id="main_z_3">
+    		<img src="./img/c3.jpg"/>
+    	</div>
+    	<div class="main_z" id="main_z_4">
+    		<img src="./img/c4.jpg"/>
+    	</div>
+    	<div class="main_z" id="main_z_5">
+    		<img src="./img/c5.jpg"/>
+    	</div>
+        <audio autoplay="autoplay">
+            <source src="./1.mp3" type="audio/mpeg">
+        </audio>
+
+        <script>
+        var btns = document.getElementsByClassName('btn');
+        var main_c = document.getElementById('main_c');
+        for(var i = 0, j = btns.length; i<j; i++){
+        	(function(index){
+        		btns[index].onclick = function(){
+        			main_c.style.display = 'none';
+        			document.getElementById('main_z_'+(index+1)).style.display = 'block';;
+        		}
+        	})(i);
+        }
+        </script>
+    </body>
+</html>
