@@ -1,0 +1,27 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example - example-example7</title>
+  <script src="../../../source/js/angular-1.4.2.min.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controller.js"></script>
+</head>
+<body ng-app="spicyApp1">
+ <div ng-controller="SpicyController">
+ <button ng-click="chiliSpicy()">Chili</button>
+ <button ng-click="jalapenoSpicy()">Jalapeño</button>
+ <p>The food is {{spice}} spicy!</p>
+
+ <a ng-href="img/{{username}}.jpg">Hello {{username}}!</a>
+
+ <button ng-init="shouldShow = true" ng-click="shouldShow = !shouldShow">Flip the shouldShow variable</button> 
+ <div ng-show="shouldShow"> 
+   <h3>Showing {{ shouldShow }}</h3> 
+ </div> <div ng-hide="shouldShow"> 
+   <h3>Hiding {{ shouldShow }}</h3> 
+ </div>
+</div>
+</body>
+</html>

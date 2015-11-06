@@ -13,6 +13,17 @@
 			console.log(arguments);
 		  return "hsl(" + Math.random() * 360 + ",100%,50%)";
 		});
+
+		d3.select('body').selectAll('p').data([10, 2, 3], function(d){
+			return d;
+		}).enter().append('p').text(function(d){
+			console.log(arguments);
+			return d;
+		});
+
+		// d3.select('body').selectAll('div').datum([1, 2, 3]).append('p').text(function(d){
+		// 	return d;
+		// });
 		</script>
 	</body>
 </html>

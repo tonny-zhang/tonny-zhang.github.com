@@ -13,6 +13,8 @@
 	
 	<canvas id="test" width="200px" height="200px" class="wraper"></canvas>
 	<canvas id="test1" width="200px" height="200px" class="wraper"></canvas>
+	<canvas id="test2" width="200px" height="200px" class="wraper"></canvas>
+	<canvas id="test3" width="200px" height="200px" class="wraper"></canvas>
 
 	<script type="text/javascript">
 		function draw(){
@@ -63,8 +65,75 @@
 			}
 
 		}
+		function draw2(){
+			var can = document.getElementById('test2');
+			if(can.getContext){
+				var cxt = can.getContext('2d');
+
+				//绘制起始点、控制点、终点
+				// cxt.beginPath();
+
+				// cxt.lineTo(50,50);
+
+				cxt.moveTo(50,50);
+				cxt.lineTo(80,50);
+				cxt.lineTo(80,80);
+				cxt.lineTo(50,80);
+				cxt.lineTo(50,50);
+				
+				cxt.moveTo(30,30);
+				cxt.lineTo(100,30);
+				cxt.lineTo(100,100);
+				cxt.lineTo(30,100);
+				cxt.lineTo(30,30);
+				// cxt.lineTo(30,30);
+
+
+				// cxt.closePath();
+
+				cxt.strokeStyle = "rgba(200,0,0,1)";
+				cxt.fillStyle = 'red';
+				cxt.stroke();
+				cxt.fill();
+			}
+		}
+		function draw3(){
+			var can = document.getElementById('test3');
+			if(can.getContext){
+				var cxt = can.getContext('2d');
+
+				cxt.fillStyle = 'red';
+				cxt.fillRect(0, 0, 200, 200);
+				//绘制起始点、控制点、终点
+				// cxt.beginPath();
+
+				cxt.fillStyle = 'blue';
+				cxt.fillRect(30, 30, 100, 100);
+
+				cxt.save();
+				cxt.beginPath();
+				cxt.moveTo(40, 40);
+				cxt.lineTo(60, 60);
+				cxt.lineTo(60, 100);
+
+				cxt.moveTo(70, 70);
+				cxt.lineTo(70, 80);
+				cxt.lineTo(80, 80);
+				cxt.lineTo(80, 70);
+				// cxt.fillStyle = 'yellow';
+				// cxt.fill();
+				cxt.clip();
+				cxt.clearRect(0, 0, 200, 200);//这里清除要clip的图形
+				cxt.restore();
+
+				cxt.fillStyle = 'rgba(0, 0, 0, 0.5)';
+				cxt.fillRect(40, 40, 50, 50);
+			}
+		}
 		draw();
 		draw1();
+		draw2();
+		draw3();
 	</script>
   </body>
 </html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.graticule {
+  fill: none;
+  stroke: #777;
+  stroke-opacity: .5;
+  stroke-width: .5px;
+}
+
+.land {
+  fill: #222;
+}
+
+.boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: .5px;
+}
+
+</style>
+<body>
+<script src="../../d3.min.js"></script>
+<script src="../../topojson.min.js"></script>
+<script src="./baidu-data.js"></script>
+<script>
+// http://bl.ocks.org/mbostock/6242308
+// http://bl.ocks.org/mbostock/4183330
+var width = 960,
+    height = 800;
+
+var projection = d3.geo.mercator()
+// var projection = d3.geo.albers()
+	.center([100, 42])
+	.scale(800)
+    // .scale((width + 1) / 2 / Math.PI * 2)
+    .translate([width / 2, height/2])
+    // .scale(600)
+    .precision(.01);
+
+// var projection = d3.geo.mercator()
+// 				.center(111.884568, 3.708936);
+
+var graticule = d3.geo.graticule();
+
+var canvas = d3.select('body').append('canvas').attr('width', width).attr('height', height);
+var context = canvas.node().getContext('2d');
+
+// var projection = d3.geo.orthographic()
+//     .scale(248)
+//     .clipAngle(90);
+
+var path = d3.geo.path()
+    .projection(projection)
+    .context(context);
+
+var time_total = 0;
+function getPoint(v){
+	var item = v.split(',');
+	// return item;
+	var d = new Date()
+	var v = projection(item);
+	time_total += (new Date() - d);
+	return v;
+}
+var t_start = new Date();
+var t_lineto = 0;
+// 渲染从百度地图上得到结果
+for(var i = 0, j = data.length; i<j; i++){
+	var arr = data[i].split(';');
+	
+	var first = getPoint(arr[0]);
+	context.moveTo(first[0], first[1]);
+	
+	for(var i_start = 1, len = arr.length; i_start < len; i_start++){
+		var point = getPoint(arr[i_start]);
+		var t = new Date();
+		context.lineTo(point[0], point[1]);
+		t_lineto += new Date() - t;
+	}
+}
+console.log(new Date() - t_start, time_total, t_lineto);
+context.stroke();
+</script>
+</body>
+</html>

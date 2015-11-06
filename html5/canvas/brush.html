@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>javascript canvas画图实例</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<style>
+*{margin:0;padding:0;}
+.fa{width:740px;margin:0 auto;}
+.top{margin:20px 0;}
+.top input{width:25px;height:25px;border:1px solid #fff;border-radius:4px;background:#ddd;}
+.top .i1{background:#000000;}
+.top .i2{background:#FF0000;}
+.top .i3{background:#80FF00;}
+.top .i4{background:#00FFFF;}
+.top .i5{background:#808080;}
+.top .i6{background:#FF8000;}
+.top .i7{background:#408080;}
+.top .i8{background:#8000FF;}
+.top .i9{background:#CCCC00;}
+#canvas{background:#eee;cursor:default;}
+.font input{font-size:14px;}
+.top .grea{background:#aaa;}
+</style>
+</head>
+<body>
+<div class="fa">
+<div class="top">
+<div id="color">
+请选择画笔颜色：
+<input class="i1" type="button" value="" />
+<input class="i2" type="button" value="" />
+<input class="i3" type="button" value="" />
+<input class="i4" type="button" value="" />
+<input class="i5" type="button" value="" />
+<input class="i6" type="button" value="" />
+<input class="i7" type="button" value="" />
+<input class="i8" type="button" value="" />
+<input class="i9" type="button" value="" />
+</div>
+<div class="font" id="font">
+请选择画笔的宽度：
+<input type="button" value="细" />
+<input type="button" value="中" class="grea"/>
+<input type="button" value="粗" />
+</div>
+<div>
+<span id="error">如果有错误，请使用橡皮擦：</span>
+<input id="eraser" style="width:60px;font-size:14px;"type="button" value="橡皮擦" />
+</div>
+<input id="clear" type="button" value="清除画布" style="width:80px;"/>
+<input id="revocation" type="button" value="撤销" style="width:80px;"/>
+<input id="imgurl" type="button" value="导出图片路径" style="width:80px;"/>
+</div>
+<canvas id="canvas" width="740" height="420">您的浏览器不支持 canvas 标签</canvas>
+<div id="div1"></div>
+</div>
+<div id="html">
+
+</div>
+<script>
+/*
+//深海博客
+//http://www.qdway.com/
+//@torry 2012-05-01
+//
+*/
+(function() {
+	var paint = {
+		init: function() {
+			this.load();
+			this.bind();
+		},
+		load: function() {
+			this.x = []; //记录鼠标移动是的X坐标
+			this.y = []; //记录鼠标移动是的Y坐标
+			this.clickDrag = [];
+			this.lock = false;
+			this.isEraser = false;
+			this.storageColor = "#000000";
+			this.eraserRadius = 15;
+			this.color = ["#000000", "#FF0000", "#80FF00", "#00FFFF", "#808080", "#FF8000", "#408080", "#8000FF", "#CCCC00"];
+			this.fontWeight = [2, 5, 8];
+			this.$ = function(id) {
+				return typeof id == "string" ? document.getElementById(id) : id;
+			};
+			this.canvas = this.$("canvas");
+			this.cxt = this.canvas.getContext('2d');
+			this.cxt.lineJoin = "round";
+			this.cxt.lineWidth = 5;
+			this.iptClear = this.$("clear");
+			this.revocation = this.$("revocation");
+			this.imgurl = this.$("imgurl");
+			this.w = this.canvas.width;
+			this.h = this.canvas.height;
+			this.touch = ("createTouch" in document);
+			this.StartEvent = this.touch ? "touchstart" : "mousedown";
+			this.MoveEvent = this.touch ? "touchmove" : "mousemove";
+			this.EndEvent = this.touch ? "touchend" : "mouseup";
+		},
+		bind: function() {
+			var t = this;
+			this.iptClear.onclick = function() {
+				t.clear();
+			};
+			this.canvas['on' + t.StartEvent] = function(e) {
+				var touch = t.touch ? e.touches[0] : e;
+				var _x = touch.clientX - touch.target.offsetLeft;
+				var _y = touch.clientY - touch.target.offsetTop;
+				if (t.isEraser) {
+					t.resetEraser(_x, _y, touch);
+				} else {
+					t.movePoint(_x, _y);
+					t.drawPoint();
+				}
+				t.lock = true;
+			};
+			this.canvas['on' + t.MoveEvent] = function(e) {
+				var touch = t.touch ? e.touches[0] : e;
+				if (t.lock) {
+					var _x = touch.clientX - touch.target.offsetLeft;
+					var _y = touch.clientY - touch.target.offsetTop;
+					if (t.isEraser) {
+						t.resetEraser(_x, _y, touch);
+					} else {
+						t.movePoint(_x, _y, true);
+						t.drawPoint();
+					}
+				}
+			};
+			this.canvas['on' + t.EndEvent] = function(e) {
+				t.lock = false;
+				t.x = [];
+				t.y = [];
+				t.clickDrag = [];
+				clearInterval(t.Timer);
+				t.Timer = null;
+			};
+			this.revocation.onclick = function() {
+				t.redraw();
+			};
+			this.changeColor();
+			this.imgurl.onclick = function() {
+				t.getUrl();
+			};
+			this.$("eraser").onclick = function(e) {
+				t.isEraser = true;
+				t.$("error").style.color = "red";
+				t.$("error").innerHTML = "您已使用橡皮擦！";
+			};
+		},
+		movePoint: function(x, y, dragging) {
+			this.x.push(x);
+			this.y.push(y);
+			this.clickDrag.push(y);
+		},
+		drawPoint: function(x, y, radius) {
+			for (var i = 0; i < this.x.length; i++) {
+				this.cxt.beginPath();
+
+				if (this.clickDrag[i] && i) {
+					this.cxt.moveTo(this.x[i - 1], this.y[i - 1]);
+				} else {
+					this.cxt.moveTo(this.x[i] - 1, this.y[i]);
+				}
+				this.cxt.lineTo(this.x[i], this.y[i]);
+				this.cxt.closePath();
+				this.cxt.stroke();
+			}
+		},
+		clear: function() {
+			this.cxt.clearRect(0, 0, this.w, this.h);
+		},
+		redraw: function() {
+			this.cxt.restore();
+		},
+		preventDefault: function(e) {
+			var touch = this.touch ? e.touches[0] : e;
+			if (this.touch) touch.preventDefault();
+			else window.event.returnValue = false;
+		},
+		changeColor: function() {
+			var t = this,
+				iptNum = this.$("color").getElementsByTagName("input"),
+				fontIptNum = this.$("font").getElementsByTagName("input");
+			for (var i = 0, l = iptNum.length; i < l; i++) {
+				iptNum[i].index = i;
+				iptNum[i].onclick = function() {
+					t.cxt.save();
+					t.cxt.strokeStyle = t.color[this.index];
+					t.storageColor = t.color[this.index];
+					t.$("error").style.color = "#000";
+					t.$("error").innerHTML = "如果有错误，请使用橡皮擦：";
+					t.cxt.strokeStyle = t.storageColor;
+					t.isEraser = false;
+				}
+			}
+			for (var i = 0, l = fontIptNum.length; i < l; i++) {
+				t.cxt.save();
+				fontIptNum[i].index = i;
+				fontIptNum[i].onclick = function() {
+					t.changeBackground(this.index);
+					t.cxt.lineWidth = t.fontWeight[this.index];
+					t.$("error").style.color = "#000";
+					t.$("error").innerHTML = "如果有错误，请使用橡皮擦：";
+					t.isEraser = false;
+					t.cxt.strokeStyle = t.storageColor;
+				}
+			}
+		},
+		changeBackground: function(num) {
+			var fontIptNum = this.$("font").getElementsByTagName("input");
+			for (var j = 0, m = fontIptNum.length; j < m; j++) {
+				fontIptNum[j].className = "";
+				if (j == num) fontIptNum[j].className = "grea";
+			}
+		},
+		getUrl: function() {
+			this.$("html").innerHTML = this.canvas.toDataURL();
+		},
+		resetEraser: function(_x, _y, touch) {
+			var t = this;
+			t.cxt.globalCompositeOperation = "destination-out";
+			t.cxt.beginPath();
+			t.cxt.arc(_x, _y, t.eraserRadius, 0, Math.PI * 2);
+			t.cxt.strokeStyle = "rgba(250,250,250,0)";
+			t.cxt.fill();
+			t.cxt.globalCompositeOperation = "source-over"
+		}
+	};
+	paint.init();
+})();
+</script>
+
+
+</body>
+</html>

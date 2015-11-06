@@ -1,0 +1,102 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="http://m.src.weather.com.cn/rl/weather/js/jquery-1.8.3.min.js" ></script>
+</head>
+<body>
+	<script>
+	var next_url = 'http://d1.weather.com.cn/calendar/weather_right_json/101010100_18.html';
+	var next_url2 = 'http://d1.weather.com.cn/calendar/weather_right_json/101010100_19.html';
+
+	var getData = (function(){
+		//参考： http://www.cnblogs.com/fsjohnhuang/p/3903607.html
+		var url_cache = {};
+		function get(url, cb){
+			url_cache[url] = cb;
+			$.ajax({
+				type: "get",
+				url: url,
+				dataType: "jsonp"
+			});
+		}
+		function fc40(data){alert(data);
+			var src = getCurrentScript();
+			alert(src);
+			for(var i in url_cache){
+				if(src.indexOf(i) == 0){
+					url_cache[i](data);
+					break;
+				}
+			}
+		}
+		function getCurrentScript() {
+			var src;
+			var s = document.currentScript;
+			// chrome /ff
+			if(s){
+				alert(0);
+				src = s.src;
+			}
+			// IE10+、Safari和Opera9
+			if(!src){alert(1);
+				var a = {}, stack;
+			    try{
+			      a.b();
+			    }catch(e){
+			      stack = e.stack || e.sourceURL || e.stacktrace; 
+			    }
+			    var rExtractUri = /(?:http|https|file):\/\/.*?\/.+?.js/, 
+			        absPath = rExtractUri.exec(stack);
+			       alert(absPath);
+			    if(absPath){
+			    	src = absPath[0] || '';
+			    }
+			}
+			//IE5.5~9
+			if(!src){alert(2);
+				var scripts = document.scripts;
+			    var isLt8 = ('' + document.querySelector).indexOf('[native code]') === -1;
+			    for (var i = scripts.length - 1, script; script = scripts[i--];){
+			       if (script.readyState === 'interactive'){
+			          src = isLt8 ? script.getAttribute('src', 4) : script.src;   
+			       }
+			    }
+			}
+		  return src;
+		}
+		window['fc40'] = fc40;
+		return get;
+	})();
+	
+
+	getData(next_url, function(data){
+		// alert(1+'->'+ data[0].time);
+	});
+	// getData(next_url2, function(data){
+	// 	// alert(2+'->'+ data[0].time);
+	// });
+	// setTimeout(function(){
+	// 	a = $.ajax({
+	// 		type: "get",
+	// 		url: next_url,
+	// 		dataType: "jsonp",
+	// 		// complete: function(){
+	// 		// 	console.log(next_url);
+	// 		// }
+	// 		// jsonpCallback: "fc40", //自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名 
+			
+	// 	});
+	// 	$.ajax({
+	// 		type: "get",
+	// 		url: next_url2,
+	// 		dataType: "jsonp",
+	// 		// complete: function(){
+	// 		// 	console.log(next_url2);
+	// 		// }
+	// 		// jsonpCallback: "fc401", //自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名 
+			
+	// 	});
+	// }, 1000);
+	</script>
+</body>
+</html>

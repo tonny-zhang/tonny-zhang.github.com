@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.graticule {
+  fill: none;
+  stroke: #777;
+  stroke-opacity: .5;
+  stroke-width: .5px;
+}
+
+.land {
+  fill: #222;
+}
+
+.boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: .5px;
+}
+
+</style>
+<body>
+<script src="../../d3.min.js"></script>
+<script src="../../topojson.min.js"></script>
+<script>
+// http://bl.ocks.org/mbostock/6242308
+// http://bl.ocks.org/mbostock/4183330
+var width = 960,
+    height = 800;
+
+var projection = d3.geo.mercator()
+    .scale((width + 1) / 2 / Math.PI)
+    .translate([width / 2, height / 2])
+    .precision(.01);
+
+var graticule = d3.geo.graticule();
+
+var canvas = d3.select('body').append('canvas').attr('width', width).attr('height', height);
+var context = canvas.node().getContext('2d');
+
+// var projection = d3.geo.orthographic()
+//     .scale(248)
+//     .clipAngle(90);
+
+var path = d3.geo.path()
+    .projection(projection)
+    .context(context);
+
+var data_url = '../../data/china.json';
+var data_url = '../../data/china_province.json';
+d3.json(data_url, function(data){
+  window.data = data;
+  console.log(data);
+  // data.features.splice(9)
+  function draw(){
+    context.clearRect(0, 0, width, height);
+    context.beginPath();
+    var time_start = new Date()
+    path(data);
+    console.log('path takes ', new Date() - time_start);
+    time_start = new Date();
+    context.stroke();
+    console.log('stroke takes ', new Date() - time_start);
+  }
+  var currentScale, currentTranslate;
+  var fn_zoomend = (function(){
+    var tt_zoomend;
+    return function(){
+      clearTimeout(tt_zoomend);
+      tt_zoomend = setTimeout(function(){
+        projection.scale(currentScale).translate(currentTranslate);
+        draw();
+      }, 10);
+    }
+  })();
+  draw();
+  var zoom = d3.behavior.zoom()
+    .size([width, height])
+    .translate(projection.translate())
+    .scale(projection.scale())
+    .scaleExtent([projection.scale()/5, projection.scale()*40])
+    .on("zoom", function(){
+      currentScale = d3.event.scale, 
+      currentTranslate = d3.event.translate;
+      // console.log('zoom', currentScale, currentTranslate);
+      fn_zoomend()
+    }).on('zoomend', fn_zoomend);
+    canvas.call(zoom);
+});
+
+</script>

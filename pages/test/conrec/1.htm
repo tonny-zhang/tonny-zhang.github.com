@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Precipitation and average temperatures at Maya sites</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script type="text/javascript" src="./js/d3.min.js"></script>
+        <script type="text/javascript" src="./js/d3.geo.min.js"></script>
+        <script type="text/javascript" src="./js/d3.layout.min.js"></script>
+        <script type="text/javascript" src="./js/jquery-1.6.2.min.js"></script>
+  <script type="text/javascript" src="./js/so.js"></script>
+        <style type="text/css"> 
+body {
+  font: 10px Verdana, Palatino, Helvetica, sans;
+  background-color: #c8ebf0;
+  text-rendering: optimizeLegibility;
+}
+text {
+  font-size: 10px;
+}
+text.axislabel {
+  font-size: 12px;
+}
+
+rect {
+  stroke-width: 0.5;
+}
+rect.hist {
+  stroke: #000;
+}
+rect.overlay {
+  stroke: none;
+  fill-opacity: 0;
+}
+rect.overlay:hover {
+  stroke: #ebee62;
+  stroke-width: 2;
+}
+rect.selected {
+  stroke: #ebee62;
+  stroke-width: 2;
+}
+
+path.control:hover {
+  stroke: #fff;
+}
+path.selected {
+  fill: #d6381b;
+}
+
+circle.site {
+  stroke: #000;
+  stroke-width: 1;
+  shape-rendering: optimizeSpeed;
+}
+circle.site-selected {
+  stroke: #a62114;
+  stroke-width: 2;
+  fill: #a62114;
+  shape-rendering: optimizeSpeed;
+}
+
+button {
+  font: 11px Verdana, Palatino, Helvetica, sans;
+  background: none;
+  margin: 0;
+  border: 0;
+  padding: 3px 5px 3px 5px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #a8cbd0;
+}
+button.active {
+  background-color: #98bbc0;
+}
+        </style>
+    </head>
+
+    <body>
+        <div id="loading">
+        <div style="position: fixed; top: 40%; width: 100%;
+            font-size: 600%; text-align: center; z-index: 11;">loading...</div>
+        <div style="position: fixed; height: 100%; width: 100%;
+            z-index: 10; background-color: #c8ebf0; opacity: 0.3;"></div>
+        </div>
+        <div style="top: 10px; left: 10px; width: 100%; height: 40px;">
+            <span style="font-size: xx-large; padding-right: 20px;">Maya sites climate</span>
+            <span style="position: relative; bottom: 6px;">
+                <button class="active" id="0">January</button>
+                <button class="inactive" id="1">February</button>
+                <button class="inactive" id="2">March</button>
+                <button class="inactive" id="3">April</button>
+                <button class="inactive" id="4">May</button>
+                <button class="inactive" id="5">June</button>
+                <button class="inactive" id="6">July</button>
+                <button class="inactive" id="7">August</button>
+                <button class="inactive" id="8">September</button>
+                <button class="inactive" id="9">October</button>
+                <button class="inactive" id="a">November</button>
+                <button class="inactive" id="b">December</button>
+            </span>
+        </div>
+        <div id="map" style="position: fixed; top: 50px; left: 10px; bottom: 50px;"></div>
+        <div style="position: fixed; top: 50px; right: 10px; bottom: 50px;">
+            <div id="label" style="font-size: 150%; position: relative; left: 50px; height: 70px; width: 380px;">
+                Welcome!<br/>
+                Move your mouse over sites or histogram / heatmap cells to show details.
+                Click to select months or parts of histogram / heatmap to show.
+            </div>
+            <div id="graph"></div>
+            <div id="elehist" style="position: relative; left: 100px;"></div>
+        </div>
+        <div style="position: fixed; bottom: 10px; left: 10px; width: 80%;">
+            Maya sites from the <a
+            href="http://mayagis.smv.org/index.htm">Electronic Atlas of Maya
+            sites</a>.  Elevation data from <a
+            href="http://www2.jpl.nasa.gov/srtm/">NASA</a>, temperature and
+            precipitation data from <a
+            href="http://www.worldclim.org">WorldClim</a>. Mean temperature and
+            cumulative precipitation are shown.
+        </div>
+        <div style="position: fixed; bottom: 10px; right: 10px;">
+            Lars Kotthoff 2011
+        </div>
+        <script type="text/javascript" src="1.js">
+        </script>
+    </body>
+</html>

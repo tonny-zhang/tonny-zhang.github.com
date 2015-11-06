@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.graticule {
+  fill: none;
+  stroke: #777;
+  stroke-opacity: .5;
+  stroke-width: .5px;
+}
+
+.land {
+  fill: #222;
+}
+
+.boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: .5px;
+}
+
+</style>
+<body>
+<script src="../../d3.min.js"></script>
+<script src="../../topojson.min.js"></script>
+<script>
+// http://bl.ocks.org/mbostock/6242308
+// http://bl.ocks.org/mbostock/4183330
+var width = 960,
+    height = 800;
+
+var projection = d3.geo.mercator()
+    .scale((width + 1) / 2 / Math.PI)
+    .translate([width / 2, height / 2])
+    .precision(.01);
+
+var graticule = d3.geo.graticule();
+
+var canvas = d3.select('body').append('canvas').attr('width', width).attr('height', height);
+var context = canvas.node().getContext('2d');
+
+// var projection = d3.geo.orthographic()
+//     .scale(248)
+//     .clipAngle(90);
+
+var path = d3.geo.path()
+    .projection(projection)
+    .context(context);
+
+var data_url = '../../data/china.json';
+var data_url = '../../data/china_province.json';
+d3.json(data_url, function(data){
+  window.data = data;
+  console.log(data);
+  // data.features.splice(9)
+  function draw(){
+    context.clearRect(0, 0, width, height);
+    context.beginPath();
+    var time_start = new Date()
+    path(data);
+    console.log('path takes ', new Date() - time_start);
+    time_start = new Date();
+    context.stroke();
+    console.log('stroke takes ', new Date() - time_start);
+  }
+  var currentScale, currentTranslate;
+  var fn_zoomend = (function(){
+    var tt_zoomend;
+    return function(){
+      clearTimeout(tt_zoomend);
+      tt_zoomend = setTimeout(function(){
+        projection.scale(currentScale).translate(currentTranslate);
+        draw();
+      }, 100);
+    }
+  })();
+  draw();
+  var zoom = d3.behavior.zoom()
+    .size([width, height])
+    .translate(projection.translate())
+    .scale(projection.scale())
+    .scaleExtent([projection.scale()/5, projection.scale()*40])
+    .on("zoom", function(){
+      currentScale = d3.event.scale, 
+      currentTranslate = d3.event.translate;
+      // console.log('zoom', currentScale, currentTranslate);
+      fn_zoomend()
+    }).on('zoomend', fn_zoomend);
+    canvas.call(zoom);
+});
+// d3.json('../../data/china.topojson.json', function(world){
+//   d3.json('../../data/world-50m.json', function(world_50){
+//     window.data = world;
+//     console.log(world);
+//     var land = topojson.feature(world, world.objects.land);
+//     var countries = topojson.feature(world, world.objects.china_province);console.log(countries);
+//     var borders = topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; });
+
+//     var land_50 = topojson.feature(world_50, world_50.objects.land);
+//     var countries_50 = topojson.feature(world_50, world_50.objects.countries);
+//     var borders_50 = topojson.mesh(world_50, world_50.objects.countries, function(a, b) { return a !== b; });
+//     function draw(){
+//       var time_start = new Date()
+//       context.clearRect(0, 0, width, height);
+//       context.fillStyle = '#bbb';
+//       // context.beginPath();
+//       // path(land);
+//       // context.fill();
+      
+//       context.strokeStyle = '#f0f';
+//       context.beginPath();
+//       var t_s = new Date();
+//       path(countries);
+//       console.log('path takes ', new Date() - t_s);
+//       context.stroke();
+//       // context.fill();
+//       // console.log(countries, land);
+
+      
+//       // context.strokeStyle = '#f00';
+//       // context.beginPath();
+//       // path(borders);
+//       // context.stroke();
+
+//       console.log('draw takes '+(new Date() - time_start)+' ms!');
+//     }
+//     context.strokeStyle = '#f00';
+//     var t = world.transform;
+//     var s = t.scale,
+//         ts = t.translate,
+//         s_x = s[0],
+//         s_y = s[1],
+//         ts_x = ts[0],
+//         ts_y = ts[1];
+//     function format(point){console.log([point[0] * s_x + ts_x, point[1] * s_y + ts_y]);
+//       return projection([point[0] * s_x + ts_x, point[1] * s_y + ts_y]);
+//     }
+//     function line(arr){
+//       context.beginPath();
+//       var first = format(arr[0]);
+//       context.moveTo(first[0], first[1]);
+//       for(var i = 1, j = arr.length; i<j; i++){
+//         var item = format(arr[i]);
+//         context.lineTo(item[0], item[1]);
+//       }
+//       context.stroke();
+//     }
+//     function draw1(){
+//       var arcs = world.arcs;
+//       for(var i = 0, j = arcs.length; i < j; i++){
+//         line(arcs[i])
+//       }
+//     }
+
+//     var fn_zoomend = (function(){
+//       var tt_zoomend;
+//       return function(){
+//         clearTimeout(tt_zoomend);
+//         // tt_zoomend = setTimeout(function(){
+//           projection.scale(currentScale).translate(currentTranslate);
+//           draw();
+//         // }, 100);
+//       }
+//     })();
+//     var currentScale, currentTranslate;
+
+//     var changeData = (function(){
+//       var is110 = true;
+//       var d110 = countries,
+//         d50 = countries_50;
+//       return function(){
+//         if(is110){
+//           is110 = false;
+//           countries = d110;
+//         }else{
+//           is110 = true;
+//           countries = d50;
+//         }
+//       }
+//     })();
+//     var tt;
+//     var zoom = d3.behavior.zoom()
+//       .size([width, height])
+//       .translate(projection.translate())
+//       .scale(projection.scale())
+//       .scaleExtent([projection.scale()/5, projection.scale()*40])
+//       .on('zoomstart', function(){
+//         changeData();
+//       })
+//       .on("zoom", function(){
+//         currentScale = d3.event.scale, 
+//         currentTranslate = d3.event.translate;fn_zoomend()
+//         console.log('zoom', currentScale, currentTranslate);
+//         // console.log(d3.event);
+//         // context.translate.apply(context, translate);
+//         // context.scale(scale, scale);
+//         // projection.scale(d3.event.scale).translate(d3.event.translate);
+//         // draw();
+//         // translate = zoom.translate();
+//         // scale = zoom.scale();
+//         // visibleArea = 1 / scale / scale;
+//         // invisibleArea = 200 * visibleArea;
+//         // context.clearRect(0, 0, width, height);
+//         // context.beginPath();
+//         // path(d);
+//         // context.stroke();
+//       }).on('zoomend', function(){
+//         changeData();
+//         clearTimeout(tt);
+//         tt = setTimeout(function(){
+//           fn_zoomend();
+//         }, 100);
+        
+//       });
+//     draw();
+
+//     canvas.call(zoom);
+
+//     var random = d3.random.normal(0, width);
+//     function jump(){
+//       var a = Math.random() * 2 + 1.5,
+//           b = Math.random() * 2 + 1.5;
+//       console.log(a, b);
+//       canvas.transition()
+//             .duration(3000)
+//             .call(zoom.translate([width / a, height / b]).event)
+//             .each('end', jump);
+//     }
+//   })
+//   // jump();
+// });
+
+</script>
