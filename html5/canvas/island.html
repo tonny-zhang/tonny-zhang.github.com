@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<style>
+		body{
+			/*background-color: blue;*/
+		}
+		</style>
+	</head>
+	<body>
+		<canvas id="test_clip" width=400 height=400></canvas>
+		
+		<script type="text/javascript">
+		/*
+			只需要外层和内层不显示的图形的画点顺序相反即可
+		*/
+		var canvas = document.getElementById('test_clip');
+		var ctx = canvas.getContext('2d');
+
+		var first = [[50, 5], [100, 5], [100, 50], [50, 50], [50, 5]];
+		var second = [[10, 0], [140, 0], [140, 90], [10, 90], [10, 0]];
+		var first1 = [[100, 80], [108, 80], [108, 88], [100, 80]];
+
+		function draw(points) {
+			var a = points[0];
+			ctx.moveTo(a[0], a[1]);
+			for(var i = 1, j = points.length; i<j; i++) {
+				var item = points[i];
+				ctx.lineTo(item[0], item[1])
+			}
+		}
+		ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
+		ctx.fillStyle = 'rgba(0, 255, 0, 0.5)'
+		draw(first);
+		draw(first1);
+		second.reverse();
+		draw(second);
+		// ctx.moveTo(50, 5);
+		// ctx.lineTo(100, 5);
+		// ctx.lineTo(100, 50);
+		// ctx.lineTo(50, 50);
+		// ctx.lineTo(50, 5);
+		
+
+		// ctx.moveTo(10, 0);
+		// ctx.lineTo(140, 0);
+		// ctx.lineTo(140, 90);
+		// ctx.lineTo(10, 90);
+		// ctx.lineTo(10, 0);
+
+
+		// ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+		// ctx.strokeStyle = 'rgba(0, 255, 0, 0.5)';
+		// ctx.stroke();
+		// ctx.fill();
+
+		// ctx.arc(100, 100, 10, 0, Math.PI * 2, false);
+		// ctx.moveTo(250, 100);
+		// ctx.arc(100, 100, 50, 0, Math.PI * 2, true);
+		ctx.fill();
+		ctx.stroke();
+		</script>
+	</body>
+</html>

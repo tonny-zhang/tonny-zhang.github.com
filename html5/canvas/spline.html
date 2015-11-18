@@ -223,7 +223,7 @@
 		var points = [[30,30], [100,30], [100, 100], [30, 100], [30,30]];
 		points.reverse();
 		// var points_new = smoothSpline(points, true, 0.2);
-		var points_new = smoothBSpline(points, 3, 20);
+		var points_new = smoothBSpline(points, 2, 200);
 		console.log(points.length, points);
 		console.log('points_new', points_new.length, points_new);
 
@@ -236,21 +236,22 @@
 				}
 			}
 		}
-		function draw(){
+		function draw(point, color){
 			var can = document.getElementById('test');
 			if(can.getContext){
 				var ctx = can.getContext('2d');
 				// build_path(ctx, points);
 				// ctx.strokeStyle = "rgba(0,0,0,1)"
 				// ctx.stroke();
-
-				build_path(ctx, points_new);
-				ctx.strokeStyle = "rgba(200,0,0,1)"
+				ctx.lineWidth = 0.5;
+				build_path(ctx, point);
+				ctx.strokeStyle = color
 				ctx.stroke();
 			}
 
 		}
-		draw();
+		draw(points, "rgba(0,255,0,0.5)");
+		draw(points_new, "rgba(200,0,0,1)");
 
 		var points_arr = [
 			[[30,180], [70,30], [130,170], [80,190]],
@@ -276,58 +277,58 @@
 			}
 			// ctx.lineTo(points_arr[0][0][0], points_arr[0][0][1]);
 		}
-		// function draw1(){
-		// 	var can1 = document.getElementById('test1');
-		// 	if(can1.getContext){
-		// 		var ctx = can1.getContext('2d');
+		function draw1(){
+			var can1 = document.getElementById('test1');
+			if(can1.getContext){
+				var ctx = can1.getContext('2d');
 
-		// 		ctx.beginPath();
-		// 		build_pathByarr(ctx, points_arr);
-		// 		ctx.closePath();
-		// 		ctx.stroke();
-		// 		// ctx.fill();
+				ctx.beginPath();
+				build_pathByarr(ctx, points_arr);
+				ctx.closePath();
+				ctx.stroke();
+				// ctx.fill();
 
-		// 		var points_arr_new = [];
-		// 		for(var i = 0, j = points_arr.length; i<j; i++){
-		// 			points_arr_new.push(smoothSpline(points_arr[i]));
-		// 		}
-		// 		ctx.beginPath();
-		// 		build_pathByarr(ctx, points_arr_new);
-		// 		ctx.closePath();
-		// 		ctx.strokeStyle = "rgba(200,0,0,1)"
-		// 		ctx.stroke();
-		// 	}
-		// }
-		// draw1();
+				var points_arr_new = [];
+				for(var i = 0, j = points_arr.length; i<j; i++){
+					points_arr_new.push(smoothSpline(points_arr[i]));
+				}
+				ctx.beginPath();
+				build_pathByarr(ctx, points_arr_new);
+				ctx.closePath();
+				ctx.strokeStyle = "rgba(200,0,0,1)"
+				ctx.stroke();
+			}
+		}
+		draw1();
 
-		// function draw2(){
-		// 	var can = document.getElementById('test2');
-		// 	if(can.getContext){
-		// 		var ctx = can.getContext('2d');
-		// 		var points_arr_new = [];
-		// 		for(var i = 0, j = points_arr.length; i<j; i++){
-		// 			points_arr_new = points_arr_new.concat((points_arr[i]));
-		// 		}
-		// 		console.log(points_arr_new);
-		// 		ctx.beginPath();
-		// 		build_pathByarr(ctx, points_arr);
-		// 		ctx.closePath();
-		// 		ctx.stroke();
-		// 		// ctx.fill();
+		function draw2(){
+			var can = document.getElementById('test2');
+			if(can.getContext){
+				var ctx = can.getContext('2d');
+				var points_arr_new = [];
+				for(var i = 0, j = points_arr.length; i<j; i++){
+					points_arr_new = points_arr_new.concat((points_arr[i]));
+				}
+				console.log(points_arr_new);
+				ctx.beginPath();
+				build_pathByarr(ctx, points_arr);
+				ctx.closePath();
+				ctx.stroke();
+				// ctx.fill();
 
-		// 		var points_arr_new = [];
-		// 		for(var i = 0, j = points_arr.length; i<j; i++){
-		// 			points_arr_new = points_arr_new.concat(smoothSpline(points_arr[i]));
-		// 		}
-		// 		console.log(points_arr_new);
-		// 		ctx.beginPath();
-		// 		build_path(ctx, points_arr_new);
-		// 		// ctx.closePath();
-		// 		ctx.strokeStyle = "rgba(200,0,0,1)"
-		// 		ctx.stroke();
-		// 	}
-		// }
-		// draw2();
+				var points_arr_new = [];
+				for(var i = 0, j = points_arr.length; i<j; i++){
+					points_arr_new = points_arr_new.concat(smoothSpline(points_arr[i]));
+				}
+				console.log(points_arr_new);
+				ctx.beginPath();
+				build_path(ctx, points_arr_new);
+				// ctx.closePath();
+				ctx.strokeStyle = "rgba(200,0,0,1)"
+				ctx.stroke();
+			}
+		}
+		draw2();
 	</script>
   </body>
 </html>

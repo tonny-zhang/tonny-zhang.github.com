@@ -32,8 +32,8 @@
     e_time = [e_time.getFullYear(), month, date].join('');
     var cityid = getParam('areaid','101010100');
 	// $.getJSON('./data/all.json',function(data){
-	// var prex = 'http://10.14.85.116/php/dptq/';
-    var prex = 'http://radar.tianqi.cn/dptq/';
+	var prex = 'http://10.14.85.116/php/dptq/';
+    // var prex = 'http://radar.tianqi.cn/dptq/';
     var url = prex+'data.php?type=history&param='+encodeURIComponent('s_time='+s_time+'&e_time='+e_time+'&areaid='+cityid);
 	$.ajax({
          url: url,

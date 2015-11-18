@@ -15,17 +15,38 @@
 
 		ctx.lineWidth = 10;
 		ctx.strokeStyle = 'red';
+		ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
 
 
+		ctx.save();
+		ctx.beginPath();
+
+		ctx.moveTo(100, 100);
 		ctx.arc(100,100,50,0,Math.PI*2);
-		ctx.stroke();
+
+		ctx.moveTo(100, 100);
+		ctx.lineTo(150, 100);
+		ctx.lineTo(150, 150);
+		ctx.lineTo(100, 150);
+		ctx.lineTo(100, 100);
+		// ctx.stroke();
+		// ctx.fill();
 		ctx.clip();
 
 
 		ctx.fillStyle = 'yellow';
 		ctx.beginPath();
-		ctx.rect(120,120,400,400);
+		ctx.rect(0,0,400,400);
 		ctx.fill();
+
+		setTimeout(function(){
+			ctx.clearRect(0, 0, 1000, 1000);
+			ctx.restore();
+			ctx.fillStyle = 'green';
+			ctx.beginPath();
+			ctx.rect(120,120,400,400);
+			ctx.fill();			
+		}, 2000);
 
 		// 扣除一部分
 		// ctx.fillStyle = 'white';
