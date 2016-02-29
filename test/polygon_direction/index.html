@@ -1,0 +1,107 @@
+<script>
+	function clockWise(items) {
+		var len = items.length;
+		var i, j, k;
+		var count = 0;
+		var z = 0;
+		if (len < 3) {
+			return 0;
+		}
+		for (var i = 0; i<len; i++) {
+			j = (i+1) % len;
+			k = (i+2) % len;
+			z = (items[j].x - items[i].x) * (items[k].y - items[j].y);
+			z -= (items[j].y - items[i].y) * (items[k].x - items[j].x);
+			if (z < 0) {
+				count --;
+			} else if (z > 0) {
+				count ++;
+			}
+		}
+		if (count > 0) {
+			return -1;//逆时针
+		} else if (count < 0) {
+			return 1;//顺时针
+		} else {
+			return 0;
+		}
+	}
+	function clockWise(points) {
+		var S = 0;
+		for (var i = 0, j = points.length - 1; i < j; i++) {
+			var p_a = points[i],
+				p_b = points[i + 1];
+			S += p_a.x * p_b.y - p_b.x * p_a.y;
+		}
+		var p_a = points[j],
+			p_b = points[0];
+		S += p_a.x * p_b.y - p_b.x * p_a.y;
+		console.log(S/2);
+		return S > 0;
+	}
+	function clockWise(points) {
+		var area = 0;
+		for (var i = 0, j = points.length; i<j; i++) {
+			var k = (i+1)%j;
+			area += points[i].x * points[k].y;
+			area -= points[k].x * points[i].y;
+		}
+		console.log(area/2);
+		return area > 0;
+	}
+</script>
+<script>
+var a = [{
+	x: 0,
+	y: 0
+}, {
+	x: 10,
+	y: 10
+}, {
+	x: 10,
+	y: 0
+}];
+console.log(clockWise(a));
+var b = [{
+	x: 0,
+	y: 0
+}, {
+	x: 10,
+	y: 0
+}, {
+	x: 10,
+	y: 10
+}];
+console.log(clockWise(b));
+
+var c = [{
+	x: 0,
+	y: 0
+}, {
+	x: 100,
+	y: 0
+}, {
+	x: 100,
+	y: 100
+}, {
+	x: 0,
+	y: 100
+}, {
+	x: 0,
+	y: 80
+}, {
+	x: 80,
+	y: 80
+}, {
+	x: 80,
+	y: 60
+}, {
+	x: 0,
+	y: 60
+}, {
+	x: 0,
+	y: 0
+}];
+console.log(clockWise(c));
+
+</script>

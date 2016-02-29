@@ -1,0 +1,54 @@
+<body>
+<script src="./conrec.js"></script>
+<script>
+// var data = [[NaN, 1, 0], [1, 2, 1], [0, 1, 0]];
+// var c = new Conrec();
+// c.contour(data, 0, 2, 0, 2, [1, 2, 3], [1, 2, 3], 3, [0, 1, 2]);
+// // c.contours will now contain vectors in the form of doubly-linked lists.
+// // c.contourList() will return an array of vectors in the form of arrays.
+// console.log(c.contourList());
+
+var data = [[0, 1, 0], [1, 2, 1], [0, 1, 0]];
+var x_array = [1, 2, 3],
+	y_array = [1, 2, 3],
+	z_array = [0, 1, 2];
+function run(data_arr, x_arr, y_arr, z_arr) {
+	var c = new Conrec();
+	c.contour(data, 0, x_arr.length - 1, 0, y_arr.length - 1, x_arr, y_arr, z_arr.length, z_arr);
+	return c.contourList();
+}
+// var c = new Conrec();
+// c.contour(data, 0, 2, 0, 2, [1, 2, 3], [1, 2, 3], 3, [0, 1, 2]);
+// // c.contours will now contain vectors in the form of doubly-linked lists.
+// // c.contourList() will return an array of vectors in the form of arrays.
+// console.log(c.contourList());
+// console.log(c.contours);
+var lines = run(data, x_array, y_array, z_array);
+console.log(lines);
+drawLines(lines);
+
+function drawLines(lines) {
+	var scale = 30;
+	var canvas = document.createElement('canvas');
+	document.body.appendChild(canvas);
+	canvas.width = 100;
+	canvas.height = 100;
+	var ctx = canvas.getContext('2d');
+	for (var i = 0, j = lines.length; i<j; i++) {console.log(i);
+		var line = lines[i];
+		var first = line[0];
+		ctx.beginPath();
+		ctx.moveTo(first.x * scale, first.y * scale);console.log('moveto', first.x * scale, first.y * scale);
+		for (var i_line = 1, j_line = line.length; i_line<j_line; i_line++) {
+			ctx.lineTo(line[i_line].x * scale, line[i_line].y * scale);
+			console.log('lineTo', line[i_line].x * scale, line[i_line].y * scale);
+		}
+		ctx.stroke();
+	}
+
+}
+function two() {
+
+}
+</script>
+</body>

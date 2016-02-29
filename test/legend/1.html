@@ -1,0 +1,303 @@
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>html2canvas</title>
+		<style>
+		
+		</style>
+	</head>
+	<body>
+	<div style="width: 30px;height:30px;border:1px solid blue;"></div>
+		<div id="one">
+			
+		</div>
+
+		<div id="result"></div>
+		<script type="text/javascript" src="../../source/js/jquery-1.8.2.js"></script>
+		<script type="text/javascript">
+		var data = {
+			"unit": "厘米",
+			"is_show_legend": true,
+			"is_show_unit": true,
+			"is_reverse": false,
+			"is_updown": true,
+			"blendent": [{
+				"val": {
+					"n": "雨",
+					"v": 26
+				},
+				"color_start": "#0000ff",
+				"color_end": "#ff0000",
+				"is_stripe": false,
+				"number_min": "0",
+				"number_max": "250",
+				"number_level": "4",
+				"colors": [{
+					"is_checked": true,
+					"color": "#afeb91",
+					"color_text": "#000000",
+					"val": [0, 10],
+					"text": "0-10",
+					"order": 0
+				}, {
+					"is_checked": true,
+					"color": "#2ead06",
+					"color_text": "#000000",
+					"val": [10, 25],
+					"text": "10-25",
+					"order": 0
+				}, {
+					"is_checked": true,
+					"color": "#64b8ff",
+					"color_text": "#000000",
+					"val": [25, 50],
+					"text": "25-50",
+					"order": 0
+				}, {
+					"is_checked": true,
+					"color": "#0901ec",
+					"color_text": "#ffffff",
+					"val": [50, 100],
+					"text": "50-100",
+					"order": 0
+				}, {
+					"is_checked": true,
+					"color": "#f805f5",
+					"color_text": "#ffffff",
+					"val": [100, 250],
+					"text": "100-250",
+					"order": 0
+				}, {
+					"is_checked": true,
+					"color": "#710505",
+					"color_text": "#ffffff",
+					"val": [250, 9999],
+					"text": "＞250毫米",
+					"order": 0
+				}]
+			}, {
+				"val": {
+					"n": "雨夹雪",
+					"v": 24
+				},
+				"color_start": "#0000ff",
+				"color_end": "#ff0000",
+				"is_stripe": true,
+				"number_min": "0",
+				"number_max": "250",
+				"number_level": "4",
+				"colors": [{
+					"is_checked": true,
+					"color": "#afeb91",
+					"color_text": "#000000",
+					"val": [0, 10],
+					"text": "0-10",
+					"order": 0
+				}, {
+					"is_checked": true,
+					"color": "#2ead06",
+					"color_text": "#000000",
+					"val": [10, 25],
+					"text": "10-25",
+					"order": 0
+				}, {
+					"is_checked": true,
+					"color": "#64b8ff",
+					"color_text": "#000000",
+					"val": [25, 50],
+					"text": "25-50",
+					"order": 0
+				}, {
+					"is_checked": true,
+					"color": "#0901ec",
+					"color_text": "#000000",
+					"val": [50, 100],
+					"text": "50-100",
+					"order": 0
+				}, {
+					"is_checked": true,
+					"color": "#f805f5",
+					"color_text": "#000000",
+					"val": [100, 250],
+					"text": "100-250",
+					"order": 0
+				}, {
+					"is_checked": true,
+					"color": "#710505",
+					"color_text": "#000000",
+					"val": [250, 99999],
+					"text": "＞250毫米",
+					"order": 0
+				}]
+			}, {
+				"val": {
+					"n": "雪",
+					"v": 23
+				},
+				"color_start": "#0000ff",
+				"color_end": "#ff0000",
+				"is_stripe": false,
+				"number_min": "0",
+				"number_max": "25",
+				"number_level": "3",
+				"colors": [{
+					"is_checked": true,
+					"color": "#cecece",
+					"color_text": "#000000",
+					"val": [0, 2.5],
+					"text": "0-2.5",
+					"order": 0
+				}, {
+					"is_checked": true,
+					"color": "#9e9e9e",
+					"color_text": "#000000",
+					"val": [2.5, 5],
+					"text": "2.5-5",
+					"order": 0
+				}, {
+					"is_checked": true,
+					"color": "#727272",
+					"color_text": "#000000",
+					"val": [5, 10],
+					"text": "5-10",
+					"order": 0
+				}, {
+					"is_checked": true,
+					"color": "#474747",
+					"color_text": "#ffffff",
+					"val": [10, 25],
+					"text": "10-25",
+					"order": 0
+				}, {
+					"is_checked": true,
+					"color": "#000000",
+					"color_text": "#ffffff",
+					"val": [25, 99999],
+					"text": "＞25毫米",
+					"order": 0
+				}]
+			}]
+		}
+		function Legend(colors, options) {
+			options = $.extend({
+				width: 20,
+				height: 100,
+				lineWidth: 1,
+				strokeStyle: '#000',
+			}, options);
+
+			var width = options.width;
+			var height = options.height;
+			var lineWidth = options.lineWidth || 0;
+			var strokeStyle = options.strokeStyle;
+
+			var WIDTH_SIZE = Math.min(16, width - 2 * lineWidth);//图例宽度
+			var TEXT_LEFT = WIDTH_SIZE + 3;
+			var HEIGHT_ARROW = WIDTH_SIZE * 1.3;
+
+			var $canvas = $('<canvas>').attr('width', width).attr('height', height);
+			var canvas = $canvas.get(0);
+			var ctx = canvas.getContext('2d');
+
+			var textWidths = [];
+			colors.map(function(v) {
+				var val = v.val;
+				textWidths.push(ctx.measureText(val[0]).width);
+				textWidths.push(ctx.measureText(val[1]).width);
+			});
+			var width_max = Math.max.apply(Math, textWidths);
+ 
+			$canvas.attr('width', TEXT_LEFT + WIDTH_SIZE + width_max).attr('height', height);
+			canvas = $canvas.get(0);
+			ctx = canvas.getContext('2d');
+
+			colors = colors.slice(0);
+			var len = colors.length;
+			//从小到大
+			colors.sort(function(a, b){
+				return a.val[0] - b.val[0];
+			});
+
+			var num_normal = len;
+			var isHaveMore = colors[len-1].val[1] >= 999;
+			var isHaveLess = colors[0].val[0] <= -999;
+
+			ctx.lineWidth = lineWidth;
+			ctx.strokeStyle = strokeStyle;
+			ctx.textAlign = 'left';
+			ctx.textBaseline = 'middle';
+			
+			var x_start = lineWidth,
+				y_start = 10;
+			var height_tmp = height - y_start*2;
+			if (isHaveMore) {
+				num_normal--;
+				height_tmp -= HEIGHT_ARROW;
+
+				ctx.save();
+				ctx.beginPath();
+				ctx.moveTo(x_start, HEIGHT_ARROW + y_start);
+				ctx.lineTo(WIDTH_SIZE/2, y_start);
+				ctx.lineTo(WIDTH_SIZE, HEIGHT_ARROW + y_start);
+
+				ctx.stroke();
+				ctx.fillStyle = colors[len-1].color;
+				ctx.fill();
+				ctx.restore();
+			}
+
+			if (isHaveLess) {
+				num_normal--;
+				height_tmp -= HEIGHT_ARROW;
+			}
+			var HEIGHT_SIZE = height_tmp / num_normal;
+
+			if (!isHaveMore) {
+				HEIGHT_ARROW = 0;
+			}
+
+			ctx.fillText(colors[len-1].val[isHaveMore? 0: 1], TEXT_LEFT, HEIGHT_ARROW + y_start);
+			for ( var i = 0; i<num_normal; i++) {
+				ctx.save();
+
+				var y0 = HEIGHT_SIZE * i + HEIGHT_ARROW + y_start,
+					y1 = y0 + HEIGHT_SIZE;
+
+				ctx.beginPath();
+				ctx.moveTo(x_start, y0);
+				ctx.lineTo(WIDTH_SIZE, y0);
+				ctx.lineTo(WIDTH_SIZE, y1);
+				ctx.lineTo(x_start, y1);
+				ctx.lineTo(x_start, y0);
+
+				var item = colors[len - (isHaveMore? 2: 1) - i];
+				ctx.fillStyle = item.color;
+				ctx.fill();
+				ctx.stroke();
+				ctx.restore();
+				
+				ctx.fillText(item.val[0], TEXT_LEFT, y1);
+			}
+
+			if (isHaveLess) {
+				ctx.save();
+				ctx.beginPath();
+				ctx.moveTo(x_start, y1);
+				ctx.lineTo(WIDTH_SIZE/2, y1 + HEIGHT_ARROW);
+				ctx.lineTo(WIDTH_SIZE, y1);
+
+				ctx.fillStyle = colors[0].color;
+				ctx.fill();
+				ctx.stroke();
+				ctx.restore();
+			}
+			return $canvas;
+		}
+
+		Legend(data.blendent[0].colors, {
+			width: 200,
+			height: 200
+		}).appendTo($('body'));
+		</script>
+	</body>
+</html>

@@ -1,0 +1,77 @@
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>html2canvas</title>
+		<style>
+		#one{
+			overflow: hidden;
+		}
+		#one ul{
+			margin: 0;
+			padding: 0;
+			float: left;
+		}
+		#one:before{
+			content: '';
+			border-top: 1px solid #000;
+		}
+		#one li{
+			width: 10px;
+			border: 1px solid #000;
+			border-top: none;
+			height: 30px;
+			text-align: center;
+			color: white;
+		}
+		#one li.top_arrow{
+			width: 10px;
+			height: 10px;
+			overflow: hidden;
+		}
+		#one li.top_arrow div{
+			transform: rotate(-45deg);
+		    width: 70.71%;
+		    height: 70.71%;
+		    border: 1px solid #000;
+		    margin-top: 10px;
+		}
+		#result{
+			border: 1px dotted red;
+			margin-top: 40px;
+		}
+		</style>
+	</head>
+	<body>
+	<div style="width: 30px;height:30px;border:1px solid blue;"></div>
+		<div id="one">
+			<ul id="two">
+				<li class="top_arrow"><div></div></li>
+			</ul>
+		</div>
+
+		<div id="result"></div>
+		<script type="text/javascript" src="../../source/js/jquery-1.8.2.js"></script>
+		<script type="text/javascript" src="../../source/js/html2canvas.0.4.1.js"></script>
+		<script type="text/javascript">
+		function rnd() {
+			return Math.floor(Math.random()*255);
+		}	
+		function rndColor() {
+			return 'rgba('+rnd()+', '+rnd()+', '+rnd()+', 0.8)'
+		}
+
+		var $two = $('#two');
+		for(var i = 0; i< 5; i++){
+			$('<li></li>').css('background-color', rndColor()).appendTo($two)
+		}
+
+		var ele = document.getElementById('two');
+		html2canvas(ele, {
+			onrendered: function(canvas) {
+				document.getElementById('result').appendChild(canvas);
+			}
+		});
+
+		</script>
+	</body>
+</html>
