@@ -4,6 +4,16 @@
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
   	<title>天气网眼</title>
   	<link href="index.css" rel="stylesheet" type="text/css">
+  	<style type="text/css">
+  	.video-player{
+  		position: relative;
+  	}
+  	#vodeo-dom1{
+  		position: absolute;
+  		left: 0;top: 0;
+  		z-index: 101;
+  	}
+  	</style>
 </head>
 <body>
 	<!-- <div>天气网眼</div> -->
@@ -11,6 +21,10 @@
 		<video id="vodeo-dom"  autoplay preload="none" width="100%" height="100%" >
 			<source src="" type='video/mp4' />
 		</video>
+		<video id="vodeo-dom1"  autoplay preload="none" width="30%" height="30%" poster="./11.jpg">
+			<source src="http://61.4.185.122/webcam/v/SWEEYESBJ02_24H_201403182258.mp4" type='video/mp4' />
+		</video>
+		<div style="z-index:10;position: absolute;left: 30%;top:30px;background-color:rgba(255, 0, 0, 0.5);text-align:center;width:100px;height:100px;">test</div>
 	</section>
 	<section class="video-list fr">
 		<!-- <div class="fl">
@@ -31,6 +45,6 @@
 		</div> -->
 	</section>
 	<script type="text/javascript" src="jquery.js"></script>
-	<script type="text/javascript" src="index.js"></script>
+	<script type="text/javascript" src="index1.js"></script>
 </body>
 </html>

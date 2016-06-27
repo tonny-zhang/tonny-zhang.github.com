@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>极酷阳光播放器(CuSunPlayerV2.0)</title>
+<SCRIPT LANGUAGE=JavaScript>
+<!--
+function getLight(pars)
+{   
+    //alert("播放器模式参数值："+string+"");
+    if(pars == "open")
+    {
+        close_light(this);
+    }
+    else
+    {
+        close_light(this);
+    }
+}
+
+
+//兼容性
+function thisMovie(movieName) {
+    if (navigator.appName.indexOf("Microsoft") != -1) {
+        return window[movieName]
+    }
+    else {
+        return document[movieName]
+    }
+}
+
+//-->
+</SCRIPT> 
+
+<style type="text/css">
+<!--
+.video { OVERFLOW: hidden; WIDTH: 100%; POSITION: relative}
+.close_light_bg {DISPLAY: none; BACKGROUND: #000; FILTER: alpha(opacity = 85); LEFT: 0px; WIDTH: 100%; POSITION: absolute; TOP: 0px; HEIGHT: 100%; opacity: .85}
+-->
+</style>
+</head>
+
+<body>
+<DIV class=close_light_bg id=close_light_bg></DIV>
+<!--播放器/代码开始-->
+<div class="video" id="CuPlayer">
+<SCRIPT LANGUAGE=JavaScript>
+<!--
+var vID        = ""; 
+var vWidth     = 650;
+var vHeight    = 400;
+var vFile      = "CuSunV2set.xml";
+var vPlayer    = "player.swf?v=2.5";
+var vMp4url    = "test.mp4";
+var vPic       = "startpic.jpg";
+ 
+//-->
+</SCRIPT> 
+<script class="CuPlayerVideo" data-mce-role="CuPlayerVideo" type="text/javascript" src="Images/AsComV3.js"></script>
+</div>
+<div style="position: absolute;left: 600px;top: 0;width:100px;height:100px;background-color:red">
+    <video id="video" width="" height="" loop="loop" controls="controls" poster="./weatherEye/11.jpg">
+          <source src="./video-js/video/oceans-clip.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+</div>
+<SCRIPT language=javascript src="Images/jquery.js" type=text/javascript></SCRIPT> 
+<SCRIPT language=javascript src="Images/action.js" type=text/javascript></SCRIPT>
+<!--播放器/代码结束-->
+<h1>极酷阳光播放器V2.5版(适配移动终端演示)</h1>
+<p>（本页面可以用PC,IPad,IPone,安卓手机或平板打开进行播放测试） </p>
+<p><strong>简要说明</strong>:<br />
+极酷阳光播放器适配终端的目标在于：让用户在pc端，平板电脑和手机端都可以正常播放视频。<br />
+目前适配pc终端、苹果终端（含IPHONE、IPAD）、安卓终端（含安卓系统手机和安卓系统平板）</p>
+<p><strong>官方适配说明</strong>：<a href="http://www.cuplayer.com/CuSunPlayer/help/Help415.html" target="_blank">http://www.cuplayer.com/CuSunPlayer/help/Help415.html</a></p>
+
+
+<!-- help/Bgein -->
+<div class="help">
+ <p>
+        <strong>播放器使用环境及注意事项：</strong><br />
+        *  请用户在IIS下或其它网站环境下使用；<br />
+        *  请确认您的环境是否支持支持flv,mp4等视频文件的mime类型，<a href="http://www.cuplayer.com/CuSunPlayer/help/Help71.html" target="_blank" class="cOrange">详细参见&gt;&gt;</a>；<br />
+        *  播放器在使用过程中，支持加载XML(asp,php,jsp,aspx)等格式配置文件；<br />
+        * 请确认播放器相关的文件地址是否正确。
+        <br />
+        <strong>遇到问题如何获得帮助：</strong>        <br />
+        * 官方应用文档：<a href="http://www.cuplayer.com/cusunplayer/help/index.html" target="_blank" class="cOrange">http://www.cuplayer.com/cusunplayer/help/index.html</a> <br />
+        * 官方客服：QQ / <strong class="cRed2">176797520</strong> (验证须注明&ldquo;极酷&rdquo;字样)  <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=176797520&site=qq&menu=yes"><img src="http://wpa.qq.com/pa?p=2:176797520:41 &r=0.7833309615211892" alt="极酷FlvPlayer在线客服" border="0" align="absmiddle" title="点击这里给我发消息"></a><br />
+        <strong>如何正确的向客服提问？</strong> <br />
+    A:请将您的测试页上传到您的某个网站目录下，然后把测试页地址发给客服<br />
+    （如果您无法提供测试页地址，很多问题，无法协助您找出更准确的原因）； <br />
+  B:请尽可能的把问题，表述清楚。 <br />
+  <strong>极酷阳光官方网站：</strong> <a href="http://www.CuPlayer.com/" target="_blank">http://www.CuPlayer.com/</a></p>
+
+</div>
+<!-- help/End -->
+</body>
+</html>
+

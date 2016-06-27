@@ -1,0 +1,76 @@
+<html>
+<body>
+<script>
+var w = 200, h = 100;
+var lineWidth = 4;
+var lineWidthMidd = lineWidth/2;
+var canvas_pattern = document.createElement('canvas');
+canvas_pattern.setAttribute('width', 20);
+canvas_pattern.setAttribute('height', lineWidth);
+var ctx_pattern = canvas_pattern.getContext('2d');
+ctx_pattern.lineWidth = lineWidth;
+ctx_pattern.strokeStyle = '#000000';
+ctx_pattern.beginPath();
+ctx_pattern.moveTo(0, lineWidthMidd);
+ctx_pattern.lineTo(10, lineWidthMidd);
+// ctx_pattern.endPath();
+ctx_pattern.stroke();
+
+
+ctx_pattern.strokeStyle = '#ff0000';
+ctx_pattern.beginPath();
+ctx_pattern.moveTo(10, lineWidthMidd);
+ctx_pattern.lineTo(20, lineWidthMidd);
+// ctx_pattern.endPath();
+ctx_pattern.stroke();
+
+document.body.appendChild(canvas_pattern);
+
+
+
+var canvas_1 = document.createElement('canvas');
+canvas_1.setAttribute('width', w);
+canvas_1.setAttribute('height', h);
+var ctx_1 = canvas_1.getContext('2d');
+ctx_1.beginPath();
+ctx_1.moveTo(30, 30);
+ctx_1.lineTo(50, 100);
+ctx_1.lineTo(100, 50);
+// ctx_1.closePath();
+var pat = ctx_1.createPattern(canvas_pattern, 'repeat');
+ctx_1.strokeStyle = pat;
+ctx_1.lineWidth = 10;
+// ctx_1.strokeStyle = '#00ff00';
+ctx_1.stroke();
+// ctx_1.fillStyle = pat;
+// ctx_1.fill();
+
+document.body.appendChild(canvas_1);
+
+
+
+var canvas_2 = document.createElement('canvas');
+document.body.appendChild(canvas_2);
+canvas_2.setAttribute('width', w);
+canvas_2.setAttribute('height', h);
+var ctx_2 = canvas_2.getContext('2d');
+ctx_2.lineJoin = 'round';
+ctx_2.beginPath();
+ctx_2.lineWidth = 6;
+ctx_2.moveTo(30, 30);
+ctx_2.lineTo(50, 100);
+ctx_2.lineTo(100, 50);
+ctx_2.stroke();
+
+
+ctx_2.beginPath();
+ctx_2.strokeStyle = '#ffffff';
+// ctx_2.setLineDash([10, 10]);
+ctx_2.lineWidth = 3;
+ctx_2.moveTo(30, 30);
+ctx_2.lineTo(50, 100);
+ctx_2.lineTo(100, 50);
+ctx_2.stroke();
+</script>
+</body>
+</html>

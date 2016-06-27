@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  	<style type="text/css">
+		.wraper {
+			position: relative;
+			border: 1px solid orange;
+		}
+		#test1{
+			width: 160px;
+			height: 160px;
+			border: 1px solid #ccc;
+		}
+  	</style>
+  </head>	
+  
+  <body>
+	<div id="test1"></div>
+	<script type="text/javascript" src="../../../source/js/jquery-1.8.2.js"></script>
+	<script type="text/javascript" src="./ring.js"></script>
+	<script type="text/javascript">
+		
+		new Ring({
+			container: document.getElementById('test1'),
+			percent: 0.75,
+			circleOuter: {
+				width: 6,
+				color: '#ccc'
+			},
+			circlePercent: {
+				width: 6,
+				color: 'red'
+			}
+		});
+	</script>
+  </body>
+</html>
