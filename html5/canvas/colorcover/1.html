@@ -1,0 +1,35 @@
+<body>
+<script>
+	var canvas = document.createElement('canvas');
+	canvas.width = 100;
+	canvas.height = 100;
+	var cxt = canvas.getContext('2d');
+	var img = new ImageData(new Uint8ClampedArray([100, 110, 120, 130]), 1, 1);
+	// cxt.putImageData(img, 0, 0);
+
+	// console.log(cxt.getImageData(0, 0, 1, 1));
+	var img1 = new ImageData(new Uint8ClampedArray([200, 210, 220, 230]), 1, 1);
+	// cxt.putImageData(img1, 0, 0);
+	// console.log(cxt.getImageData(0, 0, 1, 1));
+
+	document.body.appendChild(canvas);
+
+
+
+
+	var canvas1 = document.createElement('canvas');
+	canvas1.width = 1;
+	canvas1.height = 1;
+	var cxt1 = canvas.getContext('2d');
+	cxt1.putImageData(img, 0, 0);
+
+	cxt.drawImage(canvas1, 0, 0, 1, 1);
+	console.log(cxt.getImageData(0, 0, 1, 1));
+
+	cxt1.putImageData(img1, 0, 0);
+
+	cxt.drawImage(canvas1, 0, 0, 1, 1);
+	console.log(cxt.getImageData(0, 0, 1, 1));
+
+</script>
+</body>

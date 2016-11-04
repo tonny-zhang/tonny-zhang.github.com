@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.stroke {
+  fill: none;
+  stroke: #000;
+  stroke-width: 3px;
+}
+
+.fill {
+  fill: #fff;
+}
+
+.graticule {
+  fill: none;
+  stroke: #777;
+  stroke-width: 0.5px;
+  stroke-opacity: 0.5;
+}
+
+.land {
+  fill: #222;
+}
+
+.boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 0.5px;
+}
+
+</style>
+<svg width="960" height="800"></svg>
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="//d3js.org/topojson.v1.min.js"></script>
+<!-- <script src="../proj4.js"></script> -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.15/proj4.js"></script>
+<script>
+var pi = Math.PI,
+    tau = 2 * pi;
+
+var svg = d3.select("svg").append("g"),
+    width = +svg.attr("width") || 960,
+    height = +svg.attr("height") || 800;
+var g = svg.append("g");
+var center = [110, 30];
+// var projection = d3.geoConicConformal()
+//     .scale(239)
+//     .translate([width / 2, height / 2])
+//     .precision(0.1);
+
+// var projection = d3.geoConicConformal()
+//     .scale(400)
+//     .rotate([-127.85, 0])
+//     .parallels([45, 10])
+//     .translate([width/2, height*0.6])
+//     .parallels([45, 45])
+//     // .center(center)
+//     // .precision(0.1);
+var projection = d3.geoConicConformal()
+    // .scale(1 / tau)
+    .rotate([-105, 0])
+    .parallels([45, 45])
+    // .center(center)
+    .translate([width/2, height/2]);
+// var projection = d3.geoAlbers().rotate([-96, 0]).center([0, 37.5]).parallels([29.5, 45.5])
+console.log(projection(center));
+function degreesToRadians(degrees) { return degrees * Math.PI / 180; }
+function radiansToDegrees(radians) { return radians * 180 / Math.PI; }
+var proj = proj4('+proj=lcc +ellps=clrk66 +lon_0=110 +lat_0=36.0 +lat_1=30.0 +lat_2=60.2 +units=m +no_defs');
+// var proj = proj4('+proj=laea +lat_0=90 +lon_0=10 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs');
+
+var project = function(lambda, phi) {
+  var result = proj.forward([lambda, phi].map(radiansToDegrees));
+  // console.log(lambda, phi, '==>', result);
+  return result;
+};
+
+project.invert = function(x, y) {
+  return proj.inverse([x, y]).map(degreesToRadians);
+};
+
+// var projection = d3.geoProjection(project).scale(1 / 99999999999);
+console.log(projection(center));
+var path = d3.geoPath()
+    .projection(projection);
+
+
+g.append("defs").append("path")
+    .datum({type: "Sphere"})
+    .attr("id", "sphere")
+    .attr("d", path);
+
+g.append("use")
+    .attr("class", "stroke")
+    .attr("xlink:href", "#sphere");
+
+g.append("use")
+    .attr("class", "fill")
+    .attr("xlink:href", "#sphere");
+
+
+d3.json("../data/world-50m.json", function(error, world) {
+  window.world = world;
+  if (error) throw error;
+  // projection
+  //   .scale(1)
+  //   .translate([0, 0]);
+
+  // var b = path.bounds(topojson.feature(world, world.objects.land)),
+  //     s = .95 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
+  //     t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
+  
+  // projection
+  //   .scale(s)
+  //   .translate(t);
+
+  g.append("path", ".graticule")
+      .datum(topojson.feature(world, world.objects.land))
+      .attr("class", "land")
+      .attr("d", path);
+
+  g.append("path", ".graticule")
+      .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
+      .attr("class", "boundary")
+      .attr("d", path);
+
+  
+var graticule = d3.geoGraticule();      
+  g.append("path")
+      .datum(graticule)
+      .attr("class", "graticule")
+      .attr("d", path);
+});
+var zoom = d3.zoom()
+  .on('zoom', function () {
+    console.log('zoom');
+      var transform = d3.event.transform;
+      render(transform)
+  });
+
+function render(transform) {
+      console.log(transform);
+  projection
+          .scale(transform.k)
+          .translate([transform.x, transform.y]);
+      g.selectAll("path")
+      .attr("d", path);    
+}
+var centerPixel = projection(center);
+var _translate = projection.translate()
+console.log('centerPixel = ', centerPixel, _translate);
+svg.call(zoom)
+    .call(zoom.transform, d3.zoomIdentity
+        .translate(_translate[0] + width/2 - centerPixel[0], _translate[1] + height/2 - centerPixel[1])
+        .scale(1 << 9)
+        );;    
+var centerPixel = projection(center);
+console.log('centerPixel = ', centerPixel);
+
+// render({
+//   k: 1 << 5,
+//   x: width,
+//   y: height/2
+// })
+</script>

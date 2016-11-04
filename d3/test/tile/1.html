@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    body {
+        margin: 0;
+    }
+    .map {
+        position: relative;
+        overflow: hidden;
+    }
+    .layerWater,
+    .layerRoads,
+    .layerBuildings {
+        position: absolute;
+    }
+    .tileWater,
+    .tileRoad,
+    .tileBuilding {
+        position: absolute;
+        width: 256px;
+        height: 256px;
+    }
+    .tileWater path {
+        stroke: none;
+    }
+    .tileRoad path {
+        fill: none;
+        stroke: #ccb;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+    }
+    .tileRoad .major_road {
+        stroke: #776;
+    }
+    .tileRoad .minor_road {
+        stroke: #ccb;
+    }
+    .tileRoad .highway {
+        stroke: #f39;
+        stroke-width: 1.5px;
+    }
+    .tileRoad .rail {
+        stroke: #7de;
+    }
+    .info {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        font-family: sans-serif;
+    }
+    .tileWater .ocean {
+        stroke: none;
+        fill: #ededed;
+    }
+    .tileWater .lake,
+    .tileWater .reservoir,
+    .tileWater .riverbank,
+    .tileWater .water,
+    .tileWater .basin,
+    .tileWater .dam {
+        fill: #deebf7;
+    }
+</style>
+
+<body>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="./d3.geo.tile.js"></script>
+    <script>
+        var p = 2,
+            drawBuildings = true;
+        var width = Math.max(960, window.innerWidth),
+            height = Math.max(500, window.innerHeight),
+            prefix = prefixMatch(["webkit", "ms", "Moz", "O"]);
+
+        var tile = d3.geo.tile()
+            .size([width, height]);
+
+        var projection = d3.geo.mercator()
+            .scale((1 << 21) / p / Math.PI)
+            .translate([-width / 2, -height / 2]); // just temporary
+
+        var tileProjection = d3.geo.mercator();
+
+        var tilePath = d3.geo.path()
+            .projection(tileProjection);
+
+        var zoom = d3.behavior.zoom()
+            .scale(projection.scale() * p * Math.PI)
+            .scaleExtent([1 << 200, 1 << 25])
+            .translate(projection([-2.1043, 49.1836, ]).map(function (x) {
+                return -x;
+            }))
+            .on("zoom", zoomed);
+
+        var map = d3.select("body").append("div")
+            .attr("class", "map")
+            .style("width", width + "px")
+            .style("height", height + "px")
+            .call(zoom)
+            .on("mousemove", mousemoved);
+
+        var layerWater = map.append("div")
+            .attr("class", "layerWater");
+
+        var layerRoads = map.append("div")
+            .attr("class", "layerRoads");
+
+        var layerBuildings = map.append("div")
+            .attr("class", "layerBuildings");
+
+        var info = map.append("div")
+            .attr("class", "info");
+
+        zoomed();
+
+        function zoomed() {
+            var tiles = tile
+                .scale(zoom.scale())
+                .translate(zoom.translate())
+                ();
+
+            projection
+                .scale(zoom.scale() / p / Math.PI)
+                .translate(zoom.translate());
+
+            var imageWater = layerWater
+                .style(prefix + "transform", matrix3d(tiles.scale, tiles.translate))
+                .selectAll(".tileWater")
+                .data(tiles, function (d) {
+                    return d;
+                });
+
+            imageWater.exit()
+                .each(function (d) {
+                    this._xhr.abort();
+                })
+                .remove();
+
+            imageWater.enter().append("svg")
+                .attr("class", "tileWater")
+                .style("left", function (d) {
+                    return d[0] * 256 + "px";
+                })
+                .style("top", function (d) {
+                    return d[1] * 256 + "px";
+                })
+                .each(function (d) {
+                    var svg = d3.select(this),
+                        openStreetMapType = 'vectiles-water-areas', //'vectiles-land-usages', //'vectiles-buildings', //'vectiles-highroad'
+                        //                        url = "http://" + ["a", "b", "c"][(d[0] * 31 + d[1]) % 3] + ".tile.openstreetmap.us/vectiles-highroad/" + d[2] + "/" + d[0] + "/" + d[1] + ".json";
+                        url = "http://" + ["a", "b", "c"][(d[0] * 31 + d[1]) % 3] + ".tile.openstreetmap.us/" + openStreetMapType + "/" + d[2] + "/" + d[0] + "/" + d[1] + ".json";
+                    this._xhr = d3.json(url, function (error, json) {
+                        var k = Math.pow(2, d[2]) * 256; // size of the world in pixels
+
+                        tilePath.projection()
+                            .translate([k / 2 - d[0] * 256, k / 2 - d[1] * 256]) // [0°,0°] in pixels
+                        .scale(k / 2 / Math.PI);
+
+                        svg.selectAll("path")
+                            .data(json.features.sort(function (a, b) {
+                                return a.properties.sort_key - b.properties.sort_key;
+                            }))
+                            .enter().append("path")
+                            .attr("class", function (d) {
+                                return d.properties.kind;
+                            })
+                            .attr("d", tilePath);
+                    });
+                });
+
+
+            // var imageRoads = layerRoads
+            //     .style(prefix + "transform", matrix3d(tiles.scale, tiles.translate))
+            //     .selectAll(".tileRoad")
+            //     .data(tiles, function (d) {
+            //         return d;
+            //     });
+
+            // imageRoads.exit()
+            //     .each(function (d) {
+            //         this._xhr.abort();
+            //     })
+            //     .remove();
+
+            // imageRoads.enter().append("svg")
+            //     .attr("class", "tileRoad")
+            //     .style("left", function (d) {
+            //         return d[0] * 256 + "px";
+            //     })
+            //     .style("top", function (d) {
+            //         return d[1] * 256 + "px";
+            //     })
+            //     .each(function (d) {
+            //         var svg = d3.select(this),
+            //             openStreetMapType = 'vectiles-highroad',
+            //             //                        url = "http://" + ["a", "b", "c"][(d[0] * 31 + d[1]) % 3] + ".tile.openstreetmap.us/vectiles-highroad/" + d[2] + "/" + d[0] + "/" + d[1] + ".json";
+            //             url = "http://" + ["a", "b", "c"][(d[0] * 31 + d[1]) % 3] + ".tile.openstreetmap.us/" + openStreetMapType + "/" + d[2] + "/" + d[0] + "/" + d[1] + ".json";
+            //         this._xhr = d3.json(url, function (error, json) {
+            //             var k = Math.pow(2, d[2]) * 256; // size of the world in pixels
+
+            //             tilePath.projection()
+            //                 .translate([k / 2 - d[0] * 256, k / 2 - d[1] * 256]) // [0°,0°] in pixels
+            //             .scale(k / 2 / Math.PI);
+
+            //             svg.selectAll("path")
+            //                 .data(json.features.sort(function (a, b) {
+            //                     return a.properties.sort_key - b.properties.sort_key;
+            //                 }))
+            //                 .enter().append("path")
+            //                 .attr("class", function (d) {
+            //                     return d.properties.kind;
+            //                 })
+            //                 .attr("d", tilePath);
+            //         });
+            //     });
+
+            // if (drawBuildings) {
+            //     var imageBuildings = layerBuildings
+            //         .style(prefix + "transform", matrix3d(tiles.scale, tiles.translate))
+            //         .selectAll(".tileBuilding")
+            //         .data(tiles, function (d) {
+            //             return d;
+            //         });
+
+            //     imageBuildings.exit()
+            //         .each(function (d) {
+            //             this._xhr.abort();
+            //         })
+            //         .remove();
+
+            //     imageBuildings.enter().append("svg")
+            //         .attr("class", "tileBuilding")
+            //         .style("left", function (d) {
+            //             return d[0] * 256 + "px";
+            //         })
+            //         .style("top", function (d) {
+            //             return d[1] * 256 + "px";
+            //         })
+            //         .each(function (d) {
+            //             var svg = d3.select(this),
+            //                 openStreetMapType = 'vectiles-buildings',
+            //                 //                        url = "http://" + ["a", "b", "c"][(d[0] * 31 + d[1]) % 3] + ".tile.openstreetmap.us/vectiles-highroad/" + d[2] + "/" + d[0] + "/" + d[1] + ".json";
+            //                 url = "http://" + ["a", "b", "c"][(d[0] * 31 + d[1]) % 3] + ".tile.openstreetmap.us/" + openStreetMapType + "/" + d[2] + "/" + d[0] + "/" + d[1] + ".json";
+            //             this._xhr = d3.json(url, function (error, json) {
+            //                 var k = Math.pow(2, d[2]) * 256; // size of the world in pixels
+
+            //                 tilePath.projection()
+            //                     .translate([k / 2 - d[0] * 256, k / 2 - d[1] * 256]) // [0°,0°] in pixels
+            //                 .scale(k / 2 / Math.PI);
+
+            //                 svg.selectAll("path")
+            //                     .data(json.features.sort(function (a, b) {
+            //                         return a.properties.sort_key - b.properties.sort_key;
+            //                     }))
+            //                     .enter().append("path")
+            //                     .attr("class", function (d) {
+            //                         return d.properties.kind;
+            //                     })
+            //                     .attr("d", tilePath);
+            //             });
+            //         });
+            // }
+        }
+
+
+
+        function mousemoved() {
+            info.text(formatLocation(projection.invert(d3.mouse(this)), zoom.scale()));
+        }
+
+        function matrix3d(scale, translate) {
+            var k = scale / 256,
+                r = scale % 1 ? Number : Math.round;
+            return "matrix3d(" + [k, 0, 0, 0, 0, k, 0, 0, 0, 0, k, 0, r(translate[0] * scale), r(translate[1] * scale), 0, 1] + ")";
+        }
+
+        function prefixMatch(p) {
+            var i = -1,
+                n = p.length,
+                s = document.body.style;
+            while (++i < n)
+                if (p[i] + "Transform" in s) return "-" + p[i].toLowerCase() + "-";
+            return "";
+        }
+
+        function formatLocation(p, k) {
+            var format = d3.format("." + Math.floor(Math.log(k) / 2 - 2) + "f");
+            return (p[1] < 0 ? format(-p[1]) + "°S" : format(p[1]) + "°N") + " " + (p[0] < 0 ? format(-p[0]) + "°W" : format(p[0]) + "°E");
+        }
+    </script>
+    </body>
+    </html>

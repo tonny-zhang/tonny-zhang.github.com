@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.graticule {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .3;
+  stroke-width: .5px;
+}
+
+.land {
+  /*fill: #ccc;*/
+  fill: none;
+  stroke: #000;
+}
+
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="//d3js.org/topojson.v1.min.js"></script>
+<script>
+var box = [86.59, -0.64, 133.41, 60.64];
+
+var leftDownLngLat = [86.59, -0.64],
+    centerLngLat = [110, 30];
+
+var width = 960,
+    height = 800;
+
+var projection = d3.geo.conicConformal()
+    .scale(200)
+    .rotate([-105, 0])
+    .center([0, 65])
+    .parallels([45, 10]);
+var zoom = d3.behavior.zoom()
+    .translate([width / 2, height / 2])
+    .scale(projection.scale())
+    // .scaleExtent([scale0, 8 * scale0])
+    .on("zoom", zoomed);
+var path = d3.geo.path()
+    .projection(projection);
+
+var graticule = d3.geo.graticule()
+    .extent([[-70, -80], [250, 80 + 1e-6]])
+    .step([10, 10]);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height).append("g");
+
+
+var g = svg.append("g");
+var img = g.append('svg:image')
+          .attr('xlink:href', './cloud.png');
+svg.call(zoom)
+    .call(zoom.event);
+
+d3.json("../data/world-50m.json", function(error, world) {
+  if (error) throw error;
+  console.log(world);
+  // var russia = world.objects.countries.geometries.filter(function(d) { return d.id == 643; })[0];
+  
+  g.append("path", ".graticule")
+      .datum(topojson.feature(world, world.objects.countries))
+      .attr("class", "land")
+      .attr("d", path);
+  g.append("path")
+    .datum(graticule)
+    .attr("class", "graticule")
+    .attr("d", path);
+});
+
+function zoomed() {
+  console.log('zoom', zoom.translate(), zoom.scale())
+  projection
+      .translate(zoom.translate())
+      .scale(zoom.scale());
+
+  g.selectAll("path")
+      .attr("d", path);
+  var leftDown = projection(leftDownLngLat),
+    center = projection(centerLngLat);
+
+  var xImg = leftDown[0],
+      yImg = leftDown[1] - (leftDown[1] - center[1])*2,
+      widthImg = (center[0] - xImg)*2,
+      heightImg = leftDown[1] - yImg;   
+  img.attr('x', xImg)
+      .attr('y', yImg)
+      .attr('width', widthImg)
+      .attr('height', heightImg);
+}
+
+d3.select(self.frameElement).style("height", height + "px");
+
+
+
+</script>

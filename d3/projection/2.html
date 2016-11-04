@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.graticule {
+  fill: none;
+  stroke: #777;
+  stroke-width: .5px;
+  stroke-opacity: .5;
+}
+
+.land {
+  fill: #222;
+  stroke: #ccc;
+}
+
+.county-boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: .5px;
+}
+
+.state-boundary {
+  fill: none;
+  stroke: #fff;
+}
+
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="//d3js.org/topojson.v1.min.js"></script>
+<script>
+
+var width = 960,
+    height = 800;
+
+var projection = d3.geo.albers()
+    .rotate([0, 0])
+    .center([100, 35])
+    // .parallels([45, 45])
+    .scale(200)
+    .translate([width / 2, height / 2])
+    .precision(.1);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var graticule = d3.geo.graticule()
+    .extent([[-98 - 45, 38 - 45], [-98 + 45, 38 + 45]])
+    .step([5, 5]);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+svg.append("path")
+    .datum(graticule)
+    .attr("class", "graticule")
+    .attr("d", path);
+
+d3.json("../data/world-50m.json", function(error, us) {
+  if (error) throw error;
+console.log(us)
+  svg.insert("path", ".graticule")
+      .datum(topojson.feature(us, us.objects.countries))
+      .attr("class", "land")
+      .attr("d", path);
+
+  // svg.insert("path", ".graticule")
+  //     .datum(topojson.mesh(us, us.objects.counties, function(a, b) { return a !== b && !(a.id / 1000 ^ b.id / 1000); }))
+  //     .attr("class", "county-boundary")
+  //     .attr("d", path);
+
+  // svg.insert("path", ".graticule")
+  //     .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+  //     .attr("class", "state-boundary")
+  //     .attr("d", path);
+});
+
+d3.select(self.frameElement).style("height", height + "px");
+
+</script>

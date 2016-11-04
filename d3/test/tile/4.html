@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<body>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/d3.geo.tile.v0.min.js"></script>
+    <script>
+    var width = Math.max(960, window.innerWidth);
+    var height = Math.max(500, window.innerHeight);
+    var roadStyles = {
+        "major_road": {
+            color: "#555",
+            width: 1.4
+        },
+        "minor_road": {
+            color: "#aaa",
+            width: 0.8
+        },
+        "highway": {
+            color: "#222",
+            width: 1.8
+        }
+    };
+    var canvas = d3.select("body")
+        .append("canvas")
+        .attr("width", width)
+        .attr("height", height);
+    var context = canvas.node().getContext("2d");
+    var tile = d3.geo.tile()
+        .size([width, height]);
+    this.tilePath = d3.geo.path()
+        .projection(d3.geo.mercator())
+        .context(context);
+    var cachedTiles = {};
+    var center = [104.585, 36.165];
+    var projection = d3.geo.mercator()
+        .scale((1 << 22) / 2 / Math.PI)
+        .translate([-width / 2, -height / 2]);
+    var zoom = d3.behavior.zoom()
+        .scale(projection.scale() * 2 * Math.PI)
+        .scaleExtent([1 << 18, 1 << 26])
+        .size([width, height])
+        .translate(projection(center).map(function(x) {
+            return -x;
+        }))
+        .on("zoom", zoomed);
+    canvas.call(zoom);
+    zoomed();
+
+    function groupByKind(data) {
+        return data.reduce(function(memo, d) {
+            var kind = d.properties.kind;
+            if (memo[kind]) {
+                memo[kind].push(d);
+            } else {
+                memo[kind] = [d];
+            }
+            return memo;
+        }, {});
+    }
+
+    function drawTile(tiles, d, data) {
+        var k = Math.pow(2, d[2]) * 256;
+        var x = (d[0] + tiles.translate[0]) * tiles.scale;
+        var y = (d[1] + tiles.translate[1]) * tiles.scale;
+        var s = tiles.scale / 256;
+        tilePath
+            .projection()
+            .translate([k / 2 - d[0] * 256, k / 2 - d[1] * 256])
+            .scale(k / 2 / Math.PI);
+        context.save();
+        context.translate(x, y);
+        context.scale(s, s);
+        var key;
+        for (key in data) {
+            var style = roadStyles[key];
+            if (style) {
+                context.beginPath();
+                data[key].forEach(tilePath);
+                context.closePath();
+                context.strokeStyle = style.color;
+                context.lineWidth = style.width;
+                context.stroke();
+            }
+        }
+        context.restore();
+    }
+
+    function zoomed() {
+        var tiles = tile
+            .scale(zoom.scale())
+            .translate(zoom.translate())
+            .call();
+        context.clearRect(0, 0, width, height);
+        tiles.forEach(function(d) {
+            var letters = ["a", "b", "c"];
+            var letter = letters[(d[0] * 31 + d[1]) % 3];
+            var url = "http://" + letter + ".tile.openstreetmap.us/vectiles-highroad/" + d[2] + "/" + d[0] + "/" + d[1] + ".json";
+            if (cachedTiles[url] && cachedTiles[url].caching === false && cachedTiles[url].drawing === false) {
+                drawTile(tiles, d, cachedTiles[url].data);
+            } else if (!cachedTiles[url]) {
+                cachedTiles[url] = {
+                    caching: true,
+                    drawing: false,
+                    data: []
+                };
+                d3.json(url, function(error, json) {
+                    if (error) {
+                        console.error("caching tiles error", error, url, json);
+                        delete cachedTiles[url];
+                    } else {
+                        var data = json.features.sort(function(a, b) {
+                            return a.properties.sort_key - b.properties.sort_key;
+                        });
+                        cachedTiles[url] = {
+                            caching: false,
+                            drawing: true,
+                            data: groupByKind(data)
+                        };
+                        drawTile(tiles, d, cachedTiles[url].data);
+                        cachedTiles[url].drawing = false;
+                    }
+                });
+            }
+        });
+    }
+    </script>
+</body>

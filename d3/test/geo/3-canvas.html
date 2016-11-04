@@ -31,6 +31,7 @@ var width = 960,
 
 var projection = d3.geo.mercator()
     .scale((width + 1) / 2 / Math.PI)
+    .center([105, 35])
     .translate([width / 2, height / 2])
     .precision(.01);
 

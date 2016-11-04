@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.stroke {
+  fill: none;
+  stroke: #000;
+  stroke-width: 3px;
+}
+
+.fill {
+  fill: #fff;
+}
+
+.graticule {
+  fill: none;
+  stroke: #777;
+  stroke-width: 0.5px;
+  stroke-opacity: 0.5;
+}
+
+.land {
+  fill: #222;
+}
+
+.boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 0.5px;
+}
+
+</style>
+<body>
+    <script src="//d3js.org/d3.v4.js"></script>
+    <script src="//d3js.org/topojson.v1.min.js"></script>
+    <!-- <script src="../proj4.js"></script> -->
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.15/proj4.js"></script> -->
+    <script>
+    var width = 800,
+        height = 800;
+    var pi = Math.PI,
+        tau = 2 * pi;    
+    var lnglatLeftTop = [72.57, 58],
+        lnglatRightDown = [136.6, 14.33],
+        lnglatCenter = [(lnglatRightDown[0] + lnglatLeftTop[0])/2, (lnglatRightDown[1] + lnglatLeftTop[1])/2],
+        lnglatRightTop = [lnglatRightDown[0], lnglatLeftTop[1]],
+        lnglatLeftDown = [lnglatLeftTop[0], lnglatRightDown[1]];
+    
+    var canvas = d3.select('body')
+        .append('canvas')
+        .attr('width', width)
+        .attr('height', height);
+    var cxt = canvas.node().getContext("2d");
+
+    zoom = d3.zoom()
+    .on('zoom', function () {
+        var transform = d3.event.transform;
+        projection
+            .scale(transform.k)
+            .translate([transform.x, transform.y]);
+        draw();
+    });
+    // var projection = d3.geoConicConformal()
+    //     // .center([105, 35])
+    //     .scale(1 << 8)
+    //     .rotate([-105, 0])
+    //     .parallels([0, 45])
+        // .center(center)
+        // .translate([width/2, height/2]);
+
+    function _getProj() {
+        var p = d3.geoConicConformal();
+        // p.rotate([-lnglatCenter[0], 0]);
+        p.rotate([-110, 0]);
+        p.parallels([40, 45]);
+        p.scale(1);
+        p.translate([0, 0])
+
+        var pixelLeftTop = p(lnglatLeftTop),
+            pixelLeftDown = p(lnglatLeftDown),
+            pixelRightTop = p(lnglatRightTop),
+            pixelRightDown = p(lnglatRightDown),
+            pixelCenter = p(lnglatCenter);
+
+        var xarr = [pixelLeftTop[0], pixelLeftDown[0], pixelRightTop[0], pixelRightDown[0]];
+        var yarr = [pixelLeftTop[1], pixelLeftDown[1], pixelRightTop[1], pixelRightDown[1]]    
+        var xmin = Math.min.apply(Math, xarr),
+            xmax = Math.max.apply(Math, xarr),
+            ymin = Math.min.apply(Math, yarr),
+            ymax = Math.max.apply(Math, yarr);
+        
+        var w = xmax - xmin,
+            h = ymax - ymin;
+
+        var scale = Math.min(width/w, height/h);
+        var transform = d3.zoomIdentity
+            .translate(width/2, height/2)
+            .scale(scale)
+            .translate(-pixelCenter[0], -pixelCenter[1])    
+        
+        console.log(scale)
+        p.scale(scale);
+        p.translate([transform.x, transform.y]);
+        p.data = {
+            transform: transform
+        }
+
+        var stream = p.stream;
+        p.stream = function(contextStream) {
+            console.log(contextStream);
+            var point = contextStream.point;
+            contextStream.point = function() {
+                
+                var result = point.apply(contextStream, arguments);
+                // console.log(arguments, result);
+                return result;
+            }
+            var result = contextStream.result;
+            contextStream.result = function() {
+                
+                var r = result.apply(contextStream, arguments);
+                console.log(arguments, r);
+                return r;
+            }
+            return stream.call(p, contextStream);
+        }
+
+        var result = p.stream.result;
+        p.stream.result = function() {
+            console.log(arguments);
+            return result.apply(p.stream, arguments);
+        }
+
+        var point = p.stream.point;
+        p.stream.point = function() {
+            console.log(arguments);
+            return point.apply(p.stream, arguments);
+        }
+        return p;
+    } 
+
+    var projection = _getProj();   
+    var path = d3.geoPath()
+        .projection(projection)
+        .context(cxt);
+
+    canvas.call(zoom);
+    // var transform = d3.zoomIdentity
+    //     .translate(width/2, height/2)
+    //     .scale(projection.scale());
+    console.log(projection.data);
+    canvas.call(zoom.transform, projection.data.transform);    
+    d3.json('../data/world-50m.json', function(err, data) {
+        var land = topojson.feature(data, data.objects.countries);
+        console.log(data);
+        console.log(land);
+        // draw(land);
+
+        draw(topojson.feature(data, data.objects.land, function(a, b) {
+            return a == b;
+        }));
+    });   
+    var graticule = d3.geoGraticule().step([10, 10]).extent([
+        [-70, -80],
+        [280 + 1e-6, 80 + 1e-6]
+    ])();
+
+    function drawPoint(point) {
+        var pixel = projection(point);
+        cxt.fillStyle = 'red';
+        cxt.beginPath();
+        cxt.arc(pixel[0], pixel[1], 4, 0, 2 * Math.PI, false);
+        cxt.fill();
+    }
+
+    function drawText(text, point) {
+        var pixel = projection(point);
+        cxt.fillText(text, pixel[0], pixel[1]);
+    }
+
+    function drawFlag() {
+        if (graticule) {
+            graticule.coordinates.forEach(function(v) {
+                var val = v[0];
+                var txt = val[0] > 180? val[0]%180 - 180: val[0];
+                drawText(txt, val);
+                drawText(txt, [val[0], 0]);
+                drawText(txt, [val[0], 60]);
+            });
+        }
+    }
+    var dataPrev;
+    function draw(data) {
+        data = data || dataPrev;
+        dataPrev = data;
+        cxt.clearRect(0, 0, width, height);
+        
+        cxt.save();
+        cxt.fillStyle = 'rgba(0, 0, 255, 0.5)';
+        cxt.fillRect(0, 0, width, height);
+        cxt.lineWidth = 1;
+        cxt.strokeStyle = '#333';
+        cxt.fillStyle = '#eee';
+        cxt.beginPath();
+        console.log(path(data));
+        cxt.fill();
+        cxt.stroke();
+
+        cxt.restore();
+        cxt.save();
+        cxt.lineWidth = 0.6;
+        cxt.strokeStyle = 'blue';
+        cxt.beginPath();
+        path(graticule);
+        cxt.stroke();
+        cxt.restore();
+
+        drawPoint(lnglatLeftTop);
+        drawPoint(lnglatLeftDown);
+        drawPoint(lnglatCenter);
+        drawPoint(lnglatRightTop);
+        drawPoint(lnglatRightDown);
+
+        cxt.save();
+        cxt.beginPath();
+        drawFlag();
+        cxt.restore();
+    }
+    </script>
+</body>
+</html>

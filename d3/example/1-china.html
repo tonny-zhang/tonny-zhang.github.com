@@ -24,7 +24,7 @@ var width = 1000,
 
 var projection = d3.geo.mercator()
     .scale(248*1.5*2)
-    .clipAngle(90);
+    // .clipAngle(90);
 
 var canvas = d3.select("body").append("canvas")
     .attr("width", width)

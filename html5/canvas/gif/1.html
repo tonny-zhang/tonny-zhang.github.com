@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  	<style type="text/css">
+		.wraper {
+			position: relative;
+			border: 1px solid orange;
+		}
+  	</style>
+  </head>	
+  
+  <body>
+	
+	<canvas id="test" width="200px" height="200px" class="wraper"></canvas>
+	<canvas id="test1" width="200px" height="200px" class="wraper"></canvas>
+	<canvas id="test2" width="200px" height="200px" class="wraper"></canvas>
+	<canvas id="test3" width="200px" height="200px" class="wraper"></canvas>
+
+	<script type="text/javascript">
+		var img = new Image();
+		img.onload = function() {
+			var width = this.width;
+			var height = this.height;
+			var can = document.getElementById('test');
+			if(can.getContext){
+				can.width = width;
+				can.height = height;
+				var cxt = can.getContext('2d');
+				cxt.drawImage(img, 0, 0, width, height);
+			}
+		}
+		img.src = "https://github.com/buzzfeed/libgif-js/blob/master/example_gifs/rub_test.gif?raw=true";
+		
+	</script>
+  </body>
+</html>

@@ -29,6 +29,14 @@
 		ctx.lineTo(150, 150);
 		ctx.lineTo(100, 150);
 		ctx.lineTo(100, 100);
+
+		ctx.clip();
+		// ctx.save();
+		ctx.beginPath();
+		ctx.moveTo(100, 100);
+		ctx.lineTo(50, 200);
+		ctx.lineTo(200, 200);
+		ctx.lineTo(200, 40);
 		// ctx.stroke();
 		// ctx.fill();
 		ctx.clip();
@@ -46,7 +54,7 @@
 			ctx.beginPath();
 			ctx.rect(120,120,400,400);
 			ctx.fill();			
-		}, 2000);
+		}, 4000);
 
 		// 扣除一部分
 		// ctx.fillStyle = 'white';
