@@ -1,0 +1,124 @@
+<script type="text/javascript" src="../../d3/d3.js"></script>
+<script>
+	var REG_RGBA = /rgba\s*\((\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)/;
+	function _getValRgba(arr_rgba) {
+		return (parseInt(arr_rgba[0]) << 24 >>> 0) + (parseInt(arr_rgba[1]) << 16) + (parseInt(arr_rgba[2]) << 8) + (parseInt(arr_rgba[3]));
+	}
+	function _getValRGB(arr_rgb) {
+		return (parseInt(arr_rgb[0]) << 16) + (parseInt(arr_rgb[1]) << 8) + (parseInt(arr_rgb[2]));
+	}
+	function val_to_hex(v) {
+	    return v < 16 ? "0" + Math.max(0, v).toString(16) : Math.min(255, v).toString(16);
+	}
+	function interpolate(color_a, color_b) {
+		var m_a = REG_RGBA.exec(color_a);
+		var m_b = REG_RGBA.exec(color_b);
+		if (m_a && m_b) {
+			console.log(m_a, m_b);
+			var r_a = parseInt(m_a[1]),
+				g_a = parseInt(m_a[2]),
+				b_a = parseInt(m_a[3]),
+				a_a = parseInt(m_a[4]);
+			var r_b = parseInt(m_b[1]),
+				g_b = parseInt(m_b[2]),
+				b_b = parseInt(m_b[3]),
+				a_b = parseInt(m_b[4]);
+			
+			var r_p = r_b - r_a;
+			var g_p = g_b - g_a;
+			var b_p = b_b - b_a;
+			var a_p = a_b - a_a;		
+			return function(factor) {
+				var val = 'rgba('+([r_a + r_p*factor&255, g_a + g_p*factor&255, b_a + b_p*factor&255, a_a + a_p*factor&255])+')';
+				return val;
+			}
+			// var val_a = _getValRGB([m_a[1], m_a[2], m_a[3], m_a[4]]);
+			// var val_b = _getValRGB([m_b[1], m_b[2], m_b[3], m_b[4]]);
+			// console.log('val_a = '+val_a, 'val_b = '+val_b);
+
+			// var alpha_a = parseInt(m_a[4]);
+			// var alpha_b = parseInt(m_b[4]);
+			// return function(factor) {
+			// 	var val = val_a + (val_b - val_a) * factor;
+			// 	var arr = [val>>>16&255, val>>8&255, val&255, (alpha_a + (alpha_b - alpha_a) * factor)&255];
+			// 	var color = 'rgba('+(arr.join(','))+')';
+			// 	console.log(color);
+			// 	return color;
+			// }
+		}
+	}
+	function interpolate2(color_a, color_b) {
+		var m_a = REG_RGBA.exec(color_a);
+		var m_b = REG_RGBA.exec(color_b);
+		if (m_a && m_b) {
+			console.log(m_a, m_b);
+			var r_a = parseInt(m_a[1]),
+				g_a = parseInt(m_a[2]),
+				b_a = parseInt(m_a[3]),
+				a_a = parseInt(m_a[4]);
+			var r_b = parseInt(m_b[1]),
+				g_b = parseInt(m_b[2]),
+				b_b = parseInt(m_b[3]),
+				a_b = parseInt(m_b[4]);
+
+			var val_a = parseInt('0x'+val_to_hex(r_a) + val_to_hex(g_a) + val_to_hex(b_a) + val_to_hex(a_a));	
+			var val_b = parseInt('0x'+val_to_hex(r_b) + val_to_hex(g_b) + val_to_hex(b_b) + val_to_hex(a_b));	
+			console.log(val_a, val_b);
+			return function(factor) {
+				var val = val_a + (val_b - val_a) * factor;
+				var arr = [val>>>24&255, val>>16&255, val>>>8&255, val&255];
+				var color = 'rgba('+(arr.join(','))+')'; 
+				return color;
+			}	
+		}
+	}
+
+	var color_a = 'rgba(255, 0, 0, 100)';
+	var color_b = 'rgba(0, 255, 255, 255)';
+	var compute = interpolate(color_a, color_b);
+
+	var compute2 = d3.interpolate(color_a, color_b);
+
+	var compute3 = interpolate2(color_a, color_b);
+	
+	var num = 30;
+	var max_width = 700;
+	var per_width = max_width/num;
+	function _test(fn) {
+		var html = '<div style="margin: 3px;">';
+		for (var i = 0; i<=num; i++) {
+			var color = fn(i/num);
+			// var m = /(.+)\((.+)\)/.exec(color);
+			// if (m) {
+			// 	var arr = m[2].split(',');
+			// 	arr.forEach(function(v, i) {
+			// 		arr[i] = v&255;
+			// 	});
+
+			// 	color = m[1] + '('+arr.join(',')+')';
+			// }
+			console.log(color);
+			html += '<span style="display:inline-block;width: '+per_width+'px; height: 10px; background-color: '+color+'"></span>';
+		}
+		html += '</div>';
+		document.write(html);
+	}
+	
+	_test(compute);
+	_test((function() {
+		return function(factory) {
+			var color = compute2(factory);
+			var m = /(.+)\((.+)\)/.exec(color);
+			if (m) {
+				var arr = m[2].split(',');
+				arr.forEach(function(v, i) {
+					arr[i] = v&255;
+				});
+
+				color = m[1] + '('+arr.join(',')+')';
+			}
+			return color;
+		}
+	})());
+	_test(compute3);
+</script>
