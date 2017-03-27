@@ -26,7 +26,7 @@
         <h1>把外部样式表里的样式添加到Dom元素的style标签上，可用于淘宝店铺装修</h1>
         <div class="main">
             <textarea id="for_html" placeholder="请把html放在这里">
-                <div class="body">
+                <div class="body" style="width: 100px;height: 10px;">
                     <span></span>
                 </div>
                 <div class="test"></div>
@@ -88,7 +88,7 @@
                         $item.each(function() {
                             var $this = $(this);
                             var styleOld = $this.attr('style') || '';
-                            $this.attr('style', (styleOld + css).replace(/;+/, ';'));
+                            $this.attr('style', (styleOld + ';' + css).replace(/;+/g, ';'));
                         });
                     }
                 }
