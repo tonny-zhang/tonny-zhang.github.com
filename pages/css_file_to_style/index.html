@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>css文件样式直接转成html样式属性</title>
+        <style>
+            body{
+                padding: 10px;
+            }
+            .main{
+                width: 100%;
+            }
+            .main textarea{
+                box-sizing: border-box;
+                width: 48%;
+                height: 200px;
+                padding: 5px;
+            }
+            #for_result{
+                width: 90%;
+                height: 100px;
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>把外部样式表里的样式添加到Dom元素的style标签上，可用于淘宝店铺装修</h1>
+        <div class="main">
+            <textarea id="for_html" placeholder="请把html放在这里">
+                <div class="body">
+                    <span></span>
+                </div>
+                <div class="test"></div>
+            </textarea>
+            <textarea id="for_css" placeholder="请把css里的内容放在这里">
+                /*test*/
+                .body{
+                    font-size: 12px;
+                    /*
+                        font-weight: bold;
+                    */
+                    color: red;/*red*/
+                }
+                .test{
+                    color: blue;
+                }
+                div{
+                    color: yellow;
+                }
+                div.body{
+                    font-weight: bold;
+                }
+            </textarea>
+        </div>
+        <textarea id="for_result"></textarea>
+        <input type="button" value="生成" id="btn_create"/>
+        <input type="button" value="清除" id="btn_clear"/>
+        <script src="../../source/js/jquery-1.8.2.js"></script>
+        <script>
+            var $for_html = $('#for_html');
+            var $for_css = $('#for_css');
+            var $for_result = $('#for_result');
+            $('#btn_clear').on('click', function() {
+                $for_html.val('');
+                $for_css.val('');
+                $for_result.val('');
+            });
+            $('#btn_create').on('click', function() {
+                var html = $for_html.val();
+                var css = $for_css.val();
+                if (!html) {
+                    return alert('没有要生成的html!');
+                }
+
+                if (css) {
+                    var $html = $('<div>').html(html);
+                    // 过滤注释
+                    css = css.replace(/\/\*[^\/]*\*\//g, '').replace(/[\r\n\t]+/g, '').replace(/\s+/g, ' ');
+                    var REG_CSS = /([^{}]+){([^{}]+)}/g;
+                    var m = null;
+                    var obj_css = {};
+                    while((m = REG_CSS.exec(css))) {
+                        obj_css[m[1]] = m[2].trim();
+                    }
+
+                    for (var key in obj_css) {
+                        var css = obj_css[key];
+                        var $item = $html.find(key);
+                        $item.each(function() {
+                            var $this = $(this);
+                            var styleOld = $this.attr('style') || '';
+                            $this.attr('style', (styleOld + css).replace(/;+/, ';'));
+                        });
+                    }
+                }
+                var result = $html.html();
+                $for_result.val(result);
+            });
+        </script>
+    </body>
+</html>
