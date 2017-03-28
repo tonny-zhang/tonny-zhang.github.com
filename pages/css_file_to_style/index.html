@@ -8,22 +8,35 @@
             }
             .main{
                 width: 100%;
+                clear: both;
+                overflow: hidden;
             }
             .main textarea{
                 box-sizing: border-box;
-                width: 48%;
+                width: 49%;
                 height: 200px;
                 padding: 5px;
             }
             #for_result{
-                width: 90%;
+                width: 100%;
                 height: 100px;
                 display: block;
+                margin-top: 5px;
+            }
+            #for_html{
+                float: left;
+            }
+            #for_css{
+                float: right;
+            }
+            input{
+                margin: 5px;
             }
         </style>
     </head>
     <body>
         <h1>把外部样式表里的样式添加到Dom元素的style标签上，可用于淘宝店铺装修</h1>
+        <h4>暂时只考虑了标签原生style属性的优先级，并没有考虑css样式表里的优先级问题</h4>
         <div class="main">
             <textarea id="for_html" placeholder="请把html放在这里">
                 <div class="body" style="width: 100px;height: 10px;">
@@ -51,14 +64,18 @@
                 }
             </textarea>
         </div>
-        <textarea id="for_result"></textarea>
-        <input type="button" value="生成" id="btn_create"/>
-        <input type="button" value="清除" id="btn_clear"/>
+        <textarea id="for_result" placeholder="这里显示处理结果"></textarea>
+        <div>
+            <input type="checkbox" id="cb_del_class"/> <label for="cb_del_class">是否去除class标签</label> <br/>
+            <input type="button" value="生成" id="btn_create"/>
+            <input type="button" value="清除" id="btn_clear"/>
+        </div>
         <script src="../../source/js/jquery-1.8.2.js"></script>
         <script>
             var $for_html = $('#for_html');
             var $for_css = $('#for_css');
             var $for_result = $('#for_result');
+            var $cb_del_class = $('#cb_del_class');
             $('#btn_clear').on('click', function() {
                 $for_html.val('');
                 $for_css.val('');
@@ -71,8 +88,15 @@
                     return alert('没有要生成的html!');
                 }
 
+                var $html = $('<div>').html(html);
                 if (css) {
-                    var $html = $('<div>').html(html);
+                    // 缓存style标签内容，提升优先级
+                    $html.find('[style]').each(function() {
+                        var $this = $(this);
+                        var style = $this.attr('style');
+                        $this.removeAttr('style');
+                        $this.data('style', style);
+                    })
                     // 过滤注释
                     css = css.replace(/\/\*[^\/]*\*\//g, '').replace(/[\r\n\t]+/g, '').replace(/\s+/g, ' ');
                     var REG_CSS = /([^{}]+){([^{}]+)}/g;
@@ -91,6 +115,36 @@
                             $this.attr('style', (styleOld + ';' + css).replace(/;+/g, ';'));
                         });
                     }
+                }
+                // 对样式进行去重及覆盖处理
+                $html.find('[style]').each(function() {
+                    var $this = $(this);
+                    var style = $this.attr('style');
+                    var styleOld = $this.data('style');
+                    if (styleOld) {
+                        style += ';' + styleOld;
+                    }
+                    var cssObj = {};
+                    $.each(style.split(';'), function(i, v) {
+                        if (v) {
+                            var arr = v.split(':');
+                            var key = arr[0],
+                                val = arr[1];
+                            if (key && val) {
+                                key = key.trim();
+                                val = val.trim();
+                                cssObj[key] = val;
+                            }    
+                        }
+                    });
+                    var cssArr = [];
+                    for (var i in cssObj) {
+                        cssArr.push(i+':'+cssObj[i]);
+                    }
+                    $this.attr('style', cssArr.join(';'));
+                });
+                if ($cb_del_class.prop('checked')) {
+                    $html.find('[class]').removeAttr('class');
                 }
                 var result = $html.html();
                 $for_result.val(result);
