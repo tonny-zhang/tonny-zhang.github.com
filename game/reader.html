@@ -105,7 +105,12 @@
                 return lines;
             }
 
+            var isRunning = false;
             function begin(lines) {
+                if (isRunning) {
+                    return;
+                }
+                isRunning = true;
                 var $prev = $main2.find('prev');
                 
                 var totalLength = lines.length;
@@ -118,6 +123,7 @@
                         setTimeout(run, 1000);
                     } else {
                         $notice.show().text('over');
+                        isRunning = false;
                     }
                 }
 
@@ -144,8 +150,17 @@
             +'百科全书，例如《苏联大百科全书》。如今的百科还分出了类型如《生物百科全书》、《物理百科全书》等。'
             
             $notice.text('click start').show();
-            let lines = getLines(content, $('.main2').width());
-            $(document).on('click', function() {
+            var lines = getLines(content, $('.main2').width());
+
+            var tt;
+            $(window).on('resize', function() {
+                clearTimeout(tt);
+
+                tt = setTimeout(function() {
+                    lines = getLines(content, $('.main2').width());
+                }, 100);
+            });
+            $('body').on("ontouchend" in document? 'touchend':'click', function() {
                 begin(lines);
             });
         </script>
